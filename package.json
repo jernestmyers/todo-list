@@ -1,0 +1,23 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "project specs: 1. user can create projects and/or todo items 2. user can choose which project to place a todo item 3. todo items should include a title, due date, priority status, and a description 4. user interface should allow user to see all projects, to see all todos in a project, expand todos to see/edit its content, and delete a todo item 5. program should leverage localStorage or firebase to store user data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jernestmyers/todo-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jernestmyers/todo-list/issues"
+  },
+  "homepage": "https://github.com/jernestmyers/todo-list#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
+}
