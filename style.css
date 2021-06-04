@@ -31,6 +31,15 @@ header {
     border: 1px solid blue;
 }
 
+#nav-container {
+    display: flex;
+    flex-direction: column;
+}
+
 #main-content {
     border: 1px solid yellow;
+}
+
+button {
+    outline: 0px;
 }
