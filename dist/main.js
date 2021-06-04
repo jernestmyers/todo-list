@@ -1,1 +1,1 @@
-console.log("test");
+(()=>{"use strict";const e=document.querySelector("#page-header"),t=document.querySelector("#left-container"),n=document.querySelector("#main-content");!function(e){const t=document.createElement("h1");t.textContent="done.",e.appendChild(t)}(e),function(e){const t=document.createElement("p"),n=document.createElement("p");t.textContent="add task",n.textContent="add project",e.appendChild(n),e.appendChild(t)}(t),function(e){const t=document.createElement("p");t.textContent="blah blah test blah test blah test test",e.appendChild(t)}(n)})();
