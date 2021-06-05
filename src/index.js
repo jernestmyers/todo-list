@@ -31,6 +31,9 @@ const createProjectModule = (function() {
     }
 
     const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
+    const cancelProjectButton = document.querySelector(`#cancelProject`);
+    cancelProjectButton.addEventListener(`click`, (e) => closeFormModal(e.target.id));
+    
     submitProjectButton.addEventListener(`click`, (e) => {
         if (checkFormValidation(projectUserInput)) {
             e.preventDefault();
@@ -42,8 +45,8 @@ const createProjectModule = (function() {
     function closeFormModal(buttonID) {
         const modalToClose = document.querySelectorAll(`.modal`);
         const formToReset = document.querySelectorAll(`.formField`);
-        
-        if (buttonID === `addProjectSubmitButton`) {
+        console.log(`cancel`);
+        if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
             modalToClose[1].style.display = `none`;
             formToReset[1].reset();
         }
