@@ -15,6 +15,43 @@
             <div id="main-content"></div>
         </main>
 
+        <!-- modal for addTask form -->
+        <div id="addTaskModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <h3>create new task</h3>
+                <form class="formField" id="addTaskForm">
+                    <input class="taskUserInputs" type="text" id="title" placeholder="enter a title" required>
+                    <input class="taskUserInputs" type="date" id="dateDue" placeholder="select a due date" required>
+                    <input class="taskUserInputs" type="text" id="description" placeholder="describe the task" required>
+                    <label for="priority-status">set priority status:</label>
+                        <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
+                            <option value="">choose a status</option>
+                            <option value="low">low priority</option>
+                            <option value="medium">medium priority</option>
+                            <option value="high">high priority</option>
+                        </select>
+                    <input type="submit" id="addTaskSubmitButton" value="add task">
+                    <button class="cancelFormButtons">cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- modal for addProject form -->
+        <div id="addProjectModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <h3>create new project</h3>
+                <form class="formField" id="addProjectForm">
+                    <input class="projectUserInputs" type="text" id="title" placeholder="enter a title" required>
+                    <input class="projectUserInputs" type="date" id="dateDue" placeholder="select a due date" required>
+                    <input class="projectUserInputs" type="text" id="description" placeholder="describe the project" required>
+                    <input type="submit" id="addProjectSubmitButton" value="add project">
+                    <button class="cancelFormButtons">cancel</button>
+                </form>
+            </div>
+        </div>
+
         <script src="./main.js"></script>
     </body>
 </html>

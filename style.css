@@ -41,5 +41,46 @@ header {
 }
 
 button {
-    outline: 0px;
+    outline: none;
 }
+
+#addTaskModal {
+    display: none;
+}
+
+#addProjectModal {
+    display: block;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    opacity: 90%;
+    background-color: #D5DFE5;
+    margin: 15% auto;
+    padding: 20px;
+    border: none;
+    width: 350px;
+    text-align: center;
+  }
+
+  .modalButtons {
+    font-size: 14px;
+    width: 125px;
+    background-color: #3C5462;
+    color: #F0F4F6;
+  }
+
+  .modalButtons:hover {
+    background-color: #C2D1DA;
+    color: #3C5462;
+  }
