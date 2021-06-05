@@ -47,7 +47,6 @@ const createProjectModule = (function() {
             modalToClose[1].style.display = `none`;
             formToReset[1].reset();
         }
-
-        console.log(buttonID);
     }
+
 })();

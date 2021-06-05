@@ -12,13 +12,15 @@ function loadLeftBar(container) {
     const addTask = document.createElement(`button`);
     addTask.textContent = `+ add task`;
     addTask.classList.add(`buttonToAddItem`);
-    addTask.addEventListener(`click`, (e) => {console.log(`task`)});
+    addTask.setAttribute(`id`, `addTaskButton`);
+    addTask.addEventListener(`click`, openModal);
     addItemsContainer.appendChild(addTask);
 
     const addProject = document.createElement(`button`);
     addProject.textContent = `+ add project`;
     addProject.classList.add(`buttonToAddItem`);
-    addProject.addEventListener(`click`, (e) => {console.log(`project`)});
+    addProject.setAttribute(`id`, `addProjectButton`);
+    addProject.addEventListener(`click`, openModal);
     addItemsContainer.appendChild(addProject);
 
     container.appendChild(addItemsContainer);
@@ -55,6 +57,15 @@ function loadMainContent(container) {
     const testText = document.createElement(`p`);
     testText.textContent = `blah blah test blah test blah test test`;
     container.appendChild(testText);
+}
+
+function openModal(e) {
+    const modalToOpen = document.querySelectorAll(`.modal`);
+    if (e.target.id === `addTaskButton`) {
+        modalToOpen[0].style.display = `block`;
+    } else {
+        modalToOpen[1].style.display = `block`;
+    }
 }
 
 export { 
