@@ -49,7 +49,7 @@ button {
 }
 
 #addProjectModal {
-    display: block;
+    display: none;
 }
 
 .modal {
