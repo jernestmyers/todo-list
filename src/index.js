@@ -47,19 +47,22 @@ const createProjectModule = (function() {
 
     submitProjectButton.addEventListener(`click`, (e) => {
         if (checkFormValidation(projectUserInput)) {
-            e.preventDefault();
             instantiateNewProject();
-            closeFormModal(e.target.id);
+            submitForm(e);
         }
     })
 
     submitTaskButton.addEventListener(`click`, (e) => {
         if (checkFormValidation(taskUserInput)) {
-            e.preventDefault();
             instantiateNewTask();
-            closeFormModal(e.target.id);
+            submitForm(e);
         }
     })
+
+    function submitForm(event) {
+        event.preventDefault();
+        closeFormModal(event.target.id);
+    }
 
     function closeFormModal(buttonID) {
         const modalToClose = document.querySelectorAll(`.modal`);
