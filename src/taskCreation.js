@@ -24,7 +24,14 @@ function createNewProject(titleValue, dateDueValue, descriptionValue) {
     console.log(projectsCreated);
 }
 
+function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue) {
+    const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue);
+    tasksCreated.push(newTask);
+    console.log(tasksCreated);
+}
+
 export {
-    createNewProject
+    createNewProject,
+    createNewTask
 }
 
