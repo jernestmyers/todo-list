@@ -1,7 +1,14 @@
 import { displayNewProject } from './displayNewItems.js'
 
 const projectsCreated = [];
-const tasksCreated = [];
+const tasksCreated = [
+    {
+        title: `code today`,
+        dateDue: `today`,
+        description: `this is a test`,
+        priorityStatus: `high`
+    }
+];
 
 function getObjectArrays() {
     const taskArrays = {

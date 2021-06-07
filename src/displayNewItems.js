@@ -3,17 +3,30 @@ import { createNewProject, createNewTask } from './taskCreation.js'
 function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
     const overviewTitle = document.createElement(`h2`);
-    const tasksContainer = document.createElement(`div`);
-    const taskTitle = document.createElement(`h2`);
-    
-    overviewContainer.classList.add(`project-container`);
-    overviewTitle.textContent = `overview`;
-    tasksContainer.classList.add(`project-tasks-container`);
-    taskTitle.textContent = arrayOfTaskObjects[0].title;
-
     overviewContainer.appendChild(overviewTitle);
-    tasksContainer.appendChild(taskTitle);
-    overviewContainer.appendChild(tasksContainer);
+    
+    for (let i = 0; i < arrayOfTaskObjects.length; i++) {
+        const tasksContainer = document.createElement(`div`);
+        const taskTitle = document.createElement(`h2`);
+        const taskDueDate = document.createElement(`p`);
+        const taskDescription = document.createElement(`p`);
+        const taskPriorityStatus = document.createElement(`p`);
+        
+        overviewContainer.classList.add(`project-container`);
+        overviewTitle.textContent = `overview`;
+        tasksContainer.classList.add(`project-tasks-container`);
+        taskTitle.textContent = arrayOfTaskObjects[i].title;
+        taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
+        taskDescription.textContent = arrayOfTaskObjects[i].description;
+        taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
+
+        tasksContainer.appendChild(taskTitle);
+        tasksContainer.appendChild(taskDueDate);
+        tasksContainer.appendChild(taskDescription);
+        tasksContainer.appendChild(taskPriorityStatus);
+        overviewContainer.appendChild(tasksContainer);
+    }
+    
     
     return overviewContainer
 }

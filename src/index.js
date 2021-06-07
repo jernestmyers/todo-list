@@ -15,7 +15,7 @@ navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent))
 // console.log(getObjectArrays)
 // console.log(currentObjectArray.projects);
 let currentObjectArray = getObjectArrays();
-// loadMainContent(mainContainer);
+loadMainContent(mainContainer, currentObjectArray.tasks);
 
 
 const createTaskAndProjectModule = (function() {
@@ -49,7 +49,8 @@ const createTaskAndProjectModule = (function() {
         const taskInputArray = Array.from(taskUserInput);
         // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
-        // loadMainContent(mainContainer);
+        let currentObjectArray = getObjectArrays();
+        loadMainContent(mainContainer, currentObjectArray.tasks);
     }
 
     const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
