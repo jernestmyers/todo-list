@@ -4,13 +4,18 @@ function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
     const overviewTitle = document.createElement(`h2`);
     const tasksContainer = document.createElement(`div`);
+    const taskTitle = document.createElement(`h2`);
     
     overviewContainer.classList.add(`project-container`);
     overviewTitle.textContent = `overview`;
     tasksContainer.classList.add(`project-tasks-container`);
+    taskTitle.textContent = arrayOfTaskObjects[0].title;
 
     overviewContainer.appendChild(overviewTitle);
+    tasksContainer.appendChild(taskTitle);
     overviewContainer.appendChild(tasksContainer);
+    
+    return overviewContainer
 }
 
 function displayNewProject(arrayOfProjectObjects) {
@@ -33,8 +38,11 @@ function displayNewProject(arrayOfProjectObjects) {
     
     console.log(arrayOfProjectObjects);
     console.log(projectContainer);
+
+    return projectContainer
 }
 
 export {
+    displayTasksOverview,
     displayNewProject
 }

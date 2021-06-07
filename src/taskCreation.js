@@ -3,6 +3,14 @@ import { displayNewProject } from './displayNewItems.js'
 const projectsCreated = [];
 const tasksCreated = [];
 
+function getObjectArrays() {
+    const taskArrays = {
+        projects: projectsCreated,
+        tasks: tasksCreated
+    }
+    return taskArrays
+}
+
 class Project {
     constructor(title, dateDue, description) {
         this.title = title;
@@ -23,17 +31,18 @@ class Task {
 function createNewProject(titleValue, dateDueValue, descriptionValue) {
     const newProject = new Project(titleValue, dateDueValue, descriptionValue);
     projectsCreated.push(newProject);
-    // console.log(projectsCreated);
+    console.log(projectsCreated);
     displayNewProject(projectsCreated);
 }
 
 function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue) {
     const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue);
     tasksCreated.push(newTask);
-    // console.log(tasksCreated);
+    console.log(tasksCreated);
 }
 
 export {
+    getObjectArrays,
     createNewProject,
     createNewTask
 }

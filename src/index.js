@@ -1,14 +1,21 @@
-import { loadHeader, loadLeftBar, loadMainContent } from './pageLoad.js'
-import { createNewProject, createNewTask } from './taskCreation.js'
+import { loadHeader, loadLeftBar, loadMainContent, openModal } from './pageLoad.js'
+import { getObjectArrays, createNewProject, createNewTask } from './taskCreation.js'
 // import { displayNewProject } from './displayNewItems.js'
 
-const headerContainer = document.querySelector(`#page-header`);
-const leftContainer = document.querySelector(`#left-container`);
+// const headerContainer = document.querySelector(`#page-header`);
+// const leftContainer = document.querySelector(`#left-container`);
+const addTaskContainer = document.querySelector(`#add-task-container`);
+const navContainer = document.querySelector(`#nav-container`);
 const mainContainer = document.querySelector(`#main-content`);
 
-loadHeader(headerContainer);
-loadLeftBar(leftContainer);
-loadMainContent(mainContainer);
+addTaskContainer.addEventListener(`click`, openModal);
+navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
+// loadHeader(headerContainer);
+// loadLeftBar(leftContainer);
+// loadMainContent(mainContainer);
+// console.log(getObjectArrays)
+let currentObjectArray = getObjectArrays();
+// console.log(currentObjectArray.projects);
 
 
 const createTaskAndProjectModule = (function() {
@@ -30,12 +37,19 @@ const createTaskAndProjectModule = (function() {
         const projectInputArray = Array.from(projectUserInput);
         // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
+        // loadMainContent(mainContainer);
+        let currentObjectArray = getObjectArrays();
+        console.log(currentObjectArray);
+        console.log(currentObjectArray.projects);
+        console.log(currentObjectArray.projects[0]);
+        console.log(currentObjectArray.projects[0].title);
     }
 
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
         // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
+        // loadMainContent(mainContainer);
     }
 
     const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
