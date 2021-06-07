@@ -1,3 +1,5 @@
+import { displayTasksOverview } from './displayNewItems.js'
+
 function loadHeader(container) {
     const headerTitle = document.createElement(`h1`);
     headerTitle.textContent = `done.`;
@@ -5,7 +7,7 @@ function loadHeader(container) {
 }
 
 function loadLeftBar(container) {
-    // for the add project and add task buttons
+    // create the add project and add task buttons
     const addItemsContainer = document.createElement(`div`);
     addItemsContainer.setAttribute(`id`, `add-task-container`);
 
@@ -25,7 +27,7 @@ function loadLeftBar(container) {
 
     container.appendChild(addItemsContainer);
 
-    // for the navigation buttons
+    // create the navigation buttons
     const containerForNavigation = document.createElement(`div`);
     containerForNavigation.setAttribute(`id`, `nav-container`);
     containerForNavigation.addEventListener(`click`, (e) => console.log(e.target.textContent));

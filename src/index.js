@@ -1,5 +1,6 @@
 import { loadHeader, loadLeftBar, loadMainContent } from './pageLoad.js'
 import { createNewProject, createNewTask } from './taskCreation.js'
+// import { displayNewProject } from './displayNewItems.js'
 
 const headerContainer = document.querySelector(`#page-header`);
 const leftContainer = document.querySelector(`#left-container`);
@@ -10,7 +11,7 @@ loadLeftBar(leftContainer);
 loadMainContent(mainContainer);
 
 
-const createProjectModule = (function() {
+const createTaskAndProjectModule = (function() {
 
     const projectUserInput = document.querySelectorAll(`.projectUserInputs`);
     const taskUserInput = document.querySelectorAll(`.taskUserInputs`);
@@ -27,13 +28,13 @@ const createProjectModule = (function() {
 
     function instantiateNewProject() {
         const projectInputArray = Array.from(projectUserInput);
-        console.log(projectInputArray);
+        // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
     }
 
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
-        console.log(taskInputArray);
+        // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
     }
 
@@ -67,7 +68,6 @@ const createProjectModule = (function() {
     function closeFormModal(buttonID) {
         const modalToClose = document.querySelectorAll(`.modal`);
         const formToReset = document.querySelectorAll(`.formField`);
-        console.log(`cancel`);
         if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
             modalToClose[1].style.display = `none`;
             formToReset[1].reset();
