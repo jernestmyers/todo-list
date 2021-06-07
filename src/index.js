@@ -12,10 +12,10 @@ addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
 // loadHeader(headerContainer);
 // loadLeftBar(leftContainer);
-// loadMainContent(mainContainer);
 // console.log(getObjectArrays)
-let currentObjectArray = getObjectArrays();
 // console.log(currentObjectArray.projects);
+let currentObjectArray = getObjectArrays();
+// loadMainContent(mainContainer);
 
 
 const createTaskAndProjectModule = (function() {
@@ -37,8 +37,8 @@ const createTaskAndProjectModule = (function() {
         const projectInputArray = Array.from(projectUserInput);
         // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
-        // loadMainContent(mainContainer);
         let currentObjectArray = getObjectArrays();
+        loadMainContent(mainContainer, currentObjectArray.projects);
         console.log(currentObjectArray);
         console.log(currentObjectArray.projects);
         console.log(currentObjectArray.projects[0]);

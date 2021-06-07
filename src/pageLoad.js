@@ -55,8 +55,8 @@ import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
 //     container.appendChild(containerForNavigation);
 // }
 
-function loadMainContent(container) {
-    let containerToDisplay = displayTasksOverview();
+function loadMainContent(container, array) {
+    let containerToDisplay = displayNewProject(array);
     // const testText = document.createElement(`p`);
     // testText.textContent = `blah blah test blah test blah test test`;
     container.appendChild(containerToDisplay);
