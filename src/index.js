@@ -1,16 +1,18 @@
-import { loadHeader, loadLeftBar, loadMainContent, openModal } from './pageLoad.js'
+import { loadMainContent, openModal } from './pageLoad.js'
 import { getObjectArrays, createNewProject, createNewTask } from './taskCreation.js'
-// import { displayNewProject } from './displayNewItems.js'
+import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
 
 const addTaskContainer = document.querySelector(`#add-task-container`);
 const navContainer = document.querySelector(`#nav-container`);
+const projectListContainer = document.querySelector(`#project-container`);
 const mainContainer = document.querySelector(`#main-content`);
 
 addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
+projectListContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
 // console.log(currentObjectArray.projects);
 let currentObjectArray = getObjectArrays();
-loadMainContent(mainContainer, currentObjectArray.tasks);
+loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
 
 
 const createTaskAndProjectModule = (function() {
@@ -32,7 +34,13 @@ const createTaskAndProjectModule = (function() {
         const projectInputArray = Array.from(projectUserInput);
         // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
-        let currentObjectArray = getObjectArrays();
+        currentObjectArray = getObjectArrays();
+        let projectIndex = currentObjectArray.projects.length - 1;
+        console.log(projectIndex);
+        console.log(currentObjectArray.projects[projectIndex]);
+        loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex]));
+        // const title = currentObjectArray.projects.find( (item, index) => item[index].title === projectInputArray[0].value);
+        // console.log(title);
         // loadMainContent(mainContainer, currentObjectArray.projects);
         // console.log(currentObjectArray);
         // console.log(currentObjectArray.projects);
@@ -44,7 +52,7 @@ const createTaskAndProjectModule = (function() {
         const taskInputArray = Array.from(taskUserInput);
         // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
-        let currentObjectArray = getObjectArrays();
+        currentObjectArray = getObjectArrays();
         loadMainContent(mainContainer, currentObjectArray.tasks);
     }
 

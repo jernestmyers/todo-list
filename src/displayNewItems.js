@@ -30,7 +30,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
     return overviewContainer
 }
 
-function displayNewProject(arrayOfProjectObjects) {
+function displayNewProject(newProjectObject) {
     const projectContainer = document.createElement(`div`);
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
@@ -38,9 +38,9 @@ function displayNewProject(arrayOfProjectObjects) {
     const tasksContainer = document.createElement(`div`);
     
     projectContainer.classList.add(`project-container`);
-    projectTitle.textContent = arrayOfProjectObjects[0].title;
-    projectDueDate.textContent = arrayOfProjectObjects[0].dateDue;
-    projectDescription.textContent = arrayOfProjectObjects[0].description;
+    projectTitle.textContent = newProjectObject.title;
+    projectDueDate.textContent = newProjectObject.dateDue;
+    projectDescription.textContent = newProjectObject.description;
     tasksContainer.classList.add(`project-tasks-container`);
 
     projectContainer.appendChild(projectTitle);
@@ -48,7 +48,6 @@ function displayNewProject(arrayOfProjectObjects) {
     projectContainer.appendChild(projectDescription);
     projectContainer.appendChild(tasksContainer);
     
-    console.log(arrayOfProjectObjects);
     console.log(projectContainer);
 
     return projectContainer

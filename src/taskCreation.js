@@ -38,9 +38,9 @@ class Task {
 function createNewProject(titleValue, dateDueValue, descriptionValue) {
     const newProject = new Project(titleValue, dateDueValue, descriptionValue);
     projectsCreated.push(newProject);
-    console.log(projectsCreated);
+    // console.log(projectsCreated);
     appendProjectToProjectList(newProject.title);
-    displayNewProject(projectsCreated);
+    // displayNewProject(newProject);
 }
 
 function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue) {

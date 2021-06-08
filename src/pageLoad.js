@@ -1,10 +1,11 @@
 import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
 
-function loadMainContent(container, array) {
+function loadMainContent(container, array, functionToInvoke) {
     while (container.firstChild) {
         container.removeChild(container.firstChild)
     }
-    let containerToDisplay = displayTasksOverview(array);
+    console.log(functionToInvoke);
+    let containerToDisplay = functionToInvoke;
     container.appendChild(containerToDisplay);
 }
 
