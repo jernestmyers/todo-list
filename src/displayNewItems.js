@@ -27,7 +27,6 @@ function displayTasksOverview(arrayOfTaskObjects) {
         overviewContainer.appendChild(tasksContainer);
     }
     
-    
     return overviewContainer
 }
 
@@ -55,7 +54,16 @@ function displayNewProject(arrayOfProjectObjects) {
     return projectContainer
 }
 
+function appendProjectToProjectList(projectTitle) {
+    const projectListHead = document.querySelector(`#project-list`);
+    const newProjectTitle = document.createElement(`button`);
+    newProjectTitle.textContent = projectTitle;
+
+    projectListHead.appendChild(newProjectTitle);
+}
+
 export {
     displayTasksOverview,
-    displayNewProject
+    displayNewProject,
+    appendProjectToProjectList
 }

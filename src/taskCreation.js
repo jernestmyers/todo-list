@@ -1,4 +1,4 @@
-import { displayNewProject } from './displayNewItems.js'
+import { displayNewProject, appendProjectToProjectList } from './displayNewItems.js'
 
 const projectsCreated = [];
 const tasksCreated = [
@@ -39,6 +39,7 @@ function createNewProject(titleValue, dateDueValue, descriptionValue) {
     const newProject = new Project(titleValue, dateDueValue, descriptionValue);
     projectsCreated.push(newProject);
     console.log(projectsCreated);
+    appendProjectToProjectList(newProject.title);
     displayNewProject(projectsCreated);
 }
 
