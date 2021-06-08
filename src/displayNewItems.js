@@ -3,8 +3,39 @@ import { createNewProject, createNewTask } from './taskCreation.js'
 function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
     const overviewTitle = document.createElement(`h2`);
+    overviewTitle.textContent = `overview`;
+    overviewContainer.classList.add(`project-container`);
     overviewContainer.appendChild(overviewTitle);
     
+    const tasksToDisplay = displayTasks(arrayOfTaskObjects, overviewContainer)
+
+    // for (let i = 0; i < arrayOfTaskObjects.length; i++) {
+    //     const tasksContainer = document.createElement(`div`);
+    //     const taskTitle = document.createElement(`h3`);
+    //     const taskDueDate = document.createElement(`p`);
+    //     const taskDescription = document.createElement(`p`);
+    //     const taskPriorityStatus = document.createElement(`p`);
+    //     const taskProjectAssociated = document.createElement(`p`);
+        
+    //     tasksContainer.classList.add(`project-tasks-container`);
+    //     taskTitle.textContent = arrayOfTaskObjects[i].title;
+    //     taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
+    //     taskDescription.textContent = arrayOfTaskObjects[i].description;
+    //     taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
+    //     taskProjectAssociated.textContent = arrayOfTaskObjects[i].projectAssociated;
+
+    //     tasksContainer.appendChild(taskTitle);
+    //     tasksContainer.appendChild(taskDueDate);
+    //     tasksContainer.appendChild(taskDescription);
+    //     tasksContainer.appendChild(taskPriorityStatus);
+    //     tasksContainer.appendChild(taskProjectAssociated);
+    //     overviewContainer.appendChild(tasksContainer);
+    // }
+    
+    return tasksToDisplay
+}
+
+function displayTasks(arrayOfTaskObjects, container) {
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
         const tasksContainer = document.createElement(`div`);
         const taskTitle = document.createElement(`h3`);
@@ -13,8 +44,6 @@ function displayTasksOverview(arrayOfTaskObjects) {
         const taskPriorityStatus = document.createElement(`p`);
         const taskProjectAssociated = document.createElement(`p`);
         
-        overviewContainer.classList.add(`project-container`);
-        overviewTitle.textContent = `overview`;
         tasksContainer.classList.add(`project-tasks-container`);
         taskTitle.textContent = arrayOfTaskObjects[i].title;
         taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
@@ -27,10 +56,10 @@ function displayTasksOverview(arrayOfTaskObjects) {
         tasksContainer.appendChild(taskDescription);
         tasksContainer.appendChild(taskPriorityStatus);
         tasksContainer.appendChild(taskProjectAssociated);
-        overviewContainer.appendChild(tasksContainer);
+        container.appendChild(tasksContainer);
     }
-    
-    return overviewContainer
+
+    return container
 }
 
 function displayNewProject(newProjectObject, projectIndex) {
@@ -58,6 +87,15 @@ function displayNewProject(newProjectObject, projectIndex) {
     return projectContainer
 }
 
+function displayExistingProject(projectObject, taskObject) {
+    const projectContainer = displayNewProject(projectObject, null);
+    console.log(projectContainer);
+    const projectTasks = displayTasks(taskObject, projectContainer);
+    console.log(projectTasks);
+    // projectContainer.appendChild(projectTasks);
+    return projectContainer
+}
+
 function appendProjectToProjectList(projectTitle) {
     const projectListHead = document.querySelector(`#project-list`);
     const newProjectTitle = document.createElement(`button`);
@@ -69,5 +107,6 @@ function appendProjectToProjectList(projectTitle) {
 export {
     displayTasksOverview,
     displayNewProject,
+    displayExistingProject,
     appendProjectToProjectList
 }

@@ -1,6 +1,6 @@
 import { loadMainContent, openModal } from './pageLoad.js'
 import { getObjectArrays, createNewProject, createNewTask } from './taskCreation.js'
-import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
+import { displayNewProject, displayTasksOverview, displayExistingProject } from './displayNewItems.js'
 
 const addTaskContainer = document.querySelector(`#add-task-container`);
 const navContainer = document.querySelector(`#nav-container`);
@@ -33,6 +33,7 @@ function projectSelector(e) {
             return object
         }
     })
+    loadMainContent(mainContainer, null, displayExistingProject(currentObjectArray.projects[projectSelectedIndex], filterTasks));
     console.log(filterTasks);
 }
 
