@@ -15,6 +15,13 @@ const tasksCreated = [
         description: `this is a test`,
         priorityStatus: `high`,
         projectAssociated: `todo list`,
+    },
+    {
+        title: `do more`,
+        dateDue: `today`,
+        description: `this is a test`,
+        priorityStatus: `high`,
+        projectAssociated: `default`,
     }
 ];
 

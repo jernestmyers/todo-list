@@ -11,7 +11,7 @@ const mainContainer = document.querySelector(`#main-content`);
 addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, pageSelector);
 projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
-projectListContainer.addEventListener(`click`, (e) => console.log(e.target.dataset.indexNumber));
+projectListContainer.addEventListener(`click`, projectSelector);
 
 let currentObjectArray = getObjectArrays();
 loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
@@ -21,6 +21,19 @@ function pageSelector(e) {
         currentObjectArray = getObjectArrays();
         loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
     }
+}
+
+function projectSelector(e) {
+    console.log(`title: ${e.target.textContent} and index: ${e.target.dataset.indexNumber}`);
+    const projectSelected = e.target.textContent;
+    const projectSelectedIndex = e.target.dataset.indexNumber;
+    currentObjectArray = getObjectArrays();
+    const filterTasks = currentObjectArray.tasks.filter( object => {
+        if (object.projectAssociated === projectSelected) {
+            return object
+        }
+    })
+    console.log(filterTasks);
 }
 
 const createTaskAndProjectModule = (function() {
