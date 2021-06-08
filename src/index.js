@@ -40,26 +40,27 @@ const createTaskAndProjectModule = (function() {
 
     function instantiateNewProject() {
         const projectInputArray = Array.from(projectUserInput);
-        // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
         currentObjectArray = getObjectArrays();
         let projectIndex = currentObjectArray.projects.length - 1;
         console.log(projectIndex);
         console.log(currentObjectArray.projects[projectIndex]);
         loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex]));
-        // const title = currentObjectArray.projects.find( (item, index) => item[index].title === projectInputArray[0].value);
-        // console.log(title);
-        // loadMainContent(mainContainer, currentObjectArray.projects);
-        // console.log(currentObjectArray);
-        // console.log(currentObjectArray.projects);
-        // console.log(currentObjectArray.projects[0]);
-        // console.log(currentObjectArray.projects[0].title);
+        appendNewProjectToSelector(projectInputArray[0].value);
+    }
+
+    function appendNewProjectToSelector(newProjectTitle) {
+        const projectSelector = document.querySelector(`#project-associated`);
+        const projectToAdd = document.createElement(`option`);
+        projectToAdd.setAttribute(`value`, newProjectTitle);
+        projectToAdd.textContent = newProjectTitle;
+        projectSelector.appendChild(projectToAdd);
     }
 
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
-        // console.log(taskInputArray);
-        createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
+        console.log(taskInputArray);
+        createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
         if (mainContainer.firstChild.firstChild.textContent === `overview`) {
             currentObjectArray = getObjectArrays();
             loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));

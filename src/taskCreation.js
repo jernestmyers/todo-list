@@ -27,11 +27,12 @@ class Project {
 }
 
 class Task {
-    constructor(title, dateDue, description, priorityStatus) {
+    constructor(title, dateDue, description, priorityStatus, projectAssociated) {
         this.title = title;
         this.dateDue = dateDue;
         this.description = description;
         this.priorityStatus = priorityStatus;
+        this.projectAssociated = projectAssociated; 
     }
 }
 
@@ -43,8 +44,8 @@ function createNewProject(titleValue, dateDueValue, descriptionValue) {
     // displayNewProject(newProject);
 }
 
-function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue) {
-    const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue);
+function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated) {
+    const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated);
     tasksCreated.push(newTask);
     console.log(tasksCreated);
 }

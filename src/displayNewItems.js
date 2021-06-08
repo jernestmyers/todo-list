@@ -11,6 +11,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
         const taskDueDate = document.createElement(`p`);
         const taskDescription = document.createElement(`p`);
         const taskPriorityStatus = document.createElement(`p`);
+        const taskProjectAssociated = document.createElement(`p`);
         
         overviewContainer.classList.add(`project-container`);
         overviewTitle.textContent = `overview`;
@@ -19,11 +20,13 @@ function displayTasksOverview(arrayOfTaskObjects) {
         taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
         taskDescription.textContent = arrayOfTaskObjects[i].description;
         taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
+        taskProjectAssociated.textContent = arrayOfTaskObjects[i].projectAssociated;
 
         tasksContainer.appendChild(taskTitle);
         tasksContainer.appendChild(taskDueDate);
         tasksContainer.appendChild(taskDescription);
         tasksContainer.appendChild(taskPriorityStatus);
+        tasksContainer.appendChild(taskProjectAssociated);
         overviewContainer.appendChild(tasksContainer);
     }
     
