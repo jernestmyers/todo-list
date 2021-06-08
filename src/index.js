@@ -4,11 +4,13 @@ import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
 
 const addTaskContainer = document.querySelector(`#add-task-container`);
 const navContainer = document.querySelector(`#nav-container`);
-const projectListContainer = document.querySelector(`#project-container`);
+const projectButton = document.querySelector(`#project-button`);
+const projectListContainer = document.querySelector(`#project-list`);
 const mainContainer = document.querySelector(`#main-content`);
 
 addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, pageSelector);
+projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
 projectListContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
 
 let currentObjectArray = getObjectArrays();
