@@ -33,7 +33,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
     return overviewContainer
 }
 
-function displayNewProject(newProjectObject) {
+function displayNewProject(newProjectObject, projectIndex) {
     const projectContainer = document.createElement(`div`);
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
@@ -41,6 +41,7 @@ function displayNewProject(newProjectObject) {
     const tasksContainer = document.createElement(`div`);
     
     projectContainer.classList.add(`project-container`);
+    // projectTitle.setAttribute(`data-index-number`, projectIndex);
     projectTitle.textContent = newProjectObject.title;
     projectDueDate.textContent = newProjectObject.dateDue;
     projectDescription.textContent = newProjectObject.description;
@@ -51,7 +52,8 @@ function displayNewProject(newProjectObject) {
     projectContainer.appendChild(projectDescription);
     projectContainer.appendChild(tasksContainer);
     
-    console.log(projectContainer);
+    // console.log(projectContainer);
+    // console.log(projectTitle.dataset.indexNumber);
 
     return projectContainer
 }

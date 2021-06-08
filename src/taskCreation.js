@@ -3,10 +3,18 @@ import { displayNewProject, appendProjectToProjectList } from './displayNewItems
 const projectsCreated = [];
 const tasksCreated = [
     {
-        title: `code today`,
+        title: `refactor code`,
         dateDue: `today`,
         description: `this is a test`,
-        priorityStatus: `high`
+        priorityStatus: `high`,
+        projectAssociated: `todo list`,
+    },
+    {
+        title: `make progress`,
+        dateDue: `today`,
+        description: `this is a test`,
+        priorityStatus: `high`,
+        projectAssociated: `todo list`,
     }
 ];
 
@@ -39,15 +47,12 @@ class Task {
 function createNewProject(titleValue, dateDueValue, descriptionValue) {
     const newProject = new Project(titleValue, dateDueValue, descriptionValue);
     projectsCreated.push(newProject);
-    // console.log(projectsCreated);
     appendProjectToProjectList(newProject.title);
-    // displayNewProject(newProject);
 }
 
 function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated) {
     const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated);
     tasksCreated.push(newTask);
-    console.log(tasksCreated);
 }
 
 export {

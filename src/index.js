@@ -11,7 +11,7 @@ const mainContainer = document.querySelector(`#main-content`);
 addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, pageSelector);
 projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
-projectListContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
+projectListContainer.addEventListener(`click`, (e) => console.log(e.target.dataset.indexNumber));
 
 let currentObjectArray = getObjectArrays();
 loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
@@ -43,10 +43,16 @@ const createTaskAndProjectModule = (function() {
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
         currentObjectArray = getObjectArrays();
         let projectIndex = currentObjectArray.projects.length - 1;
-        console.log(projectIndex);
-        console.log(currentObjectArray.projects[projectIndex]);
-        loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex]));
+        // console.log(projectIndex);
+        // console.log(currentObjectArray.projects[projectIndex]);
+        loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex], projectIndex));
         appendNewProjectToSelector(projectInputArray[0].value);
+        attachDataToProjectButton(projectIndex);
+    }
+
+    function attachDataToProjectButton(indexNumber) {
+        const newProjectButton = projectListContainer.lastChild;
+        newProjectButton.setAttribute(`data-index-number`, indexNumber);
     }
 
     function appendNewProjectToSelector(newProjectTitle) {
@@ -59,7 +65,7 @@ const createTaskAndProjectModule = (function() {
 
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
-        console.log(taskInputArray);
+        // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
         if (mainContainer.firstChild.firstChild.textContent === `overview`) {
             currentObjectArray = getObjectArrays();
