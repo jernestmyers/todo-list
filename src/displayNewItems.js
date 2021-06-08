@@ -7,7 +7,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
     
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
         const tasksContainer = document.createElement(`div`);
-        const taskTitle = document.createElement(`h2`);
+        const taskTitle = document.createElement(`h3`);
         const taskDueDate = document.createElement(`p`);
         const taskDescription = document.createElement(`p`);
         const taskPriorityStatus = document.createElement(`p`);

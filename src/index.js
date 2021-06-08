@@ -2,17 +2,12 @@ import { loadHeader, loadLeftBar, loadMainContent, openModal } from './pageLoad.
 import { getObjectArrays, createNewProject, createNewTask } from './taskCreation.js'
 // import { displayNewProject } from './displayNewItems.js'
 
-// const headerContainer = document.querySelector(`#page-header`);
-// const leftContainer = document.querySelector(`#left-container`);
 const addTaskContainer = document.querySelector(`#add-task-container`);
 const navContainer = document.querySelector(`#nav-container`);
 const mainContainer = document.querySelector(`#main-content`);
 
 addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
-// loadHeader(headerContainer);
-// loadLeftBar(leftContainer);
-// console.log(getObjectArrays)
 // console.log(currentObjectArray.projects);
 let currentObjectArray = getObjectArrays();
 loadMainContent(mainContainer, currentObjectArray.tasks);
@@ -38,11 +33,11 @@ const createTaskAndProjectModule = (function() {
         // console.log(projectInputArray);
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
         let currentObjectArray = getObjectArrays();
-        loadMainContent(mainContainer, currentObjectArray.projects);
-        console.log(currentObjectArray);
-        console.log(currentObjectArray.projects);
-        console.log(currentObjectArray.projects[0]);
-        console.log(currentObjectArray.projects[0].title);
+        // loadMainContent(mainContainer, currentObjectArray.projects);
+        // console.log(currentObjectArray);
+        // console.log(currentObjectArray.projects);
+        // console.log(currentObjectArray.projects[0]);
+        // console.log(currentObjectArray.projects[0].title);
     }
 
     function instantiateNewTask() {
