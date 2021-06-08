@@ -8,12 +8,18 @@ const projectListContainer = document.querySelector(`#project-container`);
 const mainContainer = document.querySelector(`#main-content`);
 
 addTaskContainer.addEventListener(`click`, openModal);
-navContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
+navContainer.addEventListener(`click`, pageSelector);
 projectListContainer.addEventListener(`click`, (e) => console.log(e.target.textContent));
-// console.log(currentObjectArray.projects);
+
 let currentObjectArray = getObjectArrays();
 loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
 
+function pageSelector(e) {
+    if (e.target.textContent === `overview`) {
+        currentObjectArray = getObjectArrays();
+        loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+    }
+}
 
 const createTaskAndProjectModule = (function() {
 
@@ -52,8 +58,10 @@ const createTaskAndProjectModule = (function() {
         const taskInputArray = Array.from(taskUserInput);
         // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value);
-        currentObjectArray = getObjectArrays();
-        loadMainContent(mainContainer, currentObjectArray.tasks);
+        if (mainContainer.firstChild.firstChild.textContent === `overview`) {
+            currentObjectArray = getObjectArrays();
+            loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+        }
     }
 
     const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
