@@ -13,8 +13,12 @@ function openModal(e) {
     if (e.target.id === `addTaskButton`) {
         modalToOpen[0].style.display = `block`;
     } else {
-        modalToOpen[1].style.display = `block`;
+        modalToOpen[2].style.display = `block`;
     }
+}
+
+function openEditModal() {
+    
 }
 
 export { 

@@ -59,6 +59,33 @@
             </div>
         </div>
 
+        <!-- modal for editTask form -->
+        <div id="editTaskModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <h3>edit task</h3>
+                <form class="formField" id="editTaskForm">
+                    <input class="taskUserInputs" type="text" id="title" placeholder="" required>
+                    <input class="taskUserInputs" type="date" id="dateDue" placeholder="" required>
+                    <input class="taskUserInputs" type="text" id="description" placeholder="" required>
+                    <label for="priority-status">set priority status:</label>
+                        <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
+                            <option value=""></option>
+                            <option value="low">low priority</option>
+                            <option value="medium">medium priority</option>
+                            <option value="high">high priority</option>
+                        </select>
+                    <label for="project-associated">change project:</label>
+                        <select class="taskUserInputs" name="project-associated-prompt" id="project-associated" required>
+                            <option value="">select project</option>
+                            <option value="default">overview (default)</option>
+                        </select>
+                    <input type="submit" id="editTaskSubmitButton" value="confirm edits">
+                    <button class="cancelFormButtons" id="cancelTask">cancel</button>
+                </form>
+            </div>
+        </div>
+
         <!-- modal for addProject form -->
         <div id="addProjectModal" class="modal">
             <!-- Modal content -->

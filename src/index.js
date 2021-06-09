@@ -129,8 +129,8 @@ const createTaskAndProjectModule = (function() {
         const modalToClose = document.querySelectorAll(`.modal`);
         const formToReset = document.querySelectorAll(`.formField`);
         if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
-            modalToClose[1].style.display = `none`;
-            formToReset[1].reset();
+            modalToClose[2].style.display = `none`;
+            formToReset[2].reset();
         } else {
             modalToClose[0].style.display = `none`;
             formToReset[0].reset();
