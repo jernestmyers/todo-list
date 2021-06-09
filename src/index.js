@@ -58,7 +58,7 @@ function regenerateProjectTasks(pageTitle) {
     // console.log(projectDisplayedObject);
     // console.log(filterTasks);
     // console.log(currentObjectArray.projects[projectDisplayedIndex]);
-    loadMainContent(mainContainer, null, displayExistingProject(projectDisplayedObject, filterTasks));
+    loadMainContent(mainContainer, null, displayExistingProject(projectDisplayedObject[0], filterTasks));
 }
 
 const createTaskAndProjectModule = (function() {

@@ -36,29 +36,32 @@ function displayTasksOverview(arrayOfTaskObjects) {
 }
 
 function displayTasks(arrayOfTaskObjects, container) {
+    const allTasksContainer = document.createElement(`div`);
+    allTasksContainer.classList.add(`project-tasks-container`);
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
-        const tasksContainer = document.createElement(`div`);
+        const newTaskContainer = document.createElement(`div`);
         const taskTitle = document.createElement(`h3`);
         const taskDueDate = document.createElement(`p`);
         const taskDescription = document.createElement(`p`);
         const taskPriorityStatus = document.createElement(`p`);
         const taskProjectAssociated = document.createElement(`p`);
         
-        tasksContainer.classList.add(`project-tasks-container`);
         taskTitle.textContent = arrayOfTaskObjects[i].title;
         taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
         taskDescription.textContent = arrayOfTaskObjects[i].description;
         taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
         taskProjectAssociated.textContent = arrayOfTaskObjects[i].projectAssociated;
 
-        tasksContainer.appendChild(taskTitle);
-        tasksContainer.appendChild(taskDueDate);
-        tasksContainer.appendChild(taskDescription);
-        tasksContainer.appendChild(taskPriorityStatus);
-        tasksContainer.appendChild(taskProjectAssociated);
-        container.appendChild(tasksContainer);
-    }
+        newTaskContainer.appendChild(taskTitle);
+        newTaskContainer.appendChild(taskDueDate);
+        newTaskContainer.appendChild(taskDescription);
+        newTaskContainer.appendChild(taskPriorityStatus);
+        newTaskContainer.appendChild(taskProjectAssociated);
 
+        allTasksContainer.appendChild(newTaskContainer);
+    }
+    
+    container.appendChild(allTasksContainer);
     return container
 }
 
@@ -81,20 +84,22 @@ function displayNewProject(newProjectObject, projectIndex) {
     projectContainer.appendChild(projectDescription);
     // projectContainer.appendChild(tasksContainer);
     
-    console.log(projectContainer);
+    // console.log(projectContainer);
     // console.log(projectTitle.dataset.indexNumber);
 
     return projectContainer
 }
 
 function displayExistingProject(projectObject, taskObject) {
+    console.log(projectObject);
+    // let caughtObject = projectObject[0];
     // console.log(`in display function`);
-    const projectContainer = displayNewProject(projectObject, null);
-    // console.log(projectContainer);
-    const projectTasks = displayTasks(taskObject, projectContainer);
+    const projectContainerDisplayed = displayNewProject(projectObject, null);
+    // console.log(projectContainerDisplayed);
+    const projectTasks = displayTasks(taskObject, projectContainerDisplayed);
     // console.log(projectTasks);
-    projectContainer.appendChild(projectTasks);
-    return projectContainer
+    // projectContainer.appendChild(projectTasks);
+    return projectTasks
 }
 
 function appendProjectToProjectList(projectTitle) {
