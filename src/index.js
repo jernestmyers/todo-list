@@ -14,12 +14,12 @@ projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent)
 projectListContainer.addEventListener(`click`, projectSelector);
 
 let currentObjectArray = getObjectArrays();
-loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
 
 function pageSelector(e) {
     if (e.target.textContent === `overview`) {
         currentObjectArray = getObjectArrays();
-        loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+        loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
     }
 }
 
@@ -40,7 +40,7 @@ function regenerateProjectTasks(pageTitle) {
             return object
         }
     })
-    loadMainContent(mainContainer, null, displayExistingProject(projectDisplayedObject[0], filterTasks));
+    loadMainContent(mainContainer, displayExistingProject(projectDisplayedObject[0], filterTasks));
 }
 
 const createTaskAndProjectModule = (function() {
@@ -63,7 +63,7 @@ const createTaskAndProjectModule = (function() {
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
         currentObjectArray = getObjectArrays();
         let projectIndex = currentObjectArray.projects.length - 1;
-        loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex], projectIndex));
+        loadMainContent(mainContainer, displayNewProject(currentObjectArray.projects[projectIndex]));
         appendNewProjectToSelector(projectInputArray[0].value);
         attachDataToProjectButton(projectIndex);
     }
@@ -87,9 +87,8 @@ const createTaskAndProjectModule = (function() {
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
         currentObjectArray = getObjectArrays();
         let newTaskIndex = currentObjectArray.tasks.length - 1;
-        console.log(currentObjectArray.tasks[newTaskIndex].projectAssociated);
         if (currentPageDisplayed === `overview`) {
-            loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+            loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
         } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {
             regenerateProjectTasks(currentPageDisplayed);
         }

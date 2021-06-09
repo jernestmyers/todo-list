@@ -42,7 +42,7 @@ function displayTasks(arrayOfTaskObjects, container) {
     return container
 }
 
-function displayNewProject(newProjectObject, projectIndex) {
+function displayNewProject(newProjectObject) {
     const projectContainer = document.createElement(`div`);
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
@@ -61,8 +61,7 @@ function displayNewProject(newProjectObject, projectIndex) {
 }
 
 function displayExistingProject(projectObject, taskObject) {
-    console.log(projectObject);
-    const projectContainerDisplayed = displayNewProject(projectObject, null);
+    const projectContainerDisplayed = displayNewProject(projectObject);
     const projectTasks = displayTasks(taskObject, projectContainerDisplayed);
     return projectTasks
 }
