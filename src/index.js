@@ -30,17 +30,21 @@ function projectSelector(e) {
 
 function regenerateProjectTasks(pageTitle) {
     currentObjectArray = getObjectArrays();
-    const projectDisplayedObject = currentObjectArray.projects.filter( object => {
-        if (object.title === pageTitle) {
-            return object;
-        }
-    })
-    const filterTasks = currentObjectArray.tasks.filter( object => {
-        if (object.projectAssociated === pageTitle) {
-            return object
-        }
-    })
-    loadMainContent(mainContainer, displayExistingProject(projectDisplayedObject[0], filterTasks));
+    if (pageTitle === `overview`) {
+        loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
+    } else {
+        const projectDisplayedObject = currentObjectArray.projects.filter( object => {
+            if (object.title === pageTitle) {
+                return object;
+            }
+        })
+        const filterTasks = currentObjectArray.tasks.filter( object => {
+            if (object.projectAssociated === pageTitle) {
+                return object
+            }
+        })
+        loadMainContent(mainContainer, displayExistingProject(projectDisplayedObject[0], filterTasks));
+    }
 }
 
 const createTaskAndProjectModule = (function() {
@@ -134,3 +138,7 @@ const createTaskAndProjectModule = (function() {
     }
 
 })();
+
+export { 
+    regenerateProjectTasks
+}

@@ -1,4 +1,5 @@
-import { displayNewProject, appendProjectToProjectList } from './displayNewItems.js'
+import { appendProjectToProjectList } from './displayNewItems.js'
+import { regenerateProjectTasks } from './index.js'
 
 const projectsCreated = [];
 const tasksCreated = [
@@ -62,9 +63,30 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
     tasksCreated.push(newTask);
 }
 
+function editTaskObject(title, projectAssociated, pageTitle) {
+    console.log(title);
+    console.log(projectAssociated);
+    console.log(pageTitle);
+    let currentObjectArray = getObjectArrays();
+    let objectIndex;
+    const objectToEdit = currentObjectArray.tasks.filter( (object, index) => {
+        if (object.title === title && object.projectAssociated === projectAssociated) {
+            console.log(index);
+            console.log(object);
+            objectIndex = index;
+            return object
+        }
+    })
+    console.log(objectToEdit);
+    console.log(objectIndex);
+    tasksCreated[objectIndex].title = `does this work?`;
+    regenerateProjectTasks(pageTitle);
+}
+
 export {
     getObjectArrays,
     createNewProject,
-    createNewTask
+    createNewTask,
+    editTaskObject,
 }
 
