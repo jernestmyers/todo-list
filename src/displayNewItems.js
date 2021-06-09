@@ -67,19 +67,19 @@ function displayNewProject(newProjectObject, projectIndex) {
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
     const projectDescription = document.createElement(`p`);
-    const tasksContainer = document.createElement(`div`);
+    // const tasksContainer = document.createElement(`div`);
     
     projectContainer.classList.add(`project-container`);
     // projectTitle.setAttribute(`data-index-number`, projectIndex);
     projectTitle.textContent = newProjectObject.title;
     projectDueDate.textContent = newProjectObject.dateDue;
     projectDescription.textContent = newProjectObject.description;
-    tasksContainer.classList.add(`project-tasks-container`);
+    // tasksContainer.classList.add(`project-tasks-container`);
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectDueDate);
     projectContainer.appendChild(projectDescription);
-    projectContainer.appendChild(tasksContainer);
+    // projectContainer.appendChild(tasksContainer);
     
     console.log(projectContainer);
     // console.log(projectTitle.dataset.indexNumber);
@@ -88,12 +88,12 @@ function displayNewProject(newProjectObject, projectIndex) {
 }
 
 function displayExistingProject(projectObject, taskObject) {
-    console.log(`in display function`);
+    // console.log(`in display function`);
     const projectContainer = displayNewProject(projectObject, null);
     // console.log(projectContainer);
     const projectTasks = displayTasks(taskObject, projectContainer);
     // console.log(projectTasks);
-    // projectContainer.appendChild(projectTasks);
+    projectContainer.appendChild(projectTasks);
     return projectContainer
 }
 

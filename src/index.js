@@ -39,26 +39,26 @@ function projectSelector(e) {
 
 function regenerateProjectTasks(pageTitle) {
     currentObjectArray = getObjectArrays();
-    const projectDisplayedIndex = currentObjectArray.projects.filter( (object, index) => {
-        let projectIndex;
+    const projectDisplayedObject = currentObjectArray.projects.filter( (object, index) => {
+        // let projectIndex;
         if (object.title === pageTitle) {
-            console.log(`here from project filter`);
-            console.log(index);
-            projectIndex = index;
+            // console.log(`here from project filter`);
+            // console.log(index);
+            return object;
         }
-        return projectIndex;
+        // return projectIndex;
     })
     const filterTasks = currentObjectArray.tasks.filter( object => {
-        console.log(`here from task filter`);
+        // console.log(`here from task filter`);
         if (object.projectAssociated === pageTitle) {
             return object
         }
     })
-    console.log(`here past both filters`);
-    console.log(projectDisplayedIndex);
-    console.log(currentObjectArray.projects[projectDisplayedIndex]);
-    // loadMainContent(mainContainer, null, displayExistingProject(currentObjectArray.projects[projectDisplayedIndex], filterTasks));
-    console.log(filterTasks);
+    // console.log(`here past both filters`);
+    // console.log(projectDisplayedObject);
+    // console.log(filterTasks);
+    // console.log(currentObjectArray.projects[projectDisplayedIndex]);
+    loadMainContent(mainContainer, null, displayExistingProject(projectDisplayedObject, filterTasks));
 }
 
 const createTaskAndProjectModule = (function() {

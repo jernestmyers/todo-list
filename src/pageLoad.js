@@ -4,7 +4,7 @@ function loadMainContent(container, array, functionToInvoke) {
     while (container.firstChild) {
         container.removeChild(container.firstChild)
     }
-    console.log(`am i here?`);
+    // console.log(`am i here?`);
     let containerToDisplay = functionToInvoke;
     container.appendChild(containerToDisplay);
 }
