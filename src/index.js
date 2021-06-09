@@ -24,40 +24,22 @@ function pageSelector(e) {
 }
 
 function projectSelector(e) {
-    console.log(`title: ${e.target.textContent} and index: ${e.target.dataset.indexNumber}`);
     const projectSelected = e.target.textContent;
-    const projectSelectedIndex = e.target.dataset.indexNumber;
-    currentObjectArray = getObjectArrays();
-    const filterTasks = currentObjectArray.tasks.filter( object => {
-        if (object.projectAssociated === projectSelected) {
-            return object
-        }
-    })
-    loadMainContent(mainContainer, null, displayExistingProject(currentObjectArray.projects[projectSelectedIndex], filterTasks));
-    // console.log(filterTasks);
+    regenerateProjectTasks(projectSelected);
 }
 
 function regenerateProjectTasks(pageTitle) {
     currentObjectArray = getObjectArrays();
-    const projectDisplayedObject = currentObjectArray.projects.filter( (object, index) => {
-        // let projectIndex;
+    const projectDisplayedObject = currentObjectArray.projects.filter( object => {
         if (object.title === pageTitle) {
-            // console.log(`here from project filter`);
-            // console.log(index);
             return object;
         }
-        // return projectIndex;
     })
     const filterTasks = currentObjectArray.tasks.filter( object => {
-        // console.log(`here from task filter`);
         if (object.projectAssociated === pageTitle) {
             return object
         }
     })
-    // console.log(`here past both filters`);
-    // console.log(projectDisplayedObject);
-    // console.log(filterTasks);
-    // console.log(currentObjectArray.projects[projectDisplayedIndex]);
     loadMainContent(mainContainer, null, displayExistingProject(projectDisplayedObject[0], filterTasks));
 }
 
@@ -81,8 +63,6 @@ const createTaskAndProjectModule = (function() {
         createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
         currentObjectArray = getObjectArrays();
         let projectIndex = currentObjectArray.projects.length - 1;
-        // console.log(projectIndex);
-        // console.log(currentObjectArray.projects[projectIndex]);
         loadMainContent(mainContainer, projectIndex, displayNewProject(currentObjectArray.projects[projectIndex], projectIndex));
         appendNewProjectToSelector(projectInputArray[0].value);
         attachDataToProjectButton(projectIndex);
@@ -104,7 +84,6 @@ const createTaskAndProjectModule = (function() {
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
         const currentPageDisplayed = mainContainer.firstChild.firstChild.textContent;
-        // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
         currentObjectArray = getObjectArrays();
         let newTaskIndex = currentObjectArray.tasks.length - 1;
@@ -112,7 +91,6 @@ const createTaskAndProjectModule = (function() {
         if (currentPageDisplayed === `overview`) {
             loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
         } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {
-            console.log(`here`);
             regenerateProjectTasks(currentPageDisplayed);
         }
     }

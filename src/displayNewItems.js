@@ -8,29 +8,6 @@ function displayTasksOverview(arrayOfTaskObjects) {
     overviewContainer.appendChild(overviewTitle);
     
     const tasksToDisplay = displayTasks(arrayOfTaskObjects, overviewContainer)
-
-    // for (let i = 0; i < arrayOfTaskObjects.length; i++) {
-    //     const tasksContainer = document.createElement(`div`);
-    //     const taskTitle = document.createElement(`h3`);
-    //     const taskDueDate = document.createElement(`p`);
-    //     const taskDescription = document.createElement(`p`);
-    //     const taskPriorityStatus = document.createElement(`p`);
-    //     const taskProjectAssociated = document.createElement(`p`);
-        
-    //     tasksContainer.classList.add(`project-tasks-container`);
-    //     taskTitle.textContent = arrayOfTaskObjects[i].title;
-    //     taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
-    //     taskDescription.textContent = arrayOfTaskObjects[i].description;
-    //     taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
-    //     taskProjectAssociated.textContent = arrayOfTaskObjects[i].projectAssociated;
-
-    //     tasksContainer.appendChild(taskTitle);
-    //     tasksContainer.appendChild(taskDueDate);
-    //     tasksContainer.appendChild(taskDescription);
-    //     tasksContainer.appendChild(taskPriorityStatus);
-    //     tasksContainer.appendChild(taskProjectAssociated);
-    //     overviewContainer.appendChild(tasksContainer);
-    // }
     
     return tasksToDisplay
 }
@@ -70,35 +47,23 @@ function displayNewProject(newProjectObject, projectIndex) {
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
     const projectDescription = document.createElement(`p`);
-    // const tasksContainer = document.createElement(`div`);
     
     projectContainer.classList.add(`project-container`);
-    // projectTitle.setAttribute(`data-index-number`, projectIndex);
     projectTitle.textContent = newProjectObject.title;
     projectDueDate.textContent = newProjectObject.dateDue;
     projectDescription.textContent = newProjectObject.description;
-    // tasksContainer.classList.add(`project-tasks-container`);
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectDueDate);
     projectContainer.appendChild(projectDescription);
-    // projectContainer.appendChild(tasksContainer);
-    
-    // console.log(projectContainer);
-    // console.log(projectTitle.dataset.indexNumber);
 
     return projectContainer
 }
 
 function displayExistingProject(projectObject, taskObject) {
     console.log(projectObject);
-    // let caughtObject = projectObject[0];
-    // console.log(`in display function`);
     const projectContainerDisplayed = displayNewProject(projectObject, null);
-    // console.log(projectContainerDisplayed);
     const projectTasks = displayTasks(taskObject, projectContainerDisplayed);
-    // console.log(projectTasks);
-    // projectContainer.appendChild(projectTasks);
     return projectTasks
 }
 
