@@ -81,17 +81,18 @@ function displayNewProject(newProjectObject, projectIndex) {
     projectContainer.appendChild(projectDescription);
     projectContainer.appendChild(tasksContainer);
     
-    // console.log(projectContainer);
+    console.log(projectContainer);
     // console.log(projectTitle.dataset.indexNumber);
 
     return projectContainer
 }
 
 function displayExistingProject(projectObject, taskObject) {
+    console.log(`in display function`);
     const projectContainer = displayNewProject(projectObject, null);
-    console.log(projectContainer);
+    // console.log(projectContainer);
     const projectTasks = displayTasks(taskObject, projectContainer);
-    console.log(projectTasks);
+    // console.log(projectTasks);
     // projectContainer.appendChild(projectTasks);
     return projectContainer
 }

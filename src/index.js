@@ -34,6 +34,30 @@ function projectSelector(e) {
         }
     })
     loadMainContent(mainContainer, null, displayExistingProject(currentObjectArray.projects[projectSelectedIndex], filterTasks));
+    // console.log(filterTasks);
+}
+
+function regenerateProjectTasks(pageTitle) {
+    currentObjectArray = getObjectArrays();
+    const projectDisplayedIndex = currentObjectArray.projects.filter( (object, index) => {
+        let projectIndex;
+        if (object.title === pageTitle) {
+            console.log(`here from project filter`);
+            console.log(index);
+            projectIndex = index;
+        }
+        return projectIndex;
+    })
+    const filterTasks = currentObjectArray.tasks.filter( object => {
+        console.log(`here from task filter`);
+        if (object.projectAssociated === pageTitle) {
+            return object
+        }
+    })
+    console.log(`here past both filters`);
+    console.log(projectDisplayedIndex);
+    console.log(currentObjectArray.projects[projectDisplayedIndex]);
+    // loadMainContent(mainContainer, null, displayExistingProject(currentObjectArray.projects[projectDisplayedIndex], filterTasks));
     console.log(filterTasks);
 }
 
@@ -79,11 +103,17 @@ const createTaskAndProjectModule = (function() {
 
     function instantiateNewTask() {
         const taskInputArray = Array.from(taskUserInput);
+        const currentPageDisplayed = mainContainer.firstChild.firstChild.textContent;
         // console.log(taskInputArray);
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
-        if (mainContainer.firstChild.firstChild.textContent === `overview`) {
-            currentObjectArray = getObjectArrays();
+        currentObjectArray = getObjectArrays();
+        let newTaskIndex = currentObjectArray.tasks.length - 1;
+        console.log(currentObjectArray.tasks[newTaskIndex].projectAssociated);
+        if (currentPageDisplayed === `overview`) {
             loadMainContent(mainContainer, currentObjectArray.tasks, displayTasksOverview(currentObjectArray.tasks));
+        } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {
+            console.log(`here`);
+            regenerateProjectTasks(currentPageDisplayed);
         }
     }
 
