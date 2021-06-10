@@ -112,7 +112,6 @@ function deleteTaskObject(title, projectAssociated, pageTitle) {
 }
 
 function editProjectObject(objectTitle, objectDataToFilter) {
-    console.log(`here for edits`);
     // filterObjects(objectTitle, objectDescription, pageTitle, buttonID);
     let currentObjectArray = getObjectArrays();
     let objectIndex = null;
@@ -122,8 +121,6 @@ function editProjectObject(objectTitle, objectDataToFilter) {
                 return object
             }
         });
-    console.log(objectIndex);
-    console.log(objectToEdit);
     openEditProjectModal(objectToEdit, objectIndex, objectTitle)
 }
 
@@ -135,12 +132,69 @@ function finalizeTaskEdits(editInputs, targetIndex) {
     tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
 }
 
-function finalizeProjectEdits(editInputs, targetIndex) {
+function finalizeProjectEdits(editInputs, targetIndex, existingTitle) {
     projectsCreated[targetIndex].title = editInputs[0].value;
     projectsCreated[targetIndex].dateDue = editInputs[1].value;
     projectsCreated[targetIndex].description = editInputs[2].value;
-    console.log(projectsCreated[targetIndex]);
+    
     regenerateProjectTasks(editInputs[0].value);
+
+    if (editInputs[0].value !== existingTitle) {
+        console.log(`updates needed`);
+        updateProjecListAndProjectSelectors(editInputs[0].value, existingTitle);
+    }
+}
+
+function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
+    
+    const projectSelectorNewTasks = document.querySelector(`#project-associated`);
+    const projectSelectorEditTasks = document.querySelector(`#edit-project-associated`);
+    const projectButtonList = document.querySelector(`#project-list`);
+    
+    // newTask selector and editTask selector will have the same index
+    const selectorArrayForNewTask = Array.from(projectSelectorNewTasks.options)
+    const projectButtonListArray = Array.from(projectButtonList.children)
+
+    console.log(projectButtonList.children);
+    console.log(projectButtonListArray);
+
+    // const testArray = Array.from(projectSelectorNewTasks.options);
+    // // console.log(testArray);
+    // let indexToEdit = null;
+    // testArray.filter( (option, index) => {
+    //     if (option.value === existingTitle) {
+    //         // console.log(index);
+    //         // return index
+    //         indexToEdit = index;
+    //     }
+    // })
+
+    // can use newTask index for editTask index as they SHOULD be the same
+    const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
+    const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
+    console.log(buttonListIndex);
+
+    projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
+    projectSelectorNewTasks.options[newTaskSelectorIndex].textContent = newTitle;
+    projectSelectorEditTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
+    projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
+    projectButtonList.children[buttonListIndex].textContent = newTitle;
+}
+
+function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
+    let indexToEdit = null;
+    arrayToFilter.filter( (option, index) => {
+        if (elementType === `selector`) {
+            if (option.value === existingTitle) {
+                indexToEdit = index;
+            }
+        } else if (elementType === `button`) {
+            if (option.textContent === existingTitle) {
+                indexToEdit = index;
+            }
+        }
+    })
+    return indexToEdit
 }
 
 export {

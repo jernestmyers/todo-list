@@ -57,7 +57,7 @@ function openEditTaskModal(object, index, pageTitle) {
     editTaskModal.style.display = `block`;
 }
 
-function openEditProjectModal(object, index, pageTitle) {
+function openEditProjectModal(object, index, existingTitle) {
     
     const editProjectModal = document.querySelector(`#editProjectModal`);
     const editFormInputs = document.querySelectorAll(`.editProjectInputs`);
@@ -70,7 +70,7 @@ function openEditProjectModal(object, index, pageTitle) {
     const confirmEdits = document.querySelector(`#editProjectSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
         if (checkEditFormValidation(editFormInputs)) {
-            finalizeProjectEdits(editFormInputs, index);
+            finalizeProjectEdits(editFormInputs, index, existingTitle);
             e.preventDefault();
             closeEditModal(editProjectModal);
             // regenerateProjectTasks(object[0].title);

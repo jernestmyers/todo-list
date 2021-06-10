@@ -83,8 +83,6 @@ function displayNewProject(newProjectObject) {
             const buttonStored = e.target.textContent;
             const projectToEditTitle = e.target.parentNode.firstChild.textContent;
             const projectToEditDescription = e.target.previousSibling.textContent;
-            // console.log(projectToEditTitle);
-            // console.log(projectToEditDescription);
             editProjectObject(projectToEditTitle, projectToEditDescription);
         }
     });
