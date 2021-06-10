@@ -1,5 +1,6 @@
 import { appendProjectToProjectList } from './displayNewItems.js'
 import { regenerateProjectTasks } from './index.js'
+import { openEditModal } from './pageLoad.js'
 
 const projectsCreated = [];
 const tasksCreated = [
@@ -71,15 +72,16 @@ function editTaskObject(title, projectAssociated, pageTitle) {
     let objectIndex;
     const objectToEdit = currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
-            console.log(index);
-            console.log(object);
+            // console.log(index);
+            // console.log(object);
             objectIndex = index;
             return object
         }
     })
-    console.log(objectToEdit);
-    console.log(objectIndex);
-    tasksCreated[objectIndex].title = `does this work?`;
+    // console.log(objectToEdit);
+    // console.log(objectIndex);
+    // tasksCreated[objectIndex].title = `does this work?`;
+    openEditModal(objectToEdit, objectIndex);
     regenerateProjectTasks(pageTitle);
 }
 
