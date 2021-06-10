@@ -1,5 +1,5 @@
 import { appendProjectToProjectList } from './displayNewItems.js'
-// import { regenerateProjectTasks } from './index.js'
+import { regenerateProjectTasks } from './index.js'
 import { openEditModal } from './pageLoad.js'
 
 const projectsCreated = [];
@@ -74,7 +74,19 @@ function editTaskObject(title, projectAssociated, pageTitle) {
         }
     })
     openEditModal(objectToEdit, objectIndex, pageTitle);
-    // regenerateProjectTasks(pageTitle);
+}
+
+function deleteTaskObject(title, projectAssociated, pageTitle) {
+    let currentObjectArray = getObjectArrays();
+    let objectToDeleteIndex;
+    const objectToDelete = currentObjectArray.tasks.filter( (object, index) => {
+        if (object.title === title && object.projectAssociated === projectAssociated) {
+            objectToDeleteIndex = index;
+            return object
+        }
+    })
+    tasksCreated.splice(objectToDeleteIndex, 1);
+    regenerateProjectTasks(pageTitle);
 }
 
 function finalizeTaskEdits(editInputs, targetObject, targetIndex) {
@@ -83,7 +95,6 @@ function finalizeTaskEdits(editInputs, targetObject, targetIndex) {
     tasksCreated[targetIndex].description = editInputs[2].value;
     tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
     tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
-    console.log(targetObject);
 }
 
 export {
@@ -91,6 +102,6 @@ export {
     createNewProject,
     createNewTask,
     editTaskObject,
+    deleteTaskObject,
     finalizeTaskEdits,
 }
-

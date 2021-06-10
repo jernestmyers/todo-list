@@ -1,4 +1,4 @@
-import { editTaskObject } from './taskCreation.js'
+import { editTaskObject, deleteTaskObject } from './taskCreation.js'
 
 function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
@@ -20,10 +20,13 @@ function displayTasks(arrayOfTaskObjects, container) {
             const taskToEditTitle = e.target.parentNode.firstChild.textContent;
             const taskToEditProjectAssociated = e.target.previousSibling.textContent;
             const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
-            console.log(`edit clicked`);
             editTaskObject(taskToEditTitle, taskToEditProjectAssociated, titleOfPageDisplayed);
         } else if (e.target.tagName === `BUTTON` && e.target.textContent === `delete`) {
             console.log(`delete clicked`);
+            const taskToDeleteTitle = e.target.parentNode.firstChild.textContent;
+            const taskToDeleteProjectAssociated = e.target.previousSibling.previousSibling.textContent;
+            const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
+            deleteTaskObject(taskToDeleteTitle, taskToDeleteProjectAssociated, titleOfPageDisplayed);
         }
     });
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
