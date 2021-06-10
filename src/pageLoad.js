@@ -19,12 +19,12 @@ function openModal(e) {
 }
 
 function openEditModal(object, index, pageTitle) {
-
+    
     const modalToOpen = document.querySelector(`#editTaskModal`);
     const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
     const statusOption = document.querySelector(`#existing-status`);
     const projectOption = document.querySelector(`#existing-project`);
-
+    
     // pre-populate the edit form with existing data
     editFormInputs[0].setAttribute(`value`, `${object[0].title}`);
     editFormInputs[1].setAttribute(`value`, `${object[0].dateDue}`);
@@ -38,7 +38,7 @@ function openEditModal(object, index, pageTitle) {
         projectOption.setAttribute(`value`, `${object[0].projectAssociated}`);
         projectOption.textContent = object[0].projectAssociated;
     }
-
+    
     const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
         if (checkEditFormValidation(editFormInputs)) {
@@ -48,8 +48,12 @@ function openEditModal(object, index, pageTitle) {
             regenerateProjectTasks(pageTitle);
         }
     });
-    // close and reset model on submit || cancel
-
+    
+    const cancelEdits = document.querySelector(`#cancelTaskEdit`);
+    cancelEdits.addEventListener(`click`, (e) => {
+        closeEditModal(modalToOpen, editFormInputs);
+    })
+    
     modalToOpen.style.display = `block`;
 }
 
