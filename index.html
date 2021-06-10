@@ -65,9 +65,9 @@
             <div class="modal-content">
                 <h3>edit task</h3>
                 <form class="formField" id="editTaskForm">
-                    <input class="editTaskInputs" type="text" id="title" placeholder="" required>
-                    <input class="editTaskInputs" type="date" id="dateDue" placeholder="" required>
-                    <input class="editTaskInputs" type="text" id="description" placeholder="" required>
+                    <input class="editTaskInputs" type="text" id="title" required>
+                    <input class="editTaskInputs" type="date" id="dateDue" required>
+                    <input class="editTaskInputs" type="text" id="description" required>
                     <label for="priority-status">change priority status:</label>
                         <select class="editTaskInputs" name="priority-status-prompt" id="priority-status" required>
                             <option id="existing-status" value=""></option>
@@ -97,6 +97,21 @@
                     <input class="projectUserInputs" type="text" id="description" placeholder="describe the project" required>
                     <input type="submit" id="addProjectSubmitButton" value="add project">
                     <button class="cancelFormButtons" id="cancelProject">cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- modal for editProject form -->
+        <div id="editProjectModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <h3>edit project</h3>
+                <form class="formField" id="editProjectForm">
+                    <input class="editProjectInputs" type="text" id="title" required>
+                    <input class="editProjectInputs" type="date" id="dateDue" required>
+                    <input class="editProjectInputs" type="text" id="description" required>
+                    <input type="submit" id="addProjectSubmitButton" value="confirm edits">
+                    <button class="cancelFormButtons" id="cancelProjectEdit">cancel</button>
                 </form>
             </div>
         </div>
