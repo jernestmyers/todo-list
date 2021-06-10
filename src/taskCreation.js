@@ -1,6 +1,6 @@
 import { appendProjectToProjectList } from './displayNewItems.js'
 import { regenerateProjectTasks } from './index.js'
-import { openEditTaskModal } from './pageLoad.js'
+import { openEditTaskModal, openEditProjectModal } from './pageLoad.js'
 
 const projectsCreated = [];
 const tasksCreated = [
@@ -124,14 +124,23 @@ function editProjectObject(objectTitle, objectDataToFilter) {
         });
     console.log(objectIndex);
     console.log(objectToEdit);
+    openEditProjectModal(objectToEdit, objectIndex, objectTitle)
 }
 
-function finalizeTaskEdits(editInputs, targetObject, targetIndex) {
+function finalizeTaskEdits(editInputs, targetIndex) {
     tasksCreated[targetIndex].title = editInputs[0].value;
     tasksCreated[targetIndex].dateDue = editInputs[1].value;
     tasksCreated[targetIndex].description = editInputs[2].value;
     tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
     tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
+}
+
+function finalizeProjectEdits(editInputs, targetIndex) {
+    projectsCreated[targetIndex].title = editInputs[0].value;
+    projectsCreated[targetIndex].dateDue = editInputs[1].value;
+    projectsCreated[targetIndex].description = editInputs[2].value;
+    console.log(projectsCreated[targetIndex]);
+    regenerateProjectTasks(editInputs[0].value);
 }
 
 export {
@@ -142,4 +151,5 @@ export {
     editProjectObject,
     deleteTaskObject,
     finalizeTaskEdits,
+    finalizeProjectEdits,
 }

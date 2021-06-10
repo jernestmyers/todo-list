@@ -1,5 +1,5 @@
 import { loadMainContent, openModal } from './pageLoad.js'
-import { getObjectArrays, createNewProject, createNewTask } from './taskCreation.js'
+import { getObjectArrays, createNewProject, createNewTask, finalizeProjectEdits } from './taskCreation.js'
 import { displayNewProject, displayTasksOverview, displayExistingProject } from './displayNewItems.js'
 
 const addTaskContainer = document.querySelector(`#add-task-container`);

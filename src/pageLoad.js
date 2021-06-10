@@ -1,5 +1,5 @@
 import { regenerateProjectTasks } from './index.js';
-import { finalizeTaskEdits } from './taskCreation'
+import { finalizeTaskEdits, finalizeProjectEdits } from './taskCreation'
 
 function loadMainContent(container, functionToInvoke) {
     while (container.firstChild) {
@@ -10,17 +10,17 @@ function loadMainContent(container, functionToInvoke) {
 }
 
 function openModal(e) {
-    const modalToOpen = document.querySelectorAll(`.modal`);
+    const editTaskModal = document.querySelectorAll(`.modal`);
     if (e.target.id === `addTaskButton`) {
-        modalToOpen[0].style.display = `block`;
+        editTaskModal[0].style.display = `block`;
     } else {
-        modalToOpen[2].style.display = `block`;
+        editTaskModal[2].style.display = `block`;
     }
 }
 
 function openEditTaskModal(object, index, pageTitle) {
     
-    const modalToOpen = document.querySelector(`#editTaskModal`);
+    const editTaskModal = document.querySelector(`#editTaskModal`);
     const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
     const statusOption = document.querySelector(`#existing-status`);
     const projectOption = document.querySelector(`#existing-project`);
@@ -44,17 +44,45 @@ function openEditTaskModal(object, index, pageTitle) {
         if (checkEditFormValidation(editFormInputs)) {
             finalizeTaskEdits(editFormInputs, object, index);
             e.preventDefault();
-            closeEditModal(modalToOpen, editFormInputs);
+            closeEditModal(editTaskModal);
             regenerateProjectTasks(pageTitle);
         }
     });
     
     const cancelEdits = document.querySelector(`#cancelTaskEdit`);
     cancelEdits.addEventListener(`click`, (e) => {
-        closeEditModal(modalToOpen, editFormInputs);
+        closeEditModal(editTaskModal);
     })
     
-    modalToOpen.style.display = `block`;
+    editTaskModal.style.display = `block`;
+}
+
+function openEditProjectModal(object, index, pageTitle) {
+    
+    const editProjectModal = document.querySelector(`#editProjectModal`);
+    const editFormInputs = document.querySelectorAll(`.editProjectInputs`);
+    
+    // pre-populate the edit form with existing data
+    editFormInputs[0].setAttribute(`value`, `${object[0].title}`);
+    editFormInputs[1].setAttribute(`value`, `${object[0].dateDue}`);
+    editFormInputs[2].setAttribute(`value`, `${object[0].description}`);
+    
+    const confirmEdits = document.querySelector(`#editProjectSubmitButton`);
+    confirmEdits.addEventListener(`click`, (e) => {
+        if (checkEditFormValidation(editFormInputs)) {
+            finalizeProjectEdits(editFormInputs, index);
+            e.preventDefault();
+            closeEditModal(editProjectModal);
+            // regenerateProjectTasks(object[0].title);
+        }
+    });
+    
+    // const cancelEdits = document.querySelector(`#cancelTaskEdit`);
+    // cancelEdits.addEventListener(`click`, (e) => {
+    //     closeEditModal(editTaskModal, editFormInputs);
+    // })
+    
+    editProjectModal.style.display = `block`;
 }
 
 function checkEditFormValidation(inputNodeList) {
@@ -70,11 +98,16 @@ function checkEditFormValidation(inputNodeList) {
 function closeEditModal(modalToClose) {
     const formToReset = document.querySelectorAll(`.formField`);
     modalToClose.style.display = `none`;
-    formToReset[1].reset();
-;}
+    if (modalToClose === editTaskModal) {
+        formToReset[1].reset();
+    } else {
+        formToReset[3].reset();
+    }
+}
 
 export { 
     loadMainContent,
     openModal,
     openEditTaskModal,
+    openEditProjectModal,
 }
