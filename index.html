@@ -65,19 +65,19 @@
             <div class="modal-content">
                 <h3>edit task</h3>
                 <form class="formField" id="editTaskForm">
-                    <input class="taskUserInputs" type="text" id="title" placeholder="" required>
-                    <input class="taskUserInputs" type="date" id="dateDue" placeholder="" required>
-                    <input class="taskUserInputs" type="text" id="description" placeholder="" required>
-                    <label for="priority-status">set priority status:</label>
-                        <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
-                            <option value=""></option>
+                    <input class="editTaskInputs" type="text" id="title" placeholder="" required>
+                    <input class="editTaskInputs" type="date" id="dateDue" placeholder="" required>
+                    <input class="editTaskInputs" type="text" id="description" placeholder="" required>
+                    <label for="priority-status">change priority status:</label>
+                        <select class="editTaskInputs" name="priority-status-prompt" id="priority-status" required>
+                            <option id="existing-status" value=""></option>
                             <option value="low">low priority</option>
                             <option value="medium">medium priority</option>
                             <option value="high">high priority</option>
                         </select>
                     <label for="project-associated">change project:</label>
-                        <select class="taskUserInputs" name="project-associated-prompt" id="project-associated" required>
-                            <option value="">select project</option>
+                        <select class="editTaskInputs" name="project-associated-prompt" id="project-associated" required>
+                            <option id="existing-project" value=""></option>
                             <option value="default">overview (default)</option>
                         </select>
                     <input type="submit" id="editTaskSubmitButton" value="confirm edits">
