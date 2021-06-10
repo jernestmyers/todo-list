@@ -172,7 +172,7 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     // can use newTask index for editTask index as they SHOULD be the same
     const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
     const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
-    console.log(buttonListIndex);
+    // console.log(buttonListIndex);
 
     projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
     projectSelectorNewTasks.options[newTaskSelectorIndex].textContent = newTitle;

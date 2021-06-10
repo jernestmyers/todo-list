@@ -42,7 +42,7 @@ function openEditTaskModal(object, index, pageTitle) {
     const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
         if (checkEditFormValidation(editFormInputs)) {
-            finalizeTaskEdits(editFormInputs, object, index);
+            finalizeTaskEdits(editFormInputs, index);
             e.preventDefault();
             closeEditModal(editTaskModal);
             regenerateProjectTasks(pageTitle);
