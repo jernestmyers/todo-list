@@ -79,11 +79,19 @@ const createTaskAndProjectModule = (function() {
     }
 
     function appendNewProjectToSelector(newProjectTitle) {
-        const projectSelector = document.querySelector(`#project-associated`);
-        const projectToAdd = document.createElement(`option`);
-        projectToAdd.setAttribute(`value`, newProjectTitle);
-        projectToAdd.textContent = newProjectTitle;
-        projectSelector.appendChild(projectToAdd);
+        const addTaskProjectSelector = document.querySelector(`#project-associated`);
+        const editTaskProjectSelector = document.querySelector(`#edit-project-associated`);
+        
+        const projectForAddTaskSelector = document.createElement(`option`);
+        projectForAddTaskSelector.setAttribute(`value`, newProjectTitle);
+        projectForAddTaskSelector.textContent = newProjectTitle;
+        
+        const projectForEditTaskSelector = document.createElement(`option`);
+        projectForEditTaskSelector.setAttribute(`value`, newProjectTitle);
+        projectForEditTaskSelector.textContent = newProjectTitle;
+
+        addTaskProjectSelector.appendChild(projectForAddTaskSelector);
+        editTaskProjectSelector.appendChild(projectForEditTaskSelector);
     }
 
     function instantiateNewTask() {
