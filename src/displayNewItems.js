@@ -1,4 +1,4 @@
-import { editTaskObject, deleteTaskObject } from './taskCreation.js'
+import { editTaskObject, deleteTaskObject, editProjectObject } from './taskCreation.js'
 
 function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
@@ -15,14 +15,13 @@ function displayTasksOverview(arrayOfTaskObjects) {
 function displayTasks(arrayOfTaskObjects, container) {
     const allTasksContainer = document.createElement(`div`);
     allTasksContainer.classList.add(`project-tasks-container`);
-    allTasksContainer.addEventListener(`click`, e => {
+    allTasksContainer.addEventListener(`click`, (e) => {
         if (e.target.tagName === `BUTTON` && e.target.textContent === `edit`) {
             const taskToEditTitle = e.target.parentNode.firstChild.textContent;
             const taskToEditProjectAssociated = e.target.previousSibling.textContent;
             const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
             editTaskObject(taskToEditTitle, taskToEditProjectAssociated, titleOfPageDisplayed);
         } else if (e.target.tagName === `BUTTON` && e.target.textContent === `delete`) {
-            console.log(`delete clicked`);
             const taskToDeleteTitle = e.target.parentNode.firstChild.textContent;
             const taskToDeleteProjectAssociated = e.target.previousSibling.previousSibling.textContent;
             const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
@@ -67,15 +66,34 @@ function displayNewProject(newProjectObject) {
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
     const projectDescription = document.createElement(`p`);
+    const projectEditButton = document.createElement(`button`);
+    const projectDeleteButton = document.createElement(`button`);
     
     projectContainer.classList.add(`project-container`);
     projectTitle.textContent = newProjectObject.title;
     projectDueDate.textContent = newProjectObject.dateDue;
     projectDescription.textContent = newProjectObject.description;
+    projectEditButton.textContent = `edit project`;
+    projectDeleteButton.textContent = `delete project`;
+    projectEditButton.classList.add(`project-display-button`);
+    projectDeleteButton.classList.add(`project-display-button`);
+
+    projectEditButton.addEventListener(`click`, (e) => {
+        if (e.target.tagName === `BUTTON` && e.target.textContent === `edit project`) {
+            const buttonStored = e.target.textContent;
+            const projectToEditTitle = e.target.parentNode.firstChild.textContent;
+            const projectToEditDescription = e.target.previousSibling.textContent;
+            // console.log(projectToEditTitle);
+            // console.log(projectToEditDescription);
+            editProjectObject(projectToEditTitle, projectToEditDescription);
+        }
+    });
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectDueDate);
     projectContainer.appendChild(projectDescription);
+    projectContainer.appendChild(projectEditButton);
+    projectContainer.appendChild(projectDeleteButton);
 
     return projectContainer
 }

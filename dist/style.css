@@ -44,10 +44,13 @@ button {
     outline: none;
 }
 
-#addTaskModal {
+#addTaskModal,
+#addProjectModal,
+#editTaskModal,
+#editProjectModal {
     display: none;
 }
-
+/* 
 #addProjectModal {
     display: none;
 }
@@ -55,6 +58,10 @@ button {
 #editTaskModal {
     display: none;
 }
+
+#editProjectModal {
+    display: none;
+} */
 
 .modal {
     position: fixed;

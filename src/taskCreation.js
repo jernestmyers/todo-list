@@ -1,6 +1,6 @@
 import { appendProjectToProjectList } from './displayNewItems.js'
 import { regenerateProjectTasks } from './index.js'
-import { openEditModal } from './pageLoad.js'
+import { openEditTaskModal } from './pageLoad.js'
 
 const projectsCreated = [];
 const tasksCreated = [
@@ -64,6 +64,22 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
     tasksCreated.push(newTask);
 }
 
+// function filterObjects(objectTitle, objectDataToFilter, currentPageTitle, buttonID) {
+//     let currentObjectArray = getObjectArrays();
+//     let objectIndex = null;
+//     let objectToEdit = null;
+//     if (buttonID === `edit project`) {
+//         objectToEdit = currentObjectArray.projects.filter( (object, index) => {
+//             if (object.title === objectTitle && object.description === objectDataToFilter) {
+//                 objectIndex = index;
+//                 return object
+//             }
+//         })
+//         console.log(objectIndex);
+//         console.log(objectToEdit);
+//     }
+// }
+
 function editTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
     let objectIndex;
@@ -73,20 +89,41 @@ function editTaskObject(title, projectAssociated, pageTitle) {
             return object
         }
     })
-    openEditModal(objectToEdit, objectIndex, pageTitle);
+    openEditTaskModal(objectToEdit, objectIndex, pageTitle);
 }
 
 function deleteTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
-    let objectToDeleteIndex;
-    const objectToDelete = currentObjectArray.tasks.filter( (object, index) => {
+    const objectToDeleteIndex = currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
-            objectToDeleteIndex = index;
-            return object
+            // objectToDeleteIndex = index;
+            return index
         }
     })
+    // let objectToDeleteIndex;
+    // const objectToDelete = currentObjectArray.tasks.filter( (object, index) => {
+    //     if (object.title === title && object.projectAssociated === projectAssociated) {
+    //         objectToDeleteIndex = index;
+    //         return object
+    //     }
+    // })
     tasksCreated.splice(objectToDeleteIndex, 1);
     regenerateProjectTasks(pageTitle);
+}
+
+function editProjectObject(objectTitle, objectDataToFilter) {
+    console.log(`here for edits`);
+    // filterObjects(objectTitle, objectDescription, pageTitle, buttonID);
+    let currentObjectArray = getObjectArrays();
+    let objectIndex = null;
+    const objectToEdit = currentObjectArray.projects.filter( (object, index) => {
+            if (object.title === objectTitle && object.description === objectDataToFilter) {
+                objectIndex = index;
+                return object
+            }
+        });
+    console.log(objectIndex);
+    console.log(objectToEdit);
 }
 
 function finalizeTaskEdits(editInputs, targetObject, targetIndex) {
@@ -102,6 +139,7 @@ export {
     createNewProject,
     createNewTask,
     editTaskObject,
+    editProjectObject,
     deleteTaskObject,
     finalizeTaskEdits,
 }

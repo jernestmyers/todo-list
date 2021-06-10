@@ -18,7 +18,7 @@ function openModal(e) {
     }
 }
 
-function openEditModal(object, index, pageTitle) {
+function openEditTaskModal(object, index, pageTitle) {
     
     const modalToOpen = document.querySelector(`#editTaskModal`);
     const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
@@ -76,5 +76,5 @@ function closeEditModal(modalToClose) {
 export { 
     loadMainContent,
     openModal,
-    openEditModal,
+    openEditTaskModal,
 }
