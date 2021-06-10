@@ -1,5 +1,5 @@
 import { appendProjectToProjectList } from './displayNewItems.js'
-import { regenerateProjectTasks } from './index.js'
+// import { regenerateProjectTasks } from './index.js'
 import { openEditModal } from './pageLoad.js'
 
 const projectsCreated = [];
@@ -65,24 +65,25 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
 }
 
 function editTaskObject(title, projectAssociated, pageTitle) {
-    console.log(title);
-    console.log(projectAssociated);
-    console.log(pageTitle);
     let currentObjectArray = getObjectArrays();
     let objectIndex;
     const objectToEdit = currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
-            // console.log(index);
-            // console.log(object);
             objectIndex = index;
             return object
         }
     })
-    // console.log(objectToEdit);
-    // console.log(objectIndex);
-    // tasksCreated[objectIndex].title = `does this work?`;
-    openEditModal(objectToEdit, objectIndex);
-    regenerateProjectTasks(pageTitle);
+    openEditModal(objectToEdit, objectIndex, pageTitle);
+    // regenerateProjectTasks(pageTitle);
+}
+
+function finalizeTaskEdits(editInputs, targetObject, targetIndex) {
+    tasksCreated[targetIndex].title = editInputs[0].value;
+    tasksCreated[targetIndex].dateDue = editInputs[1].value;
+    tasksCreated[targetIndex].description = editInputs[2].value;
+    tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
+    tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
+    console.log(targetObject);
 }
 
 export {
@@ -90,5 +91,6 @@ export {
     createNewProject,
     createNewTask,
     editTaskObject,
+    finalizeTaskEdits,
 }
 

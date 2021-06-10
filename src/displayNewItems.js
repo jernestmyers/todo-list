@@ -22,17 +22,6 @@ function displayTasks(arrayOfTaskObjects, container) {
             const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
             console.log(`edit clicked`);
             editTaskObject(taskToEditTitle, taskToEditProjectAssociated, titleOfPageDisplayed);
-            // console.log(e.target.parentNode.firstChild.textContent);
-            // console.log(e.target.previousSibling.textContent);
-            // let currentObjectArray = getObjectArrays();
-            // console.log(currentObjectArray);
-            // const objectToEdit = currentObjectArray.tasks.filter( object => {
-            //     if (object.title === e.target.parentNode.firstChild.textContent && object.projectAssociated === e.target.previousSibling.textContent) {
-            //         console.log(object);
-            //         return object
-            //     }
-            // })
-            // console.log(objectToEdit);
         } else if (e.target.tagName === `BUTTON` && e.target.textContent === `delete`) {
             console.log(`delete clicked`);
         }

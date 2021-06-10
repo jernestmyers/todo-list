@@ -30,6 +30,7 @@ function projectSelector(e) {
 
 function regenerateProjectTasks(pageTitle) {
     currentObjectArray = getObjectArrays();
+    console.log(`is this running after edit?`);
     if (pageTitle === `overview`) {
         loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
     } else {
@@ -136,9 +137,8 @@ const createTaskAndProjectModule = (function() {
             formToReset[0].reset();
         }
     }
-
 })();
 
 export { 
-    regenerateProjectTasks
+    regenerateProjectTasks,
 }

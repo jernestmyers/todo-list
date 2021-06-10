@@ -1,4 +1,5 @@
-import { displayNewProject, displayTasksOverview } from './displayNewItems.js'
+import { regenerateProjectTasks } from './index.js';
+import { finalizeTaskEdits } from './taskCreation'
 
 function loadMainContent(container, functionToInvoke) {
     while (container.firstChild) {
@@ -17,33 +18,56 @@ function openModal(e) {
     }
 }
 
-function openEditModal(object, index) {
-    console.log(`open edit modal`);
-    console.log(object);
-    console.log(index);
+function openEditModal(object, index, pageTitle) {
+
     const modalToOpen = document.querySelector(`#editTaskModal`);
-    const formInputs = document.querySelectorAll(`.editTaskInputs`);
+    const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
     const statusOption = document.querySelector(`#existing-status`);
     const projectOption = document.querySelector(`#existing-project`);
 
-    // console.log(object[index].title);
-    // console.log(formInputs[0]);
-    formInputs[0].setAttribute(`value`, `${object[0].title}`);
-    formInputs[1].setAttribute(`value`, `${object[0].dateDue}`);
-    formInputs[2].setAttribute(`value`, `${object[0].description}`);
+    // pre-populate the edit form with existing data
+    editFormInputs[0].setAttribute(`value`, `${object[0].title}`);
+    editFormInputs[1].setAttribute(`value`, `${object[0].dateDue}`);
+    editFormInputs[2].setAttribute(`value`, `${object[0].description}`);
+    statusOption.setAttribute(`value`, `${object[0].priorityStatus}`);
     statusOption.textContent = `${object[0].priorityStatus} priority`;
-    
     if (object[0].projectAssociated === `default`) {
+        projectOption.setAttribute(`value`, `default`);
         projectOption.textContent = `overview (${object[0].projectAssociated})`;
     } else {
+        projectOption.setAttribute(`value`, `${object[0].projectAssociated}`);
         projectOption.textContent = object[0].projectAssociated;
     }
-    // formInputs[3].setAttribute(`option`, `${object[0].priorityStatus}`);
-    // formInputs[4].setAttribute(`value`, `${object[0].projectAssociated}`);
-    // console.log(formInputs);
-    // console.log(object[index]);
+
+    const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
+    confirmEdits.addEventListener(`click`, (e) => {
+        if (checkEditFormValidation(editFormInputs)) {
+            finalizeTaskEdits(editFormInputs, object, index);
+            e.preventDefault();
+            closeEditModal(modalToOpen, editFormInputs);
+            regenerateProjectTasks(pageTitle);
+        }
+    });
+    // close and reset model on submit || cancel
+
     modalToOpen.style.display = `block`;
 }
+
+function checkEditFormValidation(inputNodeList) {
+    let isValid = true;
+    inputNodeList.forEach( inputField => {
+        if (inputField.validity.valueMissing) {
+            isValid = false;
+        }
+    })
+    return isValid
+}
+
+function closeEditModal(modalToClose) {
+    const formToReset = document.querySelectorAll(`.formField`);
+    modalToClose.style.display = `none`;
+    formToReset[1].reset();
+;}
 
 export { 
     loadMainContent,
