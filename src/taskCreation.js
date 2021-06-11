@@ -121,7 +121,7 @@ function editProjectObject(objectTitle, objectDataToFilter) {
                 return object
             }
         });
-    openEditProjectModal(objectToEdit, objectIndex, objectTitle)
+    openEditProjectModal(objectToEdit, objectIndex, objectTitle, currentObjectArray)
 }
 
 function finalizeTaskEdits(editInputs, targetIndex) {
@@ -132,16 +132,17 @@ function finalizeTaskEdits(editInputs, targetIndex) {
     tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
 }
 
-function finalizeProjectEdits(editInputs, targetIndex, existingTitle) {
+function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTaskObjectArray) {
     projectsCreated[targetIndex].title = editInputs[0].value;
     projectsCreated[targetIndex].dateDue = editInputs[1].value;
     projectsCreated[targetIndex].description = editInputs[2].value;
     
-    regenerateProjectTasks(editInputs[0].value);
+    regenerateProjectTasks(editInputs[0].value); // may be positioned in the sequence of events
 
     if (editInputs[0].value !== existingTitle) {
         console.log(`updates needed`);
         updateProjecListAndProjectSelectors(editInputs[0].value, existingTitle);
+        updateTasksWithNewProjectTitle(existingTitle, existingTaskObjectArray);
     }
 }
 
@@ -180,6 +181,19 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
     projectButtonList.children[buttonListIndex].textContent = newTitle;
 }
+
+function updateTasksWithNewProjectTitle(oldProjectTitle, oldTaskObjectArray) {
+    console.log(oldProjectTitle);
+    console.log(oldTaskObjectArray);
+    const tasksToFilterArray = Array.from(oldTaskObjectArray.tasks);
+    tasksToFilterArray.filter( (task, index) => {
+        if (task.projectAssociated === oldProjectTitle) {
+            console.log(task);
+            console.log(index);
+        }
+    })
+}
+
 
 function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
     let indexToEdit = null;
