@@ -125,6 +125,7 @@ function editProjectObject(objectTitle, objectDataToFilter) {
 }
 
 function finalizeTaskEdits(editInputs, targetIndex) {
+
     tasksCreated[targetIndex].title = editInputs[0].value;
     tasksCreated[targetIndex].dateDue = editInputs[1].value;
     tasksCreated[targetIndex].description = editInputs[2].value;
@@ -133,16 +134,19 @@ function finalizeTaskEdits(editInputs, targetIndex) {
 }
 
 function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTaskObjectArray) {
+
+    const newProjectTitle = editInputs[0].value;
+
     projectsCreated[targetIndex].title = editInputs[0].value;
     projectsCreated[targetIndex].dateDue = editInputs[1].value;
     projectsCreated[targetIndex].description = editInputs[2].value;
     
     regenerateProjectTasks(editInputs[0].value); // may be positioned in the sequence of events
 
-    if (editInputs[0].value !== existingTitle) {
+    if (newProjectTitle !== existingTitle) {
         console.log(`updates needed`);
-        updateProjecListAndProjectSelectors(editInputs[0].value, existingTitle);
-        updateTasksWithNewProjectTitle(existingTitle, existingTaskObjectArray);
+        updateProjecListAndProjectSelectors(newProjectTitle, existingTitle);
+        updateTasksWithNewProjectTitle(newProjectTitle, existingTitle, existingTaskObjectArray);
     }
 }
 
@@ -182,12 +186,13 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     projectButtonList.children[buttonListIndex].textContent = newTitle;
 }
 
-function updateTasksWithNewProjectTitle(oldProjectTitle, oldTaskObjectArray) {
+function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObjectArray) {
     console.log(oldProjectTitle);
     console.log(oldTaskObjectArray);
     const tasksToFilterArray = Array.from(oldTaskObjectArray.tasks);
     tasksToFilterArray.filter( (task, index) => {
         if (task.projectAssociated === oldProjectTitle) {
+            tasksCreated[index].projectAssociated = newTitle;
             console.log(task);
             console.log(index);
         }
