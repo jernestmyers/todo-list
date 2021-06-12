@@ -49,8 +49,9 @@ function openEditTaskModal(object, index, pageTitle) {
         }
     });
     
-    const cancelEdits = document.querySelector(`#cancelTaskEdit`);
-    cancelEdits.addEventListener(`click`, (e) => {
+    const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
+    cancelTaskEdits.addEventListener(`click`, (e) => {
+        e.preventDefault();
         closeEditModal(editTaskModal);
     })
     
@@ -76,10 +77,11 @@ function openEditProjectModal(object, index, existingTitle, existingTaskObjectAr
         }
     });
     
-    // const cancelEdits = document.querySelector(`#cancelTaskEdit`);
-    // cancelEdits.addEventListener(`click`, (e) => {
-    //     closeEditModal(editTaskModal, editFormInputs);
-    // })
+    const cancelProjectEdits = document.querySelector(`#cancelProjectEdit`);
+    cancelProjectEdits.addEventListener(`click`, (e) => {
+        e.preventDefault();
+        closeEditModal(editProjectModal);
+    })
     
     editProjectModal.style.display = `block`;
 }

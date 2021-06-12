@@ -6,21 +6,21 @@ const projectsCreated = [];
 const tasksCreated = [
     {
         title: `refactor code`,
-        dateDue: `today`,
+        dateDue: `2021-06-20`,
         description: `this is a test`,
         priorityStatus: `high`,
         projectAssociated: `todo list`,
     },
     {
         title: `make progress`,
-        dateDue: `today`,
+        dateDue: `2021-06-12`,
         description: `this is a test`,
         priorityStatus: `high`,
         projectAssociated: `todo list`,
     },
     {
         title: `do more`,
-        dateDue: `today`,
+        dateDue: `2021-06-13`,
         description: `this is a test`,
         priorityStatus: `high`,
         projectAssociated: `default`,
