@@ -38,6 +38,7 @@ function displayTasks(arrayOfTaskObjects, container) {
         const taskEditButton = document.createElement(`button`);
         const taskDeleteButton = document.createElement(`button`);
         
+        newTaskContainer.classList.add(`task-container`);
         taskTitle.textContent = arrayOfTaskObjects[i].title;
         taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
         taskDescription.textContent = arrayOfTaskObjects[i].description;

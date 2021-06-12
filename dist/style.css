@@ -37,7 +37,28 @@ header {
 }
 
 #main-content {
+    display: flex;
     border: 1px solid yellow;
+}
+
+.project-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-tasks-container {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+    /* grid-template-rows: 1fr 1fr; */
+}
+
+.task-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
 }
 
 button {
@@ -50,18 +71,6 @@ button {
 #editProjectModal {
     display: none;
 }
-/* 
-#addProjectModal {
-    display: none;
-}
-
-#editTaskModal {
-    display: none;
-}
-
-#editProjectModal {
-    display: none;
-} */
 
 .modal {
     position: fixed;
