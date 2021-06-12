@@ -25,6 +25,9 @@ function displayTasks(arrayOfTaskObjects, container) {
             const taskToDeleteTitle = e.target.parentNode.firstChild.textContent;
             const taskToDeleteProjectAssociated = e.target.previousSibling.previousSibling.textContent;
             const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
+            console.log(taskToDeleteTitle)
+            console.log(taskToDeleteProjectAssociated)
+            console.log(titleOfPageDisplayed)
             deleteTaskObject(taskToDeleteTitle, taskToDeleteProjectAssociated, titleOfPageDisplayed);
         }
     });

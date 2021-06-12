@@ -78,11 +78,14 @@ function editTaskObject(title, projectAssociated, pageTitle) {
 
 function deleteTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
-    const objectToDeleteIndex = currentObjectArray.tasks.filter( (object, index) => {
+    console.log(currentObjectArray);
+    let objectToDeleteIndex = null;
+    currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
-            return index
+            objectToDeleteIndex = index;
         }
     })
+    console.log(objectToDeleteIndex);
     tasksCreated.splice(objectToDeleteIndex, 1);
     regenerateProjectTasks(pageTitle);
 }
