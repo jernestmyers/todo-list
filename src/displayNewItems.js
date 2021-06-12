@@ -80,18 +80,14 @@ function displayNewProject(newProjectObject) {
     projectDeleteButton.classList.add(`project-display-button`);
 
     projectEditButton.addEventListener(`click`, (e) => {
-        // if (e.target.tagName === `BUTTON` && e.target.textContent === `edit project`) {
             const projectToEditTitle = e.target.parentNode.firstChild.textContent;
             const projectToEditDescription = e.target.previousSibling.textContent;
             editProjectObject(projectToEditTitle, projectToEditDescription);
-        // }
     });
 
     projectDeleteButton.addEventListener(`click`, (e) => {
-        // if (e.target.tagName === `BUTTON` && e.target.textContent === `edit project`) {
             const projectToDeleteTitle = e.target.parentNode.firstChild.textContent;
             deleteProjectObject(projectToDeleteTitle);
-        // }
     });
 
     projectContainer.appendChild(projectTitle);

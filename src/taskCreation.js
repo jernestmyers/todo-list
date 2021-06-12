@@ -76,6 +76,15 @@ function editTaskObject(title, projectAssociated, pageTitle) {
     openEditTaskModal(objectToEdit, objectIndex, pageTitle);
 }
 
+function finalizeTaskEdits(editInputs, targetIndex) {
+
+    tasksCreated[targetIndex].title = editInputs[0].value;
+    tasksCreated[targetIndex].dateDue = editInputs[1].value;
+    tasksCreated[targetIndex].description = editInputs[2].value;
+    tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
+    tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
+}
+
 function deleteTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
     console.log(currentObjectArray);
@@ -90,35 +99,6 @@ function deleteTaskObject(title, projectAssociated, pageTitle) {
     regenerateProjectTasks(pageTitle);
 }
 
-function deleteProjectObject(projectTitle) {
-    console.log(`delete: ${projectTitle}`);
-    let currentObjectArray = getObjectArrays();
-    // console.log(currentObjectArray);
-    // console.log(getObjectArrays());
-    let projectObjectToDeleteIndex = null;
-    currentObjectArray.projects.filter( (object, index) => {
-        if (object.title === projectTitle) {
-            projectObjectToDeleteIndex = index;
-        }
-    })
-    
-    let taskIndexForDeletion = [];
-    currentObjectArray.tasks.filter( (object, index) => {
-        if (object.projectAssociated === projectTitle) {
-            taskIndexForDeletion.push(index);
-        }
-    })
-    console.log(projectObjectToDeleteIndex);
-    console.log(taskIndexForDeletion);
-    for (let i = taskIndexForDeletion.length; i >= 1; i--) {
-        // console.log(tasksCreated);
-        tasksCreated.splice(taskIndexForDeletion[i-1], 1);
-        console.log(tasksCreated);
-    }
-    // console.log(getObjectArrays());
-    regenerateProjectTasks(projectTitle);
-}
-
 function editProjectObject(objectTitle, objectDataToFilter) {
     let currentObjectArray = getObjectArrays();
     let objectIndex = null;
@@ -129,15 +109,6 @@ function editProjectObject(objectTitle, objectDataToFilter) {
             }
         });
     openEditProjectModal(objectToEdit, objectIndex, objectTitle, currentObjectArray)
-}
-
-function finalizeTaskEdits(editInputs, targetIndex) {
-
-    tasksCreated[targetIndex].title = editInputs[0].value;
-    tasksCreated[targetIndex].dateDue = editInputs[1].value;
-    tasksCreated[targetIndex].description = editInputs[2].value;
-    tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
-    tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
 }
 
 function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTaskObjectArray) {
@@ -156,6 +127,38 @@ function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTa
     regenerateProjectTasks(newProjectTitle);
 }
 
+function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObjectArray) {
+    const tasksToFilterArray = Array.from(oldTaskObjectArray.tasks);
+    tasksToFilterArray.filter( (task, index) => {
+        if (task.projectAssociated === oldProjectTitle) {
+            tasksCreated[index].projectAssociated = newTitle;
+        }
+    })
+}
+
+function deleteProjectObject(projectTitle) {
+    let currentObjectArray = getObjectArrays();
+    let projectObjectToDeleteIndex = null;
+    currentObjectArray.projects.filter( (object, index) => {
+        if (object.title === projectTitle) {
+            projectObjectToDeleteIndex = index;
+        }
+    })
+    
+    let taskIndexForDeletion = [];
+    currentObjectArray.tasks.filter( (object, index) => {
+        if (object.projectAssociated === projectTitle) {
+            taskIndexForDeletion.push(index);
+        }
+    })
+    for (let i = taskIndexForDeletion.length; i >= 1; i--) {
+        tasksCreated.splice(taskIndexForDeletion[i-1], 1);
+    }
+    projectsCreated.splice(projectObjectToDeleteIndex, 1);
+    updateProjecListAndProjectSelectors(null, projectTitle);
+    regenerateProjectTasks(`overview`);
+}
+
 function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     
     const projectSelectorNewTasks = document.querySelector(`#project-associated`);
@@ -169,22 +172,20 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
     const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
 
-    projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
-    projectSelectorNewTasks.options[newTaskSelectorIndex].textContent = newTitle;
-    projectSelectorEditTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
-    projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
-    projectButtonList.children[buttonListIndex].textContent = newTitle;
+    if (newTitle) {
+        projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
+        projectSelectorNewTasks.options[newTaskSelectorIndex].textContent = newTitle;
+        projectSelectorEditTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
+        projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
+        projectButtonList.children[buttonListIndex].textContent = newTitle;
+    } else if (!newTitle) {
+        projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
+        projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
+        projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);
+    }
 }
 
-function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObjectArray) {
-    const tasksToFilterArray = Array.from(oldTaskObjectArray.tasks);
-    tasksToFilterArray.filter( (task, index) => {
-        if (task.projectAssociated === oldProjectTitle) {
-            tasksCreated[index].projectAssociated = newTitle;
-        }
-    })
-}
-
+// filters for buttons and selectors to update/remove upon projectTitle edits or project deletions
 function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
     let indexToEdit = null;
     arrayToFilter.filter( (option, index) => {
