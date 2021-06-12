@@ -73,7 +73,6 @@ function openEditProjectModal(object, index, existingTitle, existingTaskObjectAr
             finalizeProjectEdits(editFormInputs, index, existingTitle, existingTaskObjectArray);
             e.preventDefault();
             closeEditModal(editProjectModal);
-            // regenerateProjectTasks(object[0].title);
         }
     });
     

@@ -64,22 +64,6 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
     tasksCreated.push(newTask);
 }
 
-// function filterObjects(objectTitle, objectDataToFilter, currentPageTitle, buttonID) {
-//     let currentObjectArray = getObjectArrays();
-//     let objectIndex = null;
-//     let objectToEdit = null;
-//     if (buttonID === `edit project`) {
-//         objectToEdit = currentObjectArray.projects.filter( (object, index) => {
-//             if (object.title === objectTitle && object.description === objectDataToFilter) {
-//                 objectIndex = index;
-//                 return object
-//             }
-//         })
-//         console.log(objectIndex);
-//         console.log(objectToEdit);
-//     }
-// }
-
 function editTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
     let objectIndex;
@@ -96,23 +80,14 @@ function deleteTaskObject(title, projectAssociated, pageTitle) {
     let currentObjectArray = getObjectArrays();
     const objectToDeleteIndex = currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
-            // objectToDeleteIndex = index;
             return index
         }
     })
-    // let objectToDeleteIndex;
-    // const objectToDelete = currentObjectArray.tasks.filter( (object, index) => {
-    //     if (object.title === title && object.projectAssociated === projectAssociated) {
-    //         objectToDeleteIndex = index;
-    //         return object
-    //     }
-    // })
     tasksCreated.splice(objectToDeleteIndex, 1);
     regenerateProjectTasks(pageTitle);
 }
 
 function editProjectObject(objectTitle, objectDataToFilter) {
-    // filterObjects(objectTitle, objectDescription, pageTitle, buttonID);
     let currentObjectArray = getObjectArrays();
     let objectIndex = null;
     const objectToEdit = currentObjectArray.projects.filter( (object, index) => {
@@ -141,13 +116,12 @@ function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTa
     projectsCreated[targetIndex].dateDue = editInputs[1].value;
     projectsCreated[targetIndex].description = editInputs[2].value;
     
-    regenerateProjectTasks(editInputs[0].value); // may be positioned in the sequence of events
-
     if (newProjectTitle !== existingTitle) {
-        console.log(`updates needed`);
         updateProjecListAndProjectSelectors(newProjectTitle, existingTitle);
         updateTasksWithNewProjectTitle(newProjectTitle, existingTitle, existingTaskObjectArray);
     }
+
+    regenerateProjectTasks(newProjectTitle);
 }
 
 function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
@@ -160,24 +134,8 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
     const selectorArrayForNewTask = Array.from(projectSelectorNewTasks.options)
     const projectButtonListArray = Array.from(projectButtonList.children)
 
-    console.log(projectButtonList.children);
-    console.log(projectButtonListArray);
-
-    // const testArray = Array.from(projectSelectorNewTasks.options);
-    // // console.log(testArray);
-    // let indexToEdit = null;
-    // testArray.filter( (option, index) => {
-    //     if (option.value === existingTitle) {
-    //         // console.log(index);
-    //         // return index
-    //         indexToEdit = index;
-    //     }
-    // })
-
-    // can use newTask index for editTask index as they SHOULD be the same
     const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
     const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
-    // console.log(buttonListIndex);
 
     projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
     projectSelectorNewTasks.options[newTaskSelectorIndex].textContent = newTitle;
@@ -187,18 +145,13 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
 }
 
 function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObjectArray) {
-    console.log(oldProjectTitle);
-    console.log(oldTaskObjectArray);
     const tasksToFilterArray = Array.from(oldTaskObjectArray.tasks);
     tasksToFilterArray.filter( (task, index) => {
         if (task.projectAssociated === oldProjectTitle) {
             tasksCreated[index].projectAssociated = newTitle;
-            console.log(task);
-            console.log(index);
         }
     })
 }
-
 
 function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
     let indexToEdit = null;
