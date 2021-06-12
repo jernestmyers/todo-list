@@ -90,6 +90,35 @@ function deleteTaskObject(title, projectAssociated, pageTitle) {
     regenerateProjectTasks(pageTitle);
 }
 
+function deleteProjectObject(projectTitle) {
+    console.log(`delete: ${projectTitle}`);
+    let currentObjectArray = getObjectArrays();
+    // console.log(currentObjectArray);
+    // console.log(getObjectArrays());
+    let projectObjectToDeleteIndex = null;
+    currentObjectArray.projects.filter( (object, index) => {
+        if (object.title === projectTitle) {
+            projectObjectToDeleteIndex = index;
+        }
+    })
+    
+    let taskIndexForDeletion = [];
+    currentObjectArray.tasks.filter( (object, index) => {
+        if (object.projectAssociated === projectTitle) {
+            taskIndexForDeletion.push(index);
+        }
+    })
+    console.log(projectObjectToDeleteIndex);
+    console.log(taskIndexForDeletion);
+    for (let i = taskIndexForDeletion.length; i >= 1; i--) {
+        // console.log(tasksCreated);
+        tasksCreated.splice(taskIndexForDeletion[i-1], 1);
+        console.log(tasksCreated);
+    }
+    // console.log(getObjectArrays());
+    regenerateProjectTasks(projectTitle);
+}
+
 function editProjectObject(objectTitle, objectDataToFilter) {
     let currentObjectArray = getObjectArrays();
     let objectIndex = null;
@@ -179,6 +208,7 @@ export {
     editTaskObject,
     editProjectObject,
     deleteTaskObject,
+    deleteProjectObject,
     finalizeTaskEdits,
     finalizeProjectEdits,
 }
