@@ -1,4 +1,5 @@
 import { editTaskObject, deleteTaskObject, editProjectObject, deleteProjectObject } from './taskCreation.js'
+import { openDeleteProjectModal } from './pageLoad.js'
 
 function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
@@ -87,7 +88,8 @@ function displayNewProject(newProjectObject) {
 
     projectDeleteButton.addEventListener(`click`, (e) => {
             const projectToDeleteTitle = e.target.parentNode.firstChild.textContent;
-            deleteProjectObject(projectToDeleteTitle);
+            openDeleteProjectModal(projectToDeleteTitle);
+            // deleteProjectObject(projectToDeleteTitle);
     });
 
     projectContainer.appendChild(projectTitle);
@@ -109,7 +111,8 @@ function appendProjectToProjectList(projectTitle) {
     const projectListHead = document.querySelector(`#project-list`);
     const newProjectTitle = document.createElement(`button`);
     newProjectTitle.textContent = projectTitle;
-
+    newProjectTitle.setAttribute(`id`, projectTitle);
+ 
     projectListHead.appendChild(newProjectTitle);
 }
 

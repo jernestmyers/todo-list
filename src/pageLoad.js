@@ -1,5 +1,5 @@
 import { regenerateProjectTasks } from './index.js';
-import { finalizeTaskEdits, finalizeProjectEdits } from './taskCreation'
+import { finalizeTaskEdits, finalizeProjectEdits, deleteProjectObject } from './taskCreation'
 
 function loadMainContent(container, functionToInvoke) {
     while (container.firstChild) {
@@ -44,7 +44,7 @@ function openEditTaskModal(object, index, pageTitle) {
         if (checkEditFormValidation(editFormInputs)) {
             finalizeTaskEdits(editFormInputs, index);
             e.preventDefault();
-            closeEditModal(editTaskModal);
+            closeEditOrDeleteModal(editTaskModal);
             regenerateProjectTasks(pageTitle);
         }
     });
@@ -52,7 +52,7 @@ function openEditTaskModal(object, index, pageTitle) {
     const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
     cancelTaskEdits.addEventListener(`click`, (e) => {
         e.preventDefault();
-        closeEditModal(editTaskModal);
+        closeEditOrDeleteModal(editTaskModal);
     })
     
     editTaskModal.style.display = `block`;
@@ -73,17 +73,39 @@ function openEditProjectModal(object, index, existingTitle, existingTaskObjectAr
         if (checkEditFormValidation(editFormInputs)) {
             finalizeProjectEdits(editFormInputs, index, existingTitle, existingTaskObjectArray);
             e.preventDefault();
-            closeEditModal(editProjectModal);
+            closeEditOrDeleteModal(editProjectModal);
         }
     });
     
     const cancelProjectEdits = document.querySelector(`#cancelProjectEdit`);
     cancelProjectEdits.addEventListener(`click`, (e) => {
         e.preventDefault();
-        closeEditModal(editProjectModal);
+        closeEditOrDeleteModal(editProjectModal);
     })
     
     editProjectModal.style.display = `block`;
+}
+
+function openDeleteProjectModal(projectTitle) {
+    console.log(projectTitle);
+    
+    const deleteProjectModal = document.querySelector(`#confirmDeleteProject`)
+    const deleteProjectMessage = document.querySelector(`#confirm-delete-text`);
+    deleteProjectMessage.textContent = `Are you sure you want to delete the project "${projectTitle}" and all of its tasks?`;
+    
+    const confirmDeleteButton = document.querySelector(`#confirmProjectDelete`);
+    const cancelDeleteButton = document.querySelector(`#cancelProjectDelete`);
+    
+    confirmDeleteButton.addEventListener( `click`, (e) => {
+        closeEditOrDeleteModal(deleteProjectModal);
+        deleteProjectObject(projectTitle);
+    })
+    
+    cancelDeleteButton.addEventListener( `click`, (e) => {
+        closeEditOrDeleteModal(deleteProjectModal);
+    })
+    
+    deleteProjectModal.style.display = `block`;
 }
 
 function checkEditFormValidation(inputNodeList) {
@@ -96,12 +118,12 @@ function checkEditFormValidation(inputNodeList) {
     return isValid
 }
 
-function closeEditModal(modalToClose) {
+function closeEditOrDeleteModal(modalToClose) {
     const formToReset = document.querySelectorAll(`.formField`);
     modalToClose.style.display = `none`;
     if (modalToClose === editTaskModal) {
         formToReset[1].reset();
-    } else {
+    } else if (modalToClose === editProjectModal) {
         formToReset[3].reset();
     }
 }
@@ -111,4 +133,5 @@ export {
     openModal,
     openEditTaskModal,
     openEditProjectModal,
+    openDeleteProjectModal,
 }

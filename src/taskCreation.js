@@ -120,7 +120,7 @@ function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTa
     projectsCreated[targetIndex].description = editInputs[2].value;
     
     if (newProjectTitle !== existingTitle) {
-        updateProjecListAndProjectSelectors(newProjectTitle, existingTitle);
+        updateProjectListAndProjectSelectors(newProjectTitle, existingTitle);
         updateTasksWithNewProjectTitle(newProjectTitle, existingTitle, existingTaskObjectArray);
     }
 
@@ -155,11 +155,11 @@ function deleteProjectObject(projectTitle) {
         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
     }
     projectsCreated.splice(projectObjectToDeleteIndex, 1);
-    updateProjecListAndProjectSelectors(null, projectTitle);
+    updateProjectListAndProjectSelectors(null, projectTitle);
     regenerateProjectTasks(`overview`);
 }
 
-function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
+function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
     
     const projectSelectorNewTasks = document.querySelector(`#project-associated`);
     const projectSelectorEditTasks = document.querySelector(`#edit-project-associated`);
@@ -179,9 +179,12 @@ function updateProjecListAndProjectSelectors(newTitle, existingTitle) {
         projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
         projectButtonList.children[buttonListIndex].textContent = newTitle;
     } else if (!newTitle) {
-        projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
-        projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
-        projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);
+        // projectSelectorNewTasks.options[newTaskSelectorIndex].remove();
+        // projectSelectorEditTasks.options[newTaskSelectorIndex].remove();
+        // projectButtonList.children[buttonListIndex].remove();
+        // projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
+        // projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
+        // projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);
     }
 }
 
