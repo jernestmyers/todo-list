@@ -70,7 +70,8 @@ button {
 #addTaskModal,
 #addProjectModal,
 #editTaskModal,
-#editProjectModal {
+#editProjectModal,
+#confirmDeleteProject {
     display: none;
 }
 
