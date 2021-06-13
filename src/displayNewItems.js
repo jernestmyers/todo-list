@@ -89,7 +89,6 @@ function displayNewProject(newProjectObject) {
     projectDeleteButton.addEventListener(`click`, (e) => {
             const projectToDeleteTitle = e.target.parentNode.firstChild.textContent;
             openDeleteProjectModal(projectToDeleteTitle);
-            // deleteProjectObject(projectToDeleteTitle);
     });
 
     projectContainer.appendChild(projectTitle);

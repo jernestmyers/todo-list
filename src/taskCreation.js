@@ -136,14 +136,35 @@ function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObject
     })
 }
 
+// function deleteProjectObject(projectTitle) {
+//     const currentObjectArray = getObjectArrays();
+//     let projectObjectToDeleteIndex = null;
+//     currentObjectArray.projects.filter( (object, index) => {
+//         if (object.title === projectTitle) {
+//             projectObjectToDeleteIndex = index;
+//         }
+//     })
+    
+//     let taskIndexForDeletion = [];
+//     currentObjectArray.tasks.filter( (object, index) => {
+//         if (object.projectAssociated === projectTitle) {
+//             taskIndexForDeletion.push(index);
+//         }
+//     })
+//     for (let i = taskIndexForDeletion.length; i >= 1; i--) {
+//         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
+//     }
+//     console.log(currentObjectArray);
+//     console.log(`indexToDelete: ${projectObjectToDeleteIndex}`);
+//     projectsCreated.splice(projectObjectToDeleteIndex, 1);
+//     updateProjectListAndProjectSelectors(null, projectTitle);
+//     regenerateProjectTasks(`overview`);
+// }
+
 function deleteProjectObject(projectTitle) {
-    let currentObjectArray = getObjectArrays();
-    let projectObjectToDeleteIndex = null;
-    currentObjectArray.projects.filter( (object, index) => {
-        if (object.title === projectTitle) {
-            projectObjectToDeleteIndex = index;
-        }
-    })
+    const currentObjectArray = getObjectArrays();
+    // let projectObjectToDeleteIndex = null;
+    console.log(currentObjectArray);
     
     let taskIndexForDeletion = [];
     currentObjectArray.tasks.filter( (object, index) => {
@@ -154,7 +175,16 @@ function deleteProjectObject(projectTitle) {
     for (let i = taskIndexForDeletion.length; i >= 1; i--) {
         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
     }
-    projectsCreated.splice(projectObjectToDeleteIndex, 1);
+
+    currentObjectArray.projects.filter( (object, index) => {
+        if (object.title === projectTitle) {
+            // projectObjectToDeleteIndex = index;
+            projectsCreated.splice(index, 1);
+        }
+    })
+    console.log(currentObjectArray);
+
+    // console.log(`indexToDelete: ${projectObjectToDeleteIndex}`);
     updateProjectListAndProjectSelectors(null, projectTitle);
     regenerateProjectTasks(`overview`);
 }
@@ -179,9 +209,9 @@ function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
         projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
         projectButtonList.children[buttonListIndex].textContent = newTitle;
     } else if (!newTitle) {
-        // projectSelectorNewTasks.options[newTaskSelectorIndex].remove();
-        // projectSelectorEditTasks.options[newTaskSelectorIndex].remove();
-        // projectButtonList.children[buttonListIndex].remove();
+        projectSelectorNewTasks.options[newTaskSelectorIndex].remove();
+        projectSelectorEditTasks.options[newTaskSelectorIndex].remove();
+        projectButtonList.children[buttonListIndex].remove();
         // projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
         // projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
         // projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);

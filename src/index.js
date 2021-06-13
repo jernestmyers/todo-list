@@ -43,6 +43,7 @@ function regenerateProjectTasks(pageTitle) {
                 return object
             }
         })
+        console.log(projectDisplayedObject[0]);
         loadMainContent(mainContainer, displayExistingProject(projectDisplayedObject[0], filterTasks));
     }
 }
