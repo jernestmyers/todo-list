@@ -197,10 +197,13 @@ function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
     
     // newTask selector and editTask selector will have the same index
     const selectorArrayForNewTask = Array.from(projectSelectorNewTasks.options)
+    const selectorArrayForEditTask = Array.from(projectSelectorEditTasks.options)
     const projectButtonListArray = Array.from(projectButtonList.children)
 
     const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
     const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
+    console.log(newTaskSelectorIndex);
+    console.log(buttonListIndex);
 
     if (newTitle) {
         projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
@@ -209,9 +212,22 @@ function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
         projectSelectorEditTasks.options[newTaskSelectorIndex].textContent = newTitle;
         projectButtonList.children[buttonListIndex].textContent = newTitle;
     } else if (!newTitle) {
-        projectSelectorNewTasks.options[newTaskSelectorIndex].remove();
-        projectSelectorEditTasks.options[newTaskSelectorIndex].remove();
-        projectButtonList.children[buttonListIndex].remove();
+        selectorArrayForNewTask.filter( (option, index) => {
+            if (option.value === existingTitle) {
+                projectSelectorNewTasks.options[index].remove();
+            }
+        })
+        selectorArrayForEditTask.filter( (option, index) => {
+            if (option.value === existingTitle) {
+                projectSelectorEditTasks.options[index].remove();
+            }
+        })
+        projectButtonListArray.filter( (option, index) => {
+            if (option.textContent === existingTitle) {
+                projectButtonList.children[index].remove();
+            }
+        })
+        // projectSelectorEditTasks.options[index].remove();
         // projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
         // projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
         // projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);
