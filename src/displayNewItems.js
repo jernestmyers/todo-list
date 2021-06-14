@@ -72,18 +72,20 @@ function displayNewProject(newProjectObject) {
     const projectDeleteButton = document.createElement(`button`);
     
     projectContainer.classList.add(`project-container`);
-    projectTitle.textContent = newProjectObject.title;
-    projectDueDate.textContent = newProjectObject.dateDue;
-    projectDescription.textContent = newProjectObject.description;
+    projectTitle.textContent = newProjectObject.projectTitle;
+    projectDueDate.textContent = newProjectObject.projectDateDue;
+    projectDescription.textContent = newProjectObject.projectDescription;
     projectEditButton.textContent = `edit project`;
     projectDeleteButton.textContent = `delete project`;
     projectEditButton.classList.add(`project-display-button`);
+    projectEditButton.setAttribute(`data-index-number`, `${newProjectObject.projectIndex}`)
     projectDeleteButton.classList.add(`project-display-button`);
+    projectDeleteButton.setAttribute(`data-index-number`, `${newProjectObject.projectIndex}`)
 
     projectEditButton.addEventListener(`click`, (e) => {
             const projectToEditTitle = e.target.parentNode.firstChild.textContent;
-            const projectToEditDescription = e.target.previousSibling.textContent;
-            editProjectObject(projectToEditTitle, projectToEditDescription);
+            const projectToEditIndex = e.target.dataset.indexNumber;
+            editProjectObject(projectToEditTitle, projectToEditIndex);
     });
 
     projectDeleteButton.addEventListener(`click`, (e) => {

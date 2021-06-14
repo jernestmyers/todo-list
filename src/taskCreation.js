@@ -36,10 +36,11 @@ function getObjectArrays() {
 }
 
 class Project {
-    constructor(title, dateDue, description) {
-        this.title = title;
-        this.dateDue = dateDue;
-        this.description = description;
+    constructor(projectTitle, projectDateDue, projectDescription, projectIndex) {
+        this.projectTitle = projectTitle;
+        this.projectDateDue = projectDateDue;
+        this.projectDescription = projectDescription;
+        this.projectIndex = projectIndex;
     }
 }
 
@@ -53,10 +54,11 @@ class Task {
     }
 }
 
-function createNewProject(titleValue, dateDueValue, descriptionValue) {
-    const newProject = new Project(titleValue, dateDueValue, descriptionValue);
+function createNewProject(titleValue, dateDueValue, descriptionValue, projectIndexValue) {
+    const newProject = new Project(titleValue, dateDueValue, descriptionValue, projectIndexValue);
     projectsCreated.push(newProject);
-    appendProjectToProjectList(newProject.title);
+    appendProjectToProjectList(newProject.projectTitle);
+    console.log(newProject);
 }
 
 function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated) {
@@ -65,7 +67,7 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
 }
 
 function editTaskObject(title, projectAssociated, pageTitle) {
-    let currentObjectArray = getObjectArrays();
+    const currentObjectArray = getObjectArrays();
     let objectIndex;
     const objectToEdit = currentObjectArray.tasks.filter( (object, index) => {
         if (object.title === title && object.projectAssociated === projectAssociated) {
@@ -77,7 +79,6 @@ function editTaskObject(title, projectAssociated, pageTitle) {
 }
 
 function finalizeTaskEdits(editInputs, targetIndex) {
-
     tasksCreated[targetIndex].title = editInputs[0].value;
     tasksCreated[targetIndex].dateDue = editInputs[1].value;
     tasksCreated[targetIndex].description = editInputs[2].value;
@@ -86,7 +87,7 @@ function finalizeTaskEdits(editInputs, targetIndex) {
 }
 
 function deleteTaskObject(title, projectAssociated, pageTitle) {
-    let currentObjectArray = getObjectArrays();
+    const currentObjectArray = getObjectArrays();
     console.log(currentObjectArray);
     let objectToDeleteIndex = null;
     currentObjectArray.tasks.filter( (object, index) => {
@@ -99,25 +100,20 @@ function deleteTaskObject(title, projectAssociated, pageTitle) {
     regenerateProjectTasks(pageTitle);
 }
 
-function editProjectObject(objectTitle, objectDataToFilter) {
-    let currentObjectArray = getObjectArrays();
-    let objectIndex = null;
-    const objectToEdit = currentObjectArray.projects.filter( (object, index) => {
-            if (object.title === objectTitle && object.description === objectDataToFilter) {
-                objectIndex = index;
-                return object
-            }
-        });
-    openEditProjectModal(objectToEdit, objectIndex, objectTitle, currentObjectArray)
+function editProjectObject(objectTitle, objectArrayIndex) {
+    console.log(objectArrayIndex)
+    const currentObjectArray = getObjectArrays();
+    const objectToEdit = projectsCreated[objectArrayIndex];
+    openEditProjectModal(objectToEdit, objectArrayIndex, objectTitle, currentObjectArray)
 }
 
 function finalizeProjectEdits(editInputs, targetIndex, existingTitle, existingTaskObjectArray) {
 
     const newProjectTitle = editInputs[0].value;
 
-    projectsCreated[targetIndex].title = editInputs[0].value;
-    projectsCreated[targetIndex].dateDue = editInputs[1].value;
-    projectsCreated[targetIndex].description = editInputs[2].value;
+    projectsCreated[targetIndex].projectTitle = editInputs[0].value;
+    projectsCreated[targetIndex].projectDateDue = editInputs[1].value;
+    projectsCreated[targetIndex].projectDescription = editInputs[2].value;
     
     if (newProjectTitle !== existingTitle) {
         updateProjectListAndProjectSelectors(newProjectTitle, existingTitle);
@@ -136,39 +132,13 @@ function updateTasksWithNewProjectTitle(newTitle, oldProjectTitle, oldTaskObject
     })
 }
 
-// function deleteProjectObject(projectTitle) {
-//     const currentObjectArray = getObjectArrays();
-//     let projectObjectToDeleteIndex = null;
-//     currentObjectArray.projects.filter( (object, index) => {
-//         if (object.title === projectTitle) {
-//             projectObjectToDeleteIndex = index;
-//         }
-//     })
-    
-//     let taskIndexForDeletion = [];
-//     currentObjectArray.tasks.filter( (object, index) => {
-//         if (object.projectAssociated === projectTitle) {
-//             taskIndexForDeletion.push(index);
-//         }
-//     })
-//     for (let i = taskIndexForDeletion.length; i >= 1; i--) {
-//         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
-//     }
-//     console.log(currentObjectArray);
-//     console.log(`indexToDelete: ${projectObjectToDeleteIndex}`);
-//     projectsCreated.splice(projectObjectToDeleteIndex, 1);
-//     updateProjectListAndProjectSelectors(null, projectTitle);
-//     regenerateProjectTasks(`overview`);
-// }
-
-function deleteProjectObject(projectTitle) {
+function deleteProjectObject(projectToDeleteTitle) {
     const currentObjectArray = getObjectArrays();
-    // let projectObjectToDeleteIndex = null;
     console.log(currentObjectArray);
     
     let taskIndexForDeletion = [];
     currentObjectArray.tasks.filter( (object, index) => {
-        if (object.projectAssociated === projectTitle) {
+        if (object.projectAssociated === projectToDeleteTitle) {
             taskIndexForDeletion.push(index);
         }
     })
@@ -177,15 +147,13 @@ function deleteProjectObject(projectTitle) {
     }
 
     currentObjectArray.projects.filter( (object, index) => {
-        if (object.title === projectTitle) {
-            // projectObjectToDeleteIndex = index;
+        if (object.projectTitle === projectToDeleteTitle) {
             projectsCreated.splice(index, 1);
         }
     })
     console.log(currentObjectArray);
 
-    // console.log(`indexToDelete: ${projectObjectToDeleteIndex}`);
-    updateProjectListAndProjectSelectors(null, projectTitle);
+    updateProjectListAndProjectSelectors(null, projectToDeleteTitle);
     regenerateProjectTasks(`overview`);
 }
 
@@ -200,10 +168,8 @@ function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
     const selectorArrayForEditTask = Array.from(projectSelectorEditTasks.options)
     const projectButtonListArray = Array.from(projectButtonList.children)
 
-    const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
-    const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
-    console.log(newTaskSelectorIndex);
-    console.log(buttonListIndex);
+    // const newTaskSelectorIndex = filterForUpdatesNeeded(selectorArrayForNewTask, existingTitle, `selector`);
+    // const buttonListIndex = filterForUpdatesNeeded(projectButtonListArray, existingTitle, `button`);
 
     if (newTitle) {
         projectSelectorNewTasks.options[newTaskSelectorIndex].setAttribute(`value`, `${newTitle}`);
@@ -227,29 +193,25 @@ function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
                 projectButtonList.children[index].remove();
             }
         })
-        // projectSelectorEditTasks.options[index].remove();
-        // projectSelectorNewTasks.removeChild(projectSelectorNewTasks.options[newTaskSelectorIndex]);
-        // projectSelectorEditTasks.removeChild(projectSelectorEditTasks.options[newTaskSelectorIndex]);
-        // projectButtonList.removeChild(projectButtonList.children[buttonListIndex]);
     }
 }
 
 // filters for buttons and selectors to update/remove upon projectTitle edits or project deletions
-function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
-    let indexToEdit = null;
-    arrayToFilter.filter( (option, index) => {
-        if (elementType === `selector`) {
-            if (option.value === existingTitle) {
-                indexToEdit = index;
-            }
-        } else if (elementType === `button`) {
-            if (option.textContent === existingTitle) {
-                indexToEdit = index;
-            }
-        }
-    })
-    return indexToEdit
-}
+// function filterForUpdatesNeeded(arrayToFilter, existingTitle, elementType) {
+//     let indexToEdit = null;
+//     arrayToFilter.filter( (option, index) => {
+//         if (elementType === `selector`) {
+//             if (option.value === existingTitle) {
+//                 indexToEdit = index;
+//             }
+//         } else if (elementType === `button`) {
+//             if (option.textContent === existingTitle) {
+//                 indexToEdit = index;
+//             }
+//         }
+//     })
+//     return indexToEdit
+// }
 
 export {
     getObjectArrays,

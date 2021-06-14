@@ -29,12 +29,12 @@ function projectSelector(e) {
 }
 
 function regenerateProjectTasks(pageTitle) {
-    currentObjectArray = getObjectArrays();
+    const currentObjectArray = getObjectArrays();
     if (pageTitle === `overview`) {
         loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
     } else {
         const projectDisplayedObject = currentObjectArray.projects.filter( object => {
-            if (object.title === pageTitle) {
+            if (object.projectTitle === pageTitle) {
                 return object;
             }
         })
@@ -65,9 +65,9 @@ const createTaskAndProjectModule = (function() {
 
     function instantiateNewProject() {
         const projectInputArray = Array.from(projectUserInput);
-        createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
-        currentObjectArray = getObjectArrays();
-        let projectIndex = currentObjectArray.projects.length - 1;
+        const currentObjectArray = getObjectArrays();
+        const projectIndex = currentObjectArray.projects.length;
+        createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value, projectIndex);
         loadMainContent(mainContainer, displayNewProject(currentObjectArray.projects[projectIndex]));
         appendNewProjectToSelector(projectInputArray[0].value);
         attachDataToProjectButton(projectIndex);
@@ -98,8 +98,8 @@ const createTaskAndProjectModule = (function() {
         const taskInputArray = Array.from(taskUserInput);
         const currentPageDisplayed = mainContainer.firstChild.firstChild.textContent;
         createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value);
-        currentObjectArray = getObjectArrays();
-        let newTaskIndex = currentObjectArray.tasks.length - 1;
+        const currentObjectArray = getObjectArrays();
+        const newTaskIndex = currentObjectArray.tasks.length - 1;
         if (currentPageDisplayed === `overview`) {
             loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
         } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {

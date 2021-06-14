@@ -64,9 +64,9 @@ function openEditProjectModal(object, index, existingTitle, existingTaskObjectAr
     const editFormInputs = document.querySelectorAll(`.editProjectInputs`);
     
     // pre-populate the edit form with existing data
-    editFormInputs[0].setAttribute(`value`, `${object[0].title}`);
-    editFormInputs[1].setAttribute(`value`, `${object[0].dateDue}`);
-    editFormInputs[2].setAttribute(`value`, `${object[0].description}`);
+    editFormInputs[0].setAttribute(`value`, `${object.projectTitle}`);
+    editFormInputs[1].setAttribute(`value`, `${object.projectDateDue}`);
+    editFormInputs[2].setAttribute(`value`, `${object.projectDescription}`);
     
     const confirmEdits = document.querySelector(`#editProjectSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
