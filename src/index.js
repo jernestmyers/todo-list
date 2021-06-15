@@ -29,6 +29,7 @@ function projectSelector(e) {
 }
 
 function regenerateProjectTasks(pageTitle) {
+    console.log(`regenerateTasks`);
     const currentObjectArray = getObjectArrays();
     if (pageTitle === `overview`) {
         loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));

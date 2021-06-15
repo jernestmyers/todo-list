@@ -75,10 +75,12 @@ function editTaskObject(title, projectAssociated, pageTitle) {
             return object
         }
     })
+    console.log(`editTask`);
     openEditTaskModal(objectToEdit, objectIndex, pageTitle);
 }
 
 function finalizeTaskEdits(editInputs, targetIndex) {
+    console.log(`finalizeTask`);
     tasksCreated[targetIndex].title = editInputs[0].value;
     tasksCreated[targetIndex].dateDue = editInputs[1].value;
     tasksCreated[targetIndex].description = editInputs[2].value;

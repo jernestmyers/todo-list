@@ -39,14 +39,16 @@ function openEditTaskModal(object, index, pageTitle) {
         projectOption.textContent = object[0].projectAssociated;
     }
     
+    console.log(`openEdit modal`);
     const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
         if (checkEditFormValidation(editFormInputs)) {
+            console.log(`in the if statement eventListener`)
             finalizeTaskEdits(editFormInputs, index);
-            e.preventDefault();
             closeEditOrDeleteModal(editTaskModal);
             regenerateProjectTasks(pageTitle);
         }
+        e.preventDefault();
     });
     
     const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
@@ -109,6 +111,7 @@ function openDeleteProjectModal(projectTitle) {
 }
 
 function checkEditFormValidation(inputNodeList) {
+    console.log(`check form validation`)
     let isValid = true;
     inputNodeList.forEach( inputField => {
         if (inputField.validity.valueMissing) {
