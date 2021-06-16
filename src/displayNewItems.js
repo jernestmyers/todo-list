@@ -9,16 +9,23 @@
 
 const mainContainer = document.querySelector(`#main-content`);
 
-function loadMainContent(projectsArray, tasksArray, currentPageDisplayed) {
+function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay) {
+    console.log(pageToDisplay);
     console.log(`loadMain counter`);
     while (mainContainer.firstChild) {
         mainContainer.removeChild(mainContainer.firstChild)
     }
-    if (currentPageDisplayed === `overview`) {
-    const containerToDisplay = displayTasksOverview(tasksArray);
-    // container.appendChild(containerToDisplay);
-    mainContainer.appendChild(containerToDisplay);
+    if (pageToDisplay === `overview`) {
+        const containerToDisplay = displayTasksOverview(tasksArray);
+        mainContainer.appendChild(containerToDisplay);
+    } else if (pageToDisplay === `new project`) {
+        const containerToDisplay = displayProject(projectToLoad)
+        mainContainer.appendChild(containerToDisplay);
+    } else {
+        const containerToDisplay = displayExistingProject(projectToLoad, tasksArray)
+        mainContainer.appendChild(containerToDisplay);
     }
+    projectButtonsAndSelectorsHandler(projectsArray)
 }
 
 function regenerateProjectTasks(pageTitle) {
@@ -80,6 +87,7 @@ function displayTasks(arrayOfTaskObjects, container) {
         const taskDeleteButton = document.createElement(`button`);
         
         newTaskContainer.classList.add(`task-container`);
+        newTaskContainer.setAttribute(`data-index-number`, `${arrayOfTaskObjects[i].taskIndex}`);
         taskTitle.textContent = arrayOfTaskObjects[i].taskTitle;
         taskDueDate.textContent = arrayOfTaskObjects[i].taskDateDue;
         taskDescription.textContent = arrayOfTaskObjects[i].taskDescription;
@@ -87,10 +95,8 @@ function displayTasks(arrayOfTaskObjects, container) {
         taskProjectAssociated.textContent = arrayOfTaskObjects[i].taskProjectAssociated;
         taskEditButton.textContent = `edit`;
         taskEditButton.classList.add(`edit-task-btn`);
-        taskEditButton.setAttribute(`data-index-number`, `${arrayOfTaskObjects[i].taskIndex}`);
         taskDeleteButton.textContent = `delete`;
         taskDeleteButton.classList.add(`delete-task-btn`);
-        taskDeleteButton.setAttribute(`data-index-number`, `${arrayOfTaskObjects[i].taskIndex}`);
 
         newTaskContainer.appendChild(taskTitle);
         newTaskContainer.appendChild(taskDueDate);
@@ -107,7 +113,7 @@ function displayTasks(arrayOfTaskObjects, container) {
     return container
 }
 
-function displayNewProject(newProjectObject) {
+function displayProject(projectObject) {
     const projectContainer = document.createElement(`div`);
     const projectTitle = document.createElement(`h2`);
     const projectDueDate = document.createElement(`p`);
@@ -116,24 +122,14 @@ function displayNewProject(newProjectObject) {
     const projectDeleteButton = document.createElement(`button`);
     
     projectContainer.classList.add(`project-container`);
-    projectTitle.textContent = newProjectObject.projectTitle;
-    projectDueDate.textContent = newProjectObject.projectDateDue;
-    projectDescription.textContent = newProjectObject.projectDescription;
+    projectContainer.setAttribute(`data-index-number`, `${projectObject.projectIndex}`);
+    projectTitle.textContent = projectObject.projectTitle;
+    projectDueDate.textContent = projectObject.projectDateDue;
+    projectDescription.textContent = projectObject.projectDescription;
     projectEditButton.textContent = `edit project`;
     projectDeleteButton.textContent = `delete project`;
-    projectEditButton.classList.add(`project-display-button`);
-    projectDeleteButton.classList.add(`project-display-button`);
-
-    projectEditButton.addEventListener(`click`, (e) => {
-            const projectToEditTitle = e.target.parentNode.firstChild.textContent;
-            const projectToEditDescription = e.target.previousSibling.textContent;
-            editProjectObject(projectToEditTitle, projectToEditDescription);
-    });
-
-    projectDeleteButton.addEventListener(`click`, (e) => {
-            const projectToDeleteTitle = e.target.parentNode.firstChild.textContent;
-            openDeleteProjectModal(projectToDeleteTitle);
-    });
+    projectEditButton.setAttribute(`id`, `edit-project-btn`);
+    projectDeleteButton.setAttribute(`id`, `delete-project-btn`);
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectDueDate);
@@ -144,21 +140,71 @@ function displayNewProject(newProjectObject) {
     return projectContainer
 }
 
-function displayExistingProject(projectObject, taskObject) {
-    const projectContainerDisplayed = displayNewProject(projectObject);
-    const projectTasks = displayTasks(taskObject, projectContainerDisplayed);
+function displayExistingProject(projectToDisplayObject, projectTasksArray) {
+    const projectContainerDisplayed = displayProject(projectToDisplayObject);
+    const projectTasks = displayTasks(projectTasksArray, projectContainerDisplayed);
     return projectTasks
 }
 
-function appendProjectToProjectList(projectTitle) {
+// function projectButtonsAndSelectorsHandler(projectTitle, projectIndex) {
+function projectButtonsAndSelectorsHandler(projectsCreatedArray) {
     const projectListHead = document.querySelector(`#project-list`);
-    const newProjectTitle = document.createElement(`button`);
-    newProjectTitle.textContent = projectTitle;
-    newProjectTitle.setAttribute(`id`, projectTitle);
- 
-    projectListHead.appendChild(newProjectTitle);
+    const addTaskProjectSelector = document.querySelector(`#project-associated`);
+    const editTaskProjectSelector = document.querySelector(`#edit-project-associated`);
+    const projectsArray = projectsCreatedArray;
+
+    function removeExistingElements(projectList, addSelector, editSelector) {
+        const arrayOfContainers = [projectList, addSelector, editSelector];
+
+        arrayOfContainers.forEach( (container) => {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild)
+            }
+        })
+    }
+
+    function appendProjectButtonsToProjectList() {
+
+        projectsArray.forEach( (projectObject) => {
+            const newProjectButton = document.createElement(`button`);
+            newProjectButton.textContent = projectObject.projectTitle;
+            newProjectButton.setAttribute(`id`, projectObject.projectTitle);
+            newProjectButton.setAttribute(`data-index-number`, projectObject.projectIndex);
+            
+            projectListHead.appendChild(newProjectButton);
+        })
+    }
+
+    function appendProjectsToSelectors() {
+        const defaultProjectForAddTaskSelector = document.createElement(`option`);
+        defaultProjectForAddTaskSelector.setAttribute(`value`, `default`);
+        defaultProjectForAddTaskSelector.textContent = `overview (default)`;
+        addTaskProjectSelector.appendChild(defaultProjectForAddTaskSelector);
+        
+        const defaultProjectForEditTaskSelector = document.createElement(`option`);
+        defaultProjectForEditTaskSelector.setAttribute(`value`, `default`);
+        defaultProjectForEditTaskSelector.textContent = `overview (default)`;
+        editTaskProjectSelector.appendChild(defaultProjectForEditTaskSelector);
+        
+        projectsArray.forEach( (projectObject) => {
+            const projectForAddTaskSelector = document.createElement(`option`);
+            projectForAddTaskSelector.setAttribute(`value`, projectObject.projectTitle);
+            projectForAddTaskSelector.textContent = projectObject.projectTitle;
+            
+            const projectForEditTaskSelector = document.createElement(`option`);
+            projectForEditTaskSelector.setAttribute(`value`, projectObject.projectTitle);
+            projectForEditTaskSelector.textContent = projectObject.projectTitle;
+        
+            addTaskProjectSelector.appendChild(projectForAddTaskSelector);
+            editTaskProjectSelector.appendChild(projectForEditTaskSelector);
+        })
+    }
+    removeExistingElements(projectListHead, addTaskProjectSelector, editTaskProjectSelector);
+    appendProjectButtonsToProjectList();
+    appendProjectsToSelectors();
 }
 
 export {
     loadMainContent,
+    // projectButtonsAndSelectorsHandler,
 }

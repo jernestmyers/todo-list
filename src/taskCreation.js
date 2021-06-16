@@ -1,6 +1,19 @@
-import { loadMainContent } from './displayNewItems.js'
+import { loadMainContent, projectButtonsAndSelectorsHandler } from './displayNewItems.js'
 
-const projectsCreated = [];
+const projectsCreated = [
+    {
+        projectTitle: `todo list`,
+        projectDateDue: `2021-06-20`,
+        projectDescription: `this is a project for the odin project`,
+        projectIndex: 0,
+    },
+    {
+        projectTitle: `keep grinding`,
+        projectDateDue: `2021-06-20`,
+        projectDescription: `this is a test project for my buggy todo list app`,
+        projectIndex: 1,
+    },
+];
 const tasksCreated = [
     {
         taskTitle: `refactor code`,
@@ -56,46 +69,59 @@ class Task {
     }
 }
 
-function createNewProject(projectTitleValue, projectDateDueValue, projectDescriptionValue, projectIndexValue) {
-    const newProject = new Project(projectTitleValue, projectDateDueValue, projectDescriptionValue, projectIndexValue);
-    projectsCreated.push(newProject);
-    appendProjectToProjectList(newProject.title);
-}
-
-function createNewTask(taskTitleValue, taskDateDueValue, taskDescriptionValue, taskPriorityStatusValue, taskProjectAssociatedValue, taskIndexValue) {
-    const newTask = new Task(taskTitleValue, taskDateDueValue, taskDescriptionValue, taskPriorityStatusValue, taskProjectAssociatedValue, taskIndexValue);
-    tasksCreated.push(newTask);
-    console.log(tasksCreated);
-    loadMainContent(projectsCreated, tasksCreated, `overview`);
-}
-
-function instantiateNewTask(newTaskModalInputs) {
-    const taskInputArray = Array.from(newTaskModalInputs);
-    const newTaskTitle = taskInputArray[0].value;
-    const newTaskDateDue = taskInputArray[1].value;
-    const newTaskDescription = taskInputArray[2].value;
-    const newTaskPriorityStatus = taskInputArray[3].value;
-    const newTaskProjectAssocaited = taskInputArray[4].value;
-    // const currentPageDisplayed = mainContainer.firstChild.firstChild.textContent;
+function instantiateNewTask(newTaskModalInputs, pageToRefresh) {
+    
+    const newTaskInputArray = Array.from(newTaskModalInputs);
+    const newTaskTitle = newTaskInputArray[0].value;
+    const newTaskDateDue = newTaskInputArray[1].value;
+    const newTaskDescription = newTaskInputArray[2].value;
+    const newTaskPriorityStatus = newTaskInputArray[3].value;
+    const newTaskProjectAssociated = newTaskInputArray[4].value;
     const newTaskIndex = tasksCreated.length;
-    createNewTask(newTaskTitle, newTaskDateDue, newTaskDescription, newTaskPriorityStatus, newTaskProjectAssocaited, newTaskIndex);
-    // if (currentPageDisplayed === `overview`) {
-    //     loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
-    // } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {
-    //     regenerateProjectTasks(currentPageDisplayed);
-    // }
+    
+    const newTask = new Task(newTaskTitle, newTaskDateDue, newTaskDescription, newTaskPriorityStatus, newTaskProjectAssociated, newTaskIndex);
+    tasksCreated.push(newTask);
+
+    const projectObjectToLoad = projectsCreated.find(object => object.projectTitle === newTaskProjectAssociated);
+    const tasksToLoad = taskFilter(newTaskProjectAssociated);
+    console.log(tasksToLoad)
+
+    if (!projectObjectToLoad) {
+        loadMainContent(projectsCreated, null, tasksCreated, `overview`);
+    } else {
+        loadMainContent(projectsCreated, projectObjectToLoad, tasksToLoad, projectObjectToLoad.projectTitle);
+    }
 }
 
+function taskFilter(instantiatedTaskProjectAssociated) {
+    let tasksAssociated = [];
+    tasksCreated.filter( (taskObject) => {
+        if (taskObject.taskProjectAssociated === instantiatedTaskProjectAssociated) {
+            tasksAssociated.push(taskObject);
+        }
+    })
+    return tasksAssociated
+}
+        
 function instantiateNewProject(newProjectModalInputs) {
-    const projectInputArray = Array.from(projectUserInput);
-    createNewProject(projectInputArray[0].value, projectInputArray[1].value, projectInputArray[2].value);
-    currentObjectArray = getObjectArrays();
-    let projectIndex = currentObjectArray.projects.length - 1;
-    loadMainContent(mainContainer, displayNewProject(currentObjectArray.projects[projectIndex]));
-    appendNewProjectToSelector(projectInputArray[0].value);
-    attachDataToProjectButton(projectIndex);
+    const newProjectInputArray = Array.from(newProjectModalInputs);
+    const newProjectTitle = newProjectInputArray[0].value;
+    const newProjectDateDue = newProjectInputArray[1].value;
+    const newProjectDescription = newProjectInputArray[2].value;
+    const newProjectIndex = projectsCreated.length;
+    
+    const newProject = new Project(newProjectTitle, newProjectDateDue, newProjectDescription, newProjectIndex);
+    projectsCreated.push(newProject);
+    console.log(newProject);
+    loadMainContent(projectsCreated, newProject, tasksCreated, `new project`);
+    
+    // projectButtonsAndSelectorsHandler(projectsCreated);
+    // projectButtonsAndSelectorsHandler(newProjectTitle, newProjectIndex);
+    // appendNewProjectToSelector(newProjectTitle);
+    // attachDataToProjectButton(newProjectIndex);
+    // appendProjectToProjectList(newProjectTitle);
 }
-
+        
 // function editTaskObject(title, projectAssociated, pageTitle) {
 //     let currentObjectArray = getObjectArrays();
 //     let objectIndex;
@@ -203,33 +229,25 @@ function updateTaskIndex(indexOfTaskToDelete, currentPageDisplayed) {
 // //     regenerateProjectTasks(`overview`);
 // // }
 
-// function deleteProjectObject(projectTitle) {
-//     const currentObjectArray = getObjectArrays();
-//     // let projectObjectToDeleteIndex = null;
-//     console.log(currentObjectArray);
+function deleteProjectObject(projectToDeleteTitle, projectToDeleteIndex) {
+    let taskIndexForDeletion = [];
+    tasksCreated.filter( (object, index) => {
+        if (object.taskProjectAssociated === projectToDeleteTitle) {
+            taskIndexForDeletion.push(index);
+        }
+    })
+    for (let i = taskIndexForDeletion.length; i >= 1; i--) {
+        tasksCreated.splice(taskIndexForDeletion[i-1], 1);
+    }
+
+    projectsCreated.splice(projectToDeleteIndex, 1);
     
-//     let taskIndexForDeletion = [];
-//     currentObjectArray.tasks.filter( (object, index) => {
-//         if (object.projectAssociated === projectTitle) {
-//             taskIndexForDeletion.push(index);
-//         }
-//     })
-//     for (let i = taskIndexForDeletion.length; i >= 1; i--) {
-//         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
-//     }
+    console.log(projectsCreated);
+    console.log(tasksCreated);
 
-//     currentObjectArray.projects.filter( (object, index) => {
-//         if (object.title === projectTitle) {
-//             // projectObjectToDeleteIndex = index;
-//             projectsCreated.splice(index, 1);
-//         }
-//     })
-//     console.log(currentObjectArray);
-
-//     // console.log(`indexToDelete: ${projectObjectToDeleteIndex}`);
-//     updateProjectListAndProjectSelectors(null, projectTitle);
-//     regenerateProjectTasks(`overview`);
-// }
+    // updateProjectListAndProjectSelectors(null, projectTitle);
+    // regenerateProjectTasks(`overview`);
+}
 
 // function updateProjectListAndProjectSelectors(newTitle, existingTitle) {
     
@@ -296,6 +314,8 @@ function updateTaskIndex(indexOfTaskToDelete, currentPageDisplayed) {
 export {
     getObjectArrays,
     instantiateNewTask,
+    instantiateNewProject,
     finalizeTaskEdits,
     deleteTaskObject,
+    deleteProjectObject,
 }

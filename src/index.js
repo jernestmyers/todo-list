@@ -1,5 +1,6 @@
 import { newObjectModalModule } from './pageLoad.js'
 import { getObjectArrays } from './taskCreation.js'
+import { loadMainContent } from './displayNewItems.js'
 
 const navContainer = document.querySelector(`#nav-container`);
 const projectButton = document.querySelector(`#project-button`);
@@ -10,19 +11,31 @@ navContainer.addEventListener(`click`, pageSelector);
 projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
 projectListContainer.addEventListener(`click`, projectSelector);
 
-// let currentObjectArray = getObjectArrays();
-// loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
+const loadPage = (function() {
+    const currentObjectArray = getObjectArrays();
+    loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, `overview`);
+})();
 
 function pageSelector(e) {
     if (e.target.textContent === `overview`) {
         const currentObjectArray = getObjectArrays();
-        loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
+        loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, e.target.textContent);
     }
 }
 
 function projectSelector(e) {
-    const projectSelected = e.target.textContent;
-    regenerateProjectTasks(projectSelected);
+    const currentObjectArray = getObjectArrays();
+    const projectClickedTitle = e.target.textContent;
+    const projectClickedIndex = e.target.dataset.indexNumber;
+    let associatedTasksToLoad = [];
+    currentObjectArray.tasks.filter( (taskObject) => {
+        if (taskObject.taskProjectAssociated === projectClickedTitle) {
+            associatedTasksToLoad.push(taskObject);
+        }
+    })
+    console.log(associatedTasksToLoad)
+    loadMainContent(currentObjectArray.projects, currentObjectArray.projects[projectClickedIndex], associatedTasksToLoad, projectClickedTitle);
+    // regenerateProjectTasks(projectClickedTitle);
 }
 
 // function regenerateProjectTasks(pageTitle) {
