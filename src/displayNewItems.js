@@ -80,11 +80,11 @@ function displayTasks(arrayOfTaskObjects, container) {
         const taskDeleteButton = document.createElement(`button`);
         
         newTaskContainer.classList.add(`task-container`);
-        taskTitle.textContent = arrayOfTaskObjects[i].title;
-        taskDueDate.textContent = arrayOfTaskObjects[i].dateDue;
-        taskDescription.textContent = arrayOfTaskObjects[i].description;
-        taskPriorityStatus.textContent = arrayOfTaskObjects[i].priorityStatus;
-        taskProjectAssociated.textContent = arrayOfTaskObjects[i].projectAssociated;
+        taskTitle.textContent = arrayOfTaskObjects[i].taskTitle;
+        taskDueDate.textContent = arrayOfTaskObjects[i].taskDateDue;
+        taskDescription.textContent = arrayOfTaskObjects[i].taskDescription;
+        taskPriorityStatus.textContent = arrayOfTaskObjects[i].taskPriorityStatus;
+        taskProjectAssociated.textContent = arrayOfTaskObjects[i].taskProjectAssociated;
         taskEditButton.textContent = `edit`;
         taskEditButton.classList.add(`edit-task-btn`);
         taskEditButton.setAttribute(`data-index-number`, `${arrayOfTaskObjects[i].taskIndex}`);
@@ -116,9 +116,9 @@ function displayNewProject(newProjectObject) {
     const projectDeleteButton = document.createElement(`button`);
     
     projectContainer.classList.add(`project-container`);
-    projectTitle.textContent = newProjectObject.title;
-    projectDueDate.textContent = newProjectObject.dateDue;
-    projectDescription.textContent = newProjectObject.description;
+    projectTitle.textContent = newProjectObject.projectTitle;
+    projectDueDate.textContent = newProjectObject.projectDateDue;
+    projectDescription.textContent = newProjectObject.projectDescription;
     projectEditButton.textContent = `edit project`;
     projectDeleteButton.textContent = `delete project`;
     projectEditButton.classList.add(`project-display-button`);

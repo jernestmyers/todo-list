@@ -102,59 +102,59 @@ const newObjectModalModule = (function() {
 //     }
 // }
 
-// const mainContainer = document.querySelector(`#main-content`);
-// mainContainer.addEventListener(`click`, (e) => {
-//     if (e.target.className === `edit-task-btn`) {
-//         openEditTaskModal(e.target.dataset.indexNumber, `overview`);
-//         console.log(e.target.dataset.indexNumber);
-//     }
-//     else if (e.target.className === `delete-task-btn`) {
-//         deleteTaskObject(e.target.dataset.indexNumber, `overview`);
-//         console.log(e.target.dataset.indexNumber);
-//     }
-// });
+const mainContainer = document.querySelector(`#main-content`);
+mainContainer.addEventListener(`click`, (e) => {
+    if (e.target.className === `edit-task-btn`) {
+        openEditTaskModal(e.target.dataset.indexNumber, `overview`);
+        console.log(e.target.dataset.indexNumber);
+    }
+    else if (e.target.className === `delete-task-btn`) {
+        deleteTaskObject(e.target.dataset.indexNumber, `overview`);
+        console.log(e.target.dataset.indexNumber);
+    }
+});
 
-// function openEditTaskModal(taskIndex, pageDisplayedTitle) {
+function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
 
-//     const currentObjectArray = getObjectArrays();
+    const currentObjectArray = getObjectArrays();
     
-//     const editTaskModal = document.querySelector(`#editTaskModal`);
-//     const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
-//     const statusOption = document.querySelector(`#existing-status`);
-//     const projectOption = document.querySelector(`#existing-project`);
+    const editTaskModal = document.querySelector(`#editTaskModal`);
+    const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
+    const statusOption = document.querySelector(`#existing-status`);
+    const projectOption = document.querySelector(`#existing-project`);
     
-//     // pre-populate the edit form with existing data
-//     editFormInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskIndex].title}`);
-//     editFormInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskIndex].dateDue}`);
-//     editFormInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskIndex].description}`);
-//     statusOption.setAttribute(`value`, `${currentObjectArray.tasks[taskIndex].priorityStatus}`);
-//     statusOption.textContent = `${currentObjectArray.tasks[taskIndex].priorityStatus} priority`;
-//     if (currentObjectArray.tasks[taskIndex].projectAssociated === `default`) {
-//         projectOption.setAttribute(`value`, `default`);
-//         projectOption.textContent = `overview (${currentObjectArray.tasks[taskIndex].projectAssociated})`;
-//     } else {
-//         projectOption.setAttribute(`value`, `${currentObjectArray.tasks[taskIndex].projectAssociated}`);
-//         projectOption.textContent = currentObjectArray.tasks[taskIndex].projectAssociated;
-//     }
+    // pre-populate the edit form with existing data
+    editFormInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskTitle}`);
+    editFormInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
+    editFormInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
+    statusOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus}`);
+    statusOption.textContent = `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus} priority`;
+    if (currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated === `default`) {
+        projectOption.setAttribute(`value`, `default`);
+        projectOption.textContent = `overview (${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated})`;
+    } else {
+        projectOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated}`);
+        projectOption.textContent = currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated;
+    }
     
-//     const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
-//     confirmEdits.addEventListener(`click`, (e) => {
-//         if (checkFormValidation(editFormInputs)) {
-//             finalizeTaskEdits(editFormInputs, taskIndex, pageDisplayedTitle);
-//             e.preventDefault();
-//             closeEditOrDeleteModal(editTaskModal);
-//             // regenerateProjectTasks(pageTitle);
-//         }
-//     });
+    const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
+    confirmEdits.addEventListener(`click`, (e) => {
+        if (checkFormValidation(editFormInputs)) {
+            finalizeTaskEdits(editFormInputs, taskToEditIndex, pageDisplayedTitle);
+            e.preventDefault();
+            closeEditOrDeleteModal(editTaskModal);
+            // regenerateProjectTasks(pageTitle);
+        }
+    });
     
-//     const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
-//     cancelTaskEdits.addEventListener(`click`, (e) => {
-//         e.preventDefault();
-//         closeEditOrDeleteModal(editTaskModal);
-//     })
+    const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
+    cancelTaskEdits.addEventListener(`click`, (e) => {
+        e.preventDefault();
+        closeEditOrDeleteModal(editTaskModal);
+    })
     
-//     editTaskModal.style.display = `block`;
-// }
+    editTaskModal.style.display = `block`;
+}
 
 function openEditProjectModal(object, index, existingTitle, existingTaskObjectArray) {
     

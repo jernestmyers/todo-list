@@ -1,30 +1,29 @@
-import { checkFormValidation, closeEditOrDeleteModal } from './pageLoad.js'
 import { loadMainContent } from './displayNewItems.js'
 
 const projectsCreated = [];
 const tasksCreated = [
     {
-        title: `refactor code`,
-        dateDue: `2021-06-20`,
-        description: `this is a test`,
-        priorityStatus: `high`,
-        projectAssociated: `todo list`,
+        taskTitle: `refactor code`,
+        taskDateDue: `2021-06-20`,
+        taskDescription: `this is a test`,
+        taskPriorityStatus: `high`,
+        taskProjectAssociated: `todo list`,
         taskIndex: 0,
     },
     {
-        title: `make progress`,
-        dateDue: `2021-06-12`,
-        description: `this is a test`,
-        priorityStatus: `high`,
-        projectAssociated: `todo list`,
+        taskTitle: `make progress`,
+        taskDateDue: `2021-06-12`,
+        taskDescription: `this is a test`,
+        taskPriorityStatus: `high`,
+        taskProjectAssociated: `todo list`,
         taskIndex: 1,
     },
     {
-        title: `do more`,
-        dateDue: `2021-06-13`,
-        description: `this is a test`,
-        priorityStatus: `high`,
-        projectAssociated: `default`,
+        taskTitle: `do more`,
+        taskDateDue: `2021-06-13`,
+        taskDescription: `this is a test`,
+        taskPriorityStatus: `high`,
+        taskProjectAssociated: `default`,
         taskIndex: 2,
     }
 ];
@@ -38,32 +37,33 @@ function getObjectArrays() {
 }
 
 class Project {
-    constructor(title, dateDue, description) {
-        this.title = title;
-        this.dateDue = dateDue;
-        this.description = description;
+    constructor(projectTitle, projectDateDue, projectDescription, projectIndex) {
+        this.projectTitle = projectTitle;
+        this.projectDateDue = projectDateDue;
+        this.projectDescription = projectDescription;
+        this.projectIndex = projectIndex;
     }
 }
 
 class Task {
-    constructor(title, dateDue, description, priorityStatus, projectAssociated, taskIndex) {
-        this.title = title;
-        this.dateDue = dateDue;
-        this.description = description;
-        this.priorityStatus = priorityStatus;
-        this.projectAssociated = projectAssociated;
+    constructor(taskTitle, taskDateDue, taskDescription, taskPriorityStatus, taskProjectAssociated, taskIndex) {
+        this.taskTitle = taskTitle;
+        this.taskDateDue = taskDateDue;
+        this.taskDescription = taskDescription;
+        this.taskPriorityStatus = taskPriorityStatus;
+        this.taskProjectAssociated = taskProjectAssociated;
         this.taskIndex = taskIndex;
     }
 }
 
-function createNewProject(titleValue, dateDueValue, descriptionValue) {
-    const newProject = new Project(titleValue, dateDueValue, descriptionValue);
+function createNewProject(projectTitleValue, projectDateDueValue, projectDescriptionValue, projectIndexValue) {
+    const newProject = new Project(projectTitleValue, projectDateDueValue, projectDescriptionValue, projectIndexValue);
     projectsCreated.push(newProject);
     appendProjectToProjectList(newProject.title);
 }
 
-function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated, taskIndex) {
-    const newTask = new Task(titleValue, dateDueValue, descriptionValue, priorityStatusValue, projectAssociated, taskIndex);
+function createNewTask(taskTitleValue, taskDateDueValue, taskDescriptionValue, taskPriorityStatusValue, taskProjectAssociatedValue, taskIndexValue) {
+    const newTask = new Task(taskTitleValue, taskDateDueValue, taskDescriptionValue, taskPriorityStatusValue, taskProjectAssociatedValue, taskIndexValue);
     tasksCreated.push(newTask);
     console.log(tasksCreated);
     loadMainContent(projectsCreated, tasksCreated, `overview`);
@@ -71,9 +71,14 @@ function createNewTask(titleValue, dateDueValue, descriptionValue, priorityStatu
 
 function instantiateNewTask(newTaskModalInputs) {
     const taskInputArray = Array.from(newTaskModalInputs);
+    const newTaskTitle = taskInputArray[0].value;
+    const newTaskDateDue = taskInputArray[1].value;
+    const newTaskDescription = taskInputArray[2].value;
+    const newTaskPriorityStatus = taskInputArray[3].value;
+    const newTaskProjectAssocaited = taskInputArray[4].value;
     // const currentPageDisplayed = mainContainer.firstChild.firstChild.textContent;
     const newTaskIndex = tasksCreated.length;
-    createNewTask(taskInputArray[0].value, taskInputArray[1].value, taskInputArray[2].value, taskInputArray[3].value, taskInputArray[4].value, newTaskIndex);
+    createNewTask(newTaskTitle, newTaskDateDue, newTaskDescription, newTaskPriorityStatus, newTaskProjectAssocaited, newTaskIndex);
     // if (currentPageDisplayed === `overview`) {
     //     loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
     // } else if (currentPageDisplayed === currentObjectArray.tasks[newTaskIndex].projectAssociated) {
@@ -103,68 +108,22 @@ function instantiateNewProject(newProjectModalInputs) {
 //     openEditTaskModal(objectToEdit, objectIndex, pageTitle);
 // }
 
-const mainContainer = document.querySelector(`#main-content`);
-mainContainer.addEventListener(`click`, (e) => {
-    if (e.target.className === `edit-task-btn`) {
-        openEditTaskModal(e.target.dataset.indexNumber, `overview`);
-        console.log(e.target.dataset.indexNumber);
-    }
-    else if (e.target.className === `delete-task-btn`) {
-        deleteTaskObject(e.target.dataset.indexNumber, `overview`);
-        console.log(e.target.dataset.indexNumber);
-    }
-});
+function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
+    const editedTaskTitle = editModalInputs[0].value;
+    const editedTaskDateDue = editModalInputs[1].value;
+    const editedTaskDescription = editModalInputs[2].value;
+    const editedTaskPriorityStatus = editModalInputs[3].value;
+    const editedTaskProjectAssocaited = editModalInputs[4].value;
+    console.log({editedTaskTitle, editedTaskDateDue});
+    tasksCreated[targetIndex].taskTitle = editedTaskTitle;
+    tasksCreated[targetIndex].taskDateDue = editedTaskDateDue;
+    tasksCreated[targetIndex].taskDescription = editedTaskDescription;
+    tasksCreated[targetIndex].taskPriorityStatus = editedTaskPriorityStatus;
+    tasksCreated[targetIndex].taskProjectAssociated = editedTaskProjectAssocaited;
 
-function openEditTaskModal(taskIndex, pageDisplayedTitle) {
-
-    // const currentObjectArray = getObjectArrays();
-    
-    const editTaskModal = document.querySelector(`#editTaskModal`);
-    const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
-    const statusOption = document.querySelector(`#existing-status`);
-    const projectOption = document.querySelector(`#existing-project`);
-    
-    // pre-populate the edit form with existing data
-    editFormInputs[0].setAttribute(`value`, `${tasksCreated[taskIndex].title}`);
-    editFormInputs[1].setAttribute(`value`, `${tasksCreated[taskIndex].dateDue}`);
-    editFormInputs[2].setAttribute(`value`, `${tasksCreated[taskIndex].description}`);
-    statusOption.setAttribute(`value`, `${tasksCreated[taskIndex].priorityStatus}`);
-    statusOption.textContent = `${tasksCreated[taskIndex].priorityStatus} priority`;
-    if (tasksCreated[taskIndex].projectAssociated === `default`) {
-        projectOption.setAttribute(`value`, `default`);
-        projectOption.textContent = `overview (${tasksCreated[taskIndex].projectAssociated})`;
-    } else {
-        projectOption.setAttribute(`value`, `${tasksCreated[taskIndex].projectAssociated}`);
-        projectOption.textContent = tasksCreated[taskIndex].projectAssociated;
-    }
-    
-    const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
-    confirmEdits.addEventListener(`click`, (e) => {
-        if (checkFormValidation(editFormInputs)) {
-            finalizeTaskEdits(editFormInputs, taskIndex, pageDisplayedTitle);
-            e.preventDefault();
-            closeEditOrDeleteModal(editTaskModal);
-            // regenerateProjectTasks(pageTitle);
-        }
-    });
-    
-    const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
-        cancelTaskEdits.addEventListener(`click`, (e) => {
-            e.preventDefault();
-            closeEditOrDeleteModal(editTaskModal);
-        })
-        
-        editTaskModal.style.display = `block`;
-    }
-
-function finalizeTaskEdits(editInputs, targetIndex, currentPageDisplayed) {
-
-    tasksCreated[targetIndex].title = editInputs[0].value;
-    tasksCreated[targetIndex].dateDue = editInputs[1].value;
-    tasksCreated[targetIndex].description = editInputs[2].value;
-    tasksCreated[targetIndex].priorityStatus = editInputs[3].value;
-    tasksCreated[targetIndex].projectAssociated = editInputs[4].value;
-    loadMainContent(projectsCreated, tasksCreated, currentPageDisplayed);
+    console.log(`edit task`);
+    loadMainContent(projectsCreated, tasksCreated, `overview`);
+    console.log(tasksCreated);
 }
 
 function deleteTaskObject(indexOfTaskToDelete, currentPageDisplayed) {
@@ -335,7 +294,7 @@ function updateTaskIndex(indexOfTaskToDelete, currentPageDisplayed) {
 // }
 
 export {
-    // getObjectArrays,
+    getObjectArrays,
     instantiateNewTask,
     finalizeTaskEdits,
     deleteTaskObject,
