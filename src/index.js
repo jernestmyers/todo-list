@@ -1,6 +1,6 @@
-import {} from './pageLoad.js'
-import { getObjectArrays } from './taskCreation.js'
-import { loadMainContent } from './displayNewItems.js'
+import {} from './dataModalHandler.js'
+import { getObjectArrays } from './objectDataManagement.js'
+import { loadMainContent } from './pageLoader.js'
 
 const navContainer = document.querySelector(`#nav-container`);
 const projectButton = document.querySelector(`#project-button`);
@@ -27,7 +27,7 @@ function projectSelector(e) {
     const currentObjectArray = getObjectArrays();
     const projectClickedTitle = e.target.textContent;
     const projectClickedIndex = e.target.dataset.indexNumber;
-    
+
     let associatedTasksToLoad = [];
     currentObjectArray.tasks.filter( (taskObject) => {
         if (taskObject.taskProjectAssociated === projectClickedTitle) {

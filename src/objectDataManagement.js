@@ -1,4 +1,4 @@
-import { loadMainContent } from './displayNewItems.js'
+import { loadMainContent } from './pageLoader.js'
 
 let projectsCreated = [
     {

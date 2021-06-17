@@ -1,4 +1,4 @@
-import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTaskEdits, finalizeProjectEdits, deleteTaskObject, deleteProjectObject } from './taskCreation.js'
+import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTaskEdits, finalizeProjectEdits, deleteTaskObject, deleteProjectObject } from './objectDataManagement.js'
 
 // module contains functions to open, close and submit addTask and addProject form modals
 const newObjectModalModule = (function() {
