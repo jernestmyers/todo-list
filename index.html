@@ -43,15 +43,13 @@
                     <input class="taskUserInputs" type="text" id="description" placeholder="describe the task" required>
                     <label for="priority-status">set priority status:</label>
                         <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
-                            <option value="">choose a status</option>
-                            <option value="low">low priority</option>
-                            <option value="medium">medium priority</option>
+                            <option value="low" selected>low priority</option>
+                            <option value="medium" default>medium priority</option>
                             <option value="high">high priority</option>
                         </select>
                     <label for="project-associated">set project:</label>
                         <select class="taskUserInputs" name="project-associated-prompt" id="project-associated" required>
                             <option value="">select project</option>
-                            <option value="default">overview (default)</option>
                         </select>
                     <input type="submit" id="addTaskSubmitButton" value="add task">
                     <button class="cancelFormButtons" id="cancelTask">cancel</button>
@@ -70,16 +68,12 @@
                     <input class="editTaskInputs" type="text" id="description" required>
                     <label for="priority-status">change priority status:</label>
                         <select class="editTaskInputs" name="priority-status-prompt" id="priority-status" required>
-                            <option id="existing-status" value=""></option>
-                            <option value="low">low priority</option>
+                            <option value="low" selected>low priority</option>
                             <option value="medium">medium priority</option>
                             <option value="high">high priority</option>
                         </select>
                     <label for="edit-project-associated">change project:</label>
-                        <select class="editTaskInputs" name="project-associated-prompt" id="edit-project-associated" required>
-                            <option id="existing-project" value=""></option>
-                            <option value="default">overview (default)</option>
-                        </select>
+                        <select class="editTaskInputs" name="project-associated-prompt" id="edit-project-associated" required></select>
                     <input type="submit" id="editTaskSubmitButton" value="confirm edits">
                     <button class="cancelFormButtons" id="cancelTaskEdit">cancel</button>
                 </form>
