@@ -1,8 +1,6 @@
 const mainContainer = document.querySelector(`#main-content`);
 
 function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay) {
-    console.log(pageToDisplay);
-    console.log(`loadMain counter`);
     while (mainContainer.firstChild) {
         mainContainer.removeChild(mainContainer.firstChild)
     }
@@ -17,26 +15,6 @@ function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay
         mainContainer.appendChild(containerToDisplay);
     }
     projectButtonsAndSelectorsHandler(projectsArray)
-}
-
-function regenerateProjectTasks(pageTitle) {
-    currentObjectArray = getObjectArrays();
-    if (pageTitle === `overview`) {
-        loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
-    } else {
-        const projectDisplayedObject = currentObjectArray.projects.filter( object => {
-            if (object.title === pageTitle) {
-                return object;
-            }
-        })
-        const filterTasks = currentObjectArray.tasks.filter( object => {
-            if (object.projectAssociated === pageTitle) {
-                return object
-            }
-        })
-        console.log(projectDisplayedObject[0]);
-        loadMainContent(mainContainer, displayExistingProject(projectDisplayedObject[0], filterTasks));
-    }
 }
 
 function displayTasksOverview(arrayOfTaskObjects) {
@@ -54,19 +32,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
 function displayTasks(arrayOfTaskObjects, container) {
     const allTasksContainer = document.createElement(`div`);
     allTasksContainer.classList.add(`project-tasks-container`);
-    // allTasksContainer.addEventListener(`click`, (e) => {
-    //     if (e.target.tagName === `BUTTON` && e.target.textContent === `edit`) {
-    //         const taskToEditIndex = e.target.dataset.indexNumber;
-    //         const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
-    //         console.log(`editTask`);
-    //         openEditTaskModal(taskToEditIndex, titleOfPageDisplayed);
-    //     } else if (e.target.tagName === `BUTTON` && e.target.textContent === `delete`) {
-    //         const taskToDeleteTitle = e.target.parentNode.firstChild.textContent;
-    //         const taskToDeleteProjectAssociated = e.target.previousSibling.previousSibling.textContent;
-    //         const titleOfPageDisplayed = e.target.parentNode.parentNode.parentNode.firstChild.textContent;
-    //         // deleteTaskObject(taskToDeleteTitle, taskToDeleteProjectAssociated, titleOfPageDisplayed);
-    //     }
-    // });
+    
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
         const newTaskContainer = document.createElement(`div`);
         const taskTitle = document.createElement(`h3`);
@@ -137,7 +103,7 @@ function displayExistingProject(projectToDisplayObject, projectTasksArray) {
     return projectTasks
 }
 
-// function projectButtonsAndSelectorsHandler(projectTitle, projectIndex) {
+// this "module" re-loads the buttons and selectors every pageLoad with updated projectsCreated data
 function projectButtonsAndSelectorsHandler(projectsCreatedArray) {
     const projectListHead = document.querySelector(`#project-list`);
     const addTaskProjectSelector = document.querySelector(`#project-associated`);
@@ -197,5 +163,4 @@ function projectButtonsAndSelectorsHandler(projectsCreatedArray) {
 
 export {
     loadMainContent,
-    // projectButtonsAndSelectorsHandler,
 }
