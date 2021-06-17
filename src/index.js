@@ -35,7 +35,6 @@ function projectSelector(e) {
     })
     console.log(associatedTasksToLoad)
     loadMainContent(currentObjectArray.projects, currentObjectArray.projects[projectClickedIndex], associatedTasksToLoad, projectClickedTitle);
-    // regenerateProjectTasks(projectClickedTitle);
 }
 
 // function regenerateProjectTasks(pageTitle) {

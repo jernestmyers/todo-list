@@ -1,12 +1,3 @@
-
-// function loadMainContent(container, functionToInvoke) {
-//     while (container.firstChild) {
-//         container.removeChild(container.firstChild)
-//     }
-//     let containerToDisplay = functionToInvoke;
-//     container.appendChild(containerToDisplay);
-// }
-
 const mainContainer = document.querySelector(`#main-content`);
 
 function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay) {

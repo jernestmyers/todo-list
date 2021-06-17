@@ -60,12 +60,13 @@ const newObjectModalModule = (function() {
 
 const mainContainer = document.querySelector(`#main-content`);
 mainContainer.addEventListener(`click`, (e) => {
+    const currentPage = mainContainer.firstChild.firstChild.textContent;
     if (e.target.className === `edit-task-btn`) {
         const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
-        openEditTaskModal(taskSelectedIndex, `overview`);
+        openEditTaskModal(taskSelectedIndex, currentPage);
     } else if (e.target.className === `delete-task-btn`) {
         const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
-        deleteTaskObject(taskSelectedIndex, `overview`);
+        deleteTaskObject(taskSelectedIndex, currentPage);
     } else if (e.target.id === `edit-project-btn`) {
         const projectSelectedIndex = e.target.parentElement.dataset.indexNumber;
     } else if (e.target.id === `delete-project-btn`) {
@@ -76,28 +77,34 @@ mainContainer.addEventListener(`click`, (e) => {
 });
 
 function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
-
+    
     const currentObjectArray = getObjectArrays();
     
     const editTaskModal = document.querySelector(`#editTaskModal`);
+    editTaskModal.style.display = `block`;
+
     const editFormInputs = document.querySelectorAll(`.editTaskInputs`);
-    const statusOption = document.querySelector(`#existing-status`);
-    const projectOption = document.querySelector(`#existing-project`);
+    // const statusOption = document.querySelector(`#existing-status`);
+    // const projectSelector = document.querySelector(`#edit-project-associated`);
+    // const projectOption = document.createElement(`option`);
     
     // pre-populate the edit form with existing data
     editFormInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskTitle}`);
     editFormInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
     editFormInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
     
-    statusOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus}`);
-    statusOption.textContent = `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus} priority`;
-    if (currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated === `default`) {
-        projectOption.setAttribute(`value`, `default`);
-        projectOption.textContent = `overview (${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated})`;
-    } else {
-        projectOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated}`);
-        projectOption.textContent = currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated;
-    }
+    // statusOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus}`);
+    // statusOption.textContent = `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus} priority`;
+    // if (currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated === `default`) {
+    //     projectOption.setAttribute(`value`, `default`);
+    //     projectOption.textContent = `overview (${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated})`;
+    //     projectSelector.appendChild(projectOption);
+    // } else {
+    //     projectOption.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated}`);
+    //     projectOption.setAttribute(`selected`, ``);
+    //     projectOption.textContent = currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated;
+    //     projectSelector.appendChild(projectOption);
+    // }
     
     const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
     confirmEdits.addEventListener(`click`, (e) => {
@@ -114,7 +121,6 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
         closeEditOrDeleteModal(editTaskModal);
     })
     
-    editTaskModal.style.display = `block`;
 }
 
 function openEditProjectModal(object, index, existingTitle, existingTaskObjectArray) {
@@ -188,7 +194,6 @@ function checkFormValidation(inputNodeList) {
 }
 
 export {
-    // openNewObjectModal,
     newObjectModalModule,
     closeEditOrDeleteModal,
     checkFormValidation,
