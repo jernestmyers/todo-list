@@ -1,29 +1,30 @@
-import { loadMainContent, openModal } from './pageLoad.js'
-import { getObjectArrays, createNewProject, createNewTask, finalizeProjectEdits } from './taskCreation.js'
-import { displayNewProject, displayTasksOverview, displayExistingProject } from './displayNewItems.js'
+import {} from './dataModalHandler.js'
+import { getObjectArrays } from './objectDataManagement.js'
+import { loadMainContent } from './pageLoader.js'
 
-const addTaskContainer = document.querySelector(`#add-task-container`);
 const navContainer = document.querySelector(`#nav-container`);
 const projectButton = document.querySelector(`#project-button`);
 const projectListContainer = document.querySelector(`#project-list`);
-const mainContainer = document.querySelector(`#main-content`);
 
-addTaskContainer.addEventListener(`click`, openModal);
 navContainer.addEventListener(`click`, pageSelector);
 projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
 projectListContainer.addEventListener(`click`, projectSelector);
 
-let currentObjectArray = getObjectArrays();
-loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
+const loadPage = (function() {
+    const currentObjectArray = getObjectArrays();
+    loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, `overview`);
+})();
 
 function pageSelector(e) {
-    if (e.target.textContent === `overview`) {
-        currentObjectArray = getObjectArrays();
-        loadMainContent(mainContainer, displayTasksOverview(currentObjectArray.tasks));
+    const pageSelectedTitle = e.target.textContent;
+    if (pageSelectedTitle === `overview`) {
+        const currentObjectArray = getObjectArrays();
+        loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, pageSelectedTitle);
     }
 }
 
 function projectSelector(e) {
+<<<<<<< HEAD
     const projectSelected = e.target.textContent;
     regenerateProjectTasks(projectSelected);
 }
@@ -120,34 +121,18 @@ const createTaskAndProjectModule = (function() {
         if (checkFormValidation(projectUserInput)) {
             instantiateNewProject();
             submitForm(e);
+=======
+    const currentObjectArray = getObjectArrays();
+    const projectClickedTitle = e.target.textContent;
+    const projectClickedIndex = e.target.dataset.indexNumber;
+
+    let associatedTasksToLoad = [];
+    currentObjectArray.tasks.filter( (taskObject) => {
+        if (taskObject.taskProjectAssociated === projectClickedTitle) {
+            associatedTasksToLoad.push(taskObject);
+>>>>>>> majorRefactor
         }
     })
 
-    submitTaskButton.addEventListener(`click`, (e) => {
-        if (checkFormValidation(taskUserInput)) {
-            instantiateNewTask();
-            submitForm(e);
-        }
-    })
-
-    function submitForm(event) {
-        event.preventDefault();
-        closeFormModal(event.target.id);
-    }
-
-    function closeFormModal(buttonID) {
-        const modalToClose = document.querySelectorAll(`.modal`);
-        const formToReset = document.querySelectorAll(`.formField`);
-        if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
-            modalToClose[2].style.display = `none`;
-            formToReset[2].reset();
-        } else {
-            modalToClose[0].style.display = `none`;
-            formToReset[0].reset();
-        }
-    }
-})();
-
-export { 
-    regenerateProjectTasks,
+    loadMainContent(currentObjectArray.projects, currentObjectArray.projects[projectClickedIndex], associatedTasksToLoad, projectClickedTitle);
 }
