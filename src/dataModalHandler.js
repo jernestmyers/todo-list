@@ -1,15 +1,18 @@
 import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTaskEdits, finalizeProjectEdits, deleteTaskObject, deleteProjectObject } from './objectDataManagement.js'
 
 // module contains functions to open, close and submit addTask and addProject form modals
-const newObjectModalModule = (function() {
+// const newObjectModalModule = (function() {
 
-    const addTaskContainer = document.querySelector(`#add-task-container`);
-    addTaskContainer.addEventListener(`click`, openNewObjectModal);
+    const addTaskButton = document.querySelector(`#addTaskButton`);
+    const addProjectButton = document.querySelector(`#addProjectButton`);
+    addTaskButton.addEventListener(`click`, openNewObjectModal);
+    addProjectButton.addEventListener(`click`, openNewObjectModal);
     
     const projectUserInput = document.querySelectorAll(`.projectUserInputs`);
     const taskUserInput = document.querySelectorAll(`.taskUserInputs`);
     
     function openNewObjectModal(e) {
+        e.stopPropagation();
         const addObjectModal = document.querySelectorAll(`.modal`);
         if (e.target.id === `addTaskButton`) {
             addObjectModal[0].style.display = `block`;
@@ -56,12 +59,13 @@ const newObjectModalModule = (function() {
             formToReset[0].reset();
         }
     }
-})();
+// })();
 
 // module contains functions to open, close and submit editTask and editProject form modals
-const editObjectModalModule = (function() {
+// const editObjectModalModule = (function() {
     const mainContainer = document.querySelector(`#main-content`);
     mainContainer.addEventListener(`click`, (e) => {
+        e.stopPropagation();
         const currentPage = mainContainer.firstChild.firstChild.textContent;
         if (e.target.className === `edit-task-btn`) {
             const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
@@ -95,6 +99,7 @@ const editObjectModalModule = (function() {
         
         const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
         confirmEdits.addEventListener(`click`, (e) => {
+            e.stopPropagation();
             if (checkFormValidation(editTaskInputs)) {
                 finalizeTaskEdits(editTaskInputs, taskToEditIndex, pageDisplayedTitle);
                 e.preventDefault();
@@ -170,7 +175,7 @@ const editObjectModalModule = (function() {
             formToReset[3].reset();
         }
     }
-})();
+// })();
 
 function checkFormValidation(inputNodeList) {
     let isValid = true;

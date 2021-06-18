@@ -147,6 +147,7 @@ function finalizeProjectEdits(editProjectModalInputs, targetProjectIndex, existi
     projectsCreated[targetProjectIndex].projectDateDue = editedProjectDateDue;
     projectsCreated[targetProjectIndex].projectDescription = editedProjectDescription
 
+    // if a project's title changes, this updates all associated tasks' taskProjectAssociated data to the new project title 
     if (editedProjectTitle !== existingProjectTitle) {
         tasksToLoad = taskFilter(existingProjectTitle);
         tasksToLoad.forEach( taskObject => {
@@ -166,6 +167,7 @@ function deleteProjectObject(projectToDeleteTitle, projectToDeleteIndex) {
             taskIndexForDeletion.push(index);
         }
     })
+    
     // deletes the tasks associated with the deleted project and updates the remaining task indices
     for (let i = taskIndexForDeletion.length; i >= 1; i--) {
         tasksCreated.splice(taskIndexForDeletion[i-1], 1);
