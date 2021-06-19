@@ -25,18 +25,42 @@ function displayTasksOverview(arrayOfTaskObjects) {
     overviewContainer.classList.add(`project-container`);
     overviewContainer.appendChild(overviewTitle);
     
-    const tasksToDisplay = displayTasks(arrayOfTaskObjects, overviewContainer)
+    const tasksToDisplay = displayTasks(arrayOfTaskObjects, overviewContainer, true)
     
     return tasksToDisplay
 }
 
-function displayTasks(arrayOfTaskObjects, container) {
+function displayTasks(arrayOfTaskObjects, container, toDisplayProjectAssociation) {
     const allTasksContainer = document.createElement(`div`);
     allTasksContainer.classList.add(`project-tasks-container`);
+
+    const taskHeader = document.createElement(`div`);
+    taskHeader.setAttribute(`id`, `task-header`);
+    const headerTitleLabel = document.createElement(`h5`);
+    const headerDueDateLabel = document.createElement(`h5`);
+    const headerDescriptionLabel = document.createElement(`h5`);
+    const headerPriorityLabel = document.createElement(`h5`);
+    const headerProjectAssociatedLabel = document.createElement(`h5`);
+    headerTitleLabel.textContent = `task`;
+    headerDueDateLabel.textContent = `due date`;
+    headerDescriptionLabel.textContent = `description`;
+    headerPriorityLabel.textContent = `priority status`;
+    headerProjectAssociatedLabel.textContent = `associated project`;
+
+    taskHeader.appendChild(headerTitleLabel);
+    taskHeader.appendChild(headerDueDateLabel);
+    taskHeader.appendChild(headerDescriptionLabel);
+    taskHeader.appendChild(headerPriorityLabel);
+    if (toDisplayProjectAssociation) {
+        taskHeader.setAttribute(`id`, `overview-task-header`);
+        taskHeader.appendChild(headerProjectAssociatedLabel);
+    }
+
+    allTasksContainer.appendChild(taskHeader);
     
     for (let i = 0; i < arrayOfTaskObjects.length; i++) {
         const newTaskContainer = document.createElement(`div`);
-        const taskTitle = document.createElement(`h3`);
+        const taskTitle = document.createElement(`h4`);
         const taskDueDate = document.createElement(`p`);
         const taskDescription = document.createElement(`p`);
         const taskPriorityStatus = document.createElement(`p`);
@@ -60,7 +84,10 @@ function displayTasks(arrayOfTaskObjects, container) {
         newTaskContainer.appendChild(taskDueDate);
         newTaskContainer.appendChild(taskDescription);
         newTaskContainer.appendChild(taskPriorityStatus);
-        newTaskContainer.appendChild(taskProjectAssociated);
+        if (toDisplayProjectAssociation) {
+            newTaskContainer.setAttribute(`id`, `overview-task-container`);
+            newTaskContainer.appendChild(taskProjectAssociated);
+        }
         newTaskContainer.appendChild(taskEditButton);
         newTaskContainer.appendChild(taskDeleteButton);
 
@@ -123,7 +150,7 @@ function displayProject(projectObject) {
 
 function displayExistingProject(projectToDisplayObject, projectTasksArray) {
     const projectContainerDisplayed = displayProject(projectToDisplayObject);
-    const projectTasks = displayTasks(projectTasksArray, projectContainerDisplayed);
+    const projectTasks = displayTasks(projectTasksArray, projectContainerDisplayed, false);
     return projectTasks
 }
 

@@ -66,7 +66,10 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
     const mainContainer = document.querySelector(`#main-content`);
     mainContainer.addEventListener(`click`, (e) => {
         e.stopPropagation();
-        const currentPage = mainContainer.firstChild.firstChild.textContent;
+        let currentPage = mainContainer.firstChild.firstChild.textContent;
+        if (currentPage !== `overview`) {
+            currentPage = mainContainer.firstChild.firstChild.firstChild.firstChild.firstChild.nextSibling.textContent;
+        }
         if (e.target.className === `edit-task-btn`) {
             const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
             openEditTaskModal(taskSelectedIndex, currentPage);
@@ -74,12 +77,12 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
             const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
             deleteTaskObject(taskSelectedIndex, currentPage);
         } else if (e.target.className === `edit-project-btn`) {
-            const projectSelectedTitle = e.target.parentNode.firstChild.textContent;
-            const projectSelectedIndex = e.target.parentElement.dataset.indexNumber;
+            const projectSelectedTitle = e.target.parentNode.firstChild.lastChild.textContent;
+            const projectSelectedIndex = e.target.parentElement.parentElement.parentElement.dataset.indexNumber;
             openEditProjectModal(projectSelectedTitle, projectSelectedIndex);
         } else if (e.target.className === `delete-project-btn`) {
-            const projectSelectedTitle = e.target.parentNode.firstChild.textContent;
-            const projectSelectedIndex = e.target.parentElement.dataset.indexNumber;
+            const projectSelectedTitle = e.target.parentNode.firstChild.lastChild.textContent;
+            const projectSelectedIndex = e.target.parentElement.parentElement.parentElement.dataset.indexNumber;
             openDeleteProjectModal(projectSelectedTitle, projectSelectedIndex);
         }
     });
@@ -96,9 +99,12 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
         editTaskInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskTitle}`);
         editTaskInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
         editTaskInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
+        editTaskInputs[2].textContent = currentObjectArray.tasks[taskToEditIndex].taskDescription;
         
+
         const confirmTaskEdits = document.querySelector(`#editTaskSubmitButton`);
         confirmTaskEdits.addEventListener(`click`, (e) => {
+            // console.log(editTaskInputs);
             e.stopPropagation();
             if (checkFormValidation(editTaskInputs)) {
                 finalizeTaskEdits(editTaskInputs, taskToEditIndex, pageDisplayedTitle);
