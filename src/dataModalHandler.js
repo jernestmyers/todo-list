@@ -104,7 +104,6 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
 
         const confirmTaskEdits = document.querySelector(`#editTaskSubmitButton`);
         confirmTaskEdits.addEventListener(`click`, (e) => {
-            // console.log(editTaskInputs);
             e.stopPropagation();
             if (checkFormValidation(editTaskInputs)) {
                 finalizeTaskEdits(editTaskInputs, taskToEditIndex, pageDisplayedTitle);
@@ -132,6 +131,7 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
         editProjectInputs[0].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectTitle}`);
         editProjectInputs[1].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDateDue}`);
         editProjectInputs[2].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDescription}`);
+        editProjectInputs[2].textContent = currentObjectArray.projects[projectToEditIndex].projectDescription;
         
         const confirmProjectEdits = document.querySelector(`#editProjectSubmitButton`);
         confirmProjectEdits.addEventListener(`click`, (e) => {
