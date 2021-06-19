@@ -24,7 +24,7 @@
                     <button>this week</button>
                     <button>past due</button>
                 </div>
-                <div id="project-container">
+                <div id="project-nav-container">
                     <button id="project-button">projects</button>
                     <ul id="project-list"></ul>
                 </div>
@@ -36,21 +36,26 @@
         <div id="addTaskModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <h3>create new task</h3>
+                <h3 class="modal-header">create new task</h3>
                 <form class="formField" id="addTaskForm">
-                    <input class="taskUserInputs" type="text" id="title" placeholder="enter a title" required>
-                    <input class="taskUserInputs" type="date" id="dateDue" placeholder="select a due date" required>
-                    <input class="taskUserInputs" type="text" id="description" placeholder="describe the task" required>
-                    <label for="priority-status">set priority status:</label>
-                        <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
-                            <option value="low" selected>low priority</option>
-                            <option value="medium" default>medium priority</option>
-                            <option value="high">high priority</option>
-                        </select>
-                    <label for="project-associated">set project:</label>
-                        <select class="taskUserInputs" name="project-associated-prompt" id="project-associated" required>
-                            <option value="">select project</option>
-                        </select>
+                    <input class="taskUserInputs" id="new-task-title" type="text" placeholder="enter a title" required>
+                    <input class="taskUserInputs" id="new-task-dateDue" type="date" placeholder="select a due date" required>
+                    <!-- <input class="taskUserInputs" type="text" id="description" placeholder="describe the task" required> -->
+                    <textarea class="taskUserInputs" id="new-task-description" rows= "3" placeholder="describe the task" required></textarea>
+                    <div class="priority-status-selector" id="new-task-priority">
+                        <label for="priority-status">set priority status:</label>
+                            <select class="taskUserInputs" name="priority-status-prompt" id="priority-status" required>
+                                <option value="low" selected>low priority</option>
+                                <option value="medium" default>medium priority</option>
+                                <option value="high">high priority</option>
+                            </select>
+                    </div>
+                    <div class="project-selector" id="new-task-project">
+                        <label for="project-associated">set project:</label>
+                            <select class="taskUserInputs" name="project-associated-prompt" id="project-associated" required>
+                                <option value="">select project</option>
+                            </select>
+                    </div>
                     <input type="submit" id="addTaskSubmitButton" value="add task">
                     <button class="cancelFormButtons" id="cancelTask">cancel</button>
                 </form>
@@ -61,7 +66,7 @@
         <div id="editTaskModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <h3>edit task</h3>
+                <h3 class="modal-header">edit task</h3>
                 <form class="formField" id="editTaskForm">
                     <input class="editTaskInputs" type="text" id="title" required>
                     <input class="editTaskInputs" type="date" id="dateDue" required>
@@ -85,7 +90,7 @@
         <div id="addProjectModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <h3>create new project</h3>
+                <h3 class="modal-header">create new project</h3>
                 <form class="formField" id="addProjectForm">
                     <input class="projectUserInputs" type="text" id="title" placeholder="enter a title" required>
                     <input class="projectUserInputs" type="date" id="dateDue" placeholder="select a due date" required>
@@ -100,7 +105,7 @@
         <div id="editProjectModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <h3>edit project</h3>
+                <h3 class="modal-header">edit project</h3>
                 <form class="formField" id="editProjectForm">
                     <input class="editProjectInputs" type="text" id="title" required>
                     <input class="editProjectInputs" type="date" id="dateDue" required>

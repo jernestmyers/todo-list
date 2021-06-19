@@ -85,8 +85,8 @@ function displayProject(projectObject) {
     projectDescription.textContent = projectObject.projectDescription;
     projectEditButton.textContent = `edit project`;
     projectDeleteButton.textContent = `delete project`;
-    projectEditButton.setAttribute(`id`, `edit-project-btn`);
-    projectDeleteButton.setAttribute(`id`, `delete-project-btn`);
+    projectEditButton.classList.add(`edit-project-btn`);
+    projectDeleteButton.classList.add(`delete-project-btn`);
 
     projectContainer.appendChild(projectTitle);
     projectContainer.appendChild(projectDueDate);
@@ -127,6 +127,7 @@ function projectButtonsAndSelectorsHandler(projectsCreatedArray) {
             newProjectButton.textContent = projectObject.projectTitle;
             newProjectButton.setAttribute(`id`, projectObject.projectTitle);
             newProjectButton.setAttribute(`data-index-number`, projectObject.projectIndex);
+            newProjectButton.classList.add(`projectListButton`);
             
             projectListHead.appendChild(newProjectButton);
         })

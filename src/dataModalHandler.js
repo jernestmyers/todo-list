@@ -73,11 +73,11 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
         } else if (e.target.className === `delete-task-btn`) {
             const taskSelectedIndex = e.target.parentElement.dataset.indexNumber;
             deleteTaskObject(taskSelectedIndex, currentPage);
-        } else if (e.target.id === `edit-project-btn`) {
+        } else if (e.target.className === `edit-project-btn`) {
             const projectSelectedTitle = e.target.parentNode.firstChild.textContent;
             const projectSelectedIndex = e.target.parentElement.dataset.indexNumber;
             openEditProjectModal(projectSelectedTitle, projectSelectedIndex);
-        } else if (e.target.id === `delete-project-btn`) {
+        } else if (e.target.className === `delete-project-btn`) {
             const projectSelectedTitle = e.target.parentNode.firstChild.textContent;
             const projectSelectedIndex = e.target.parentElement.dataset.indexNumber;
             openDeleteProjectModal(projectSelectedTitle, projectSelectedIndex);
@@ -97,8 +97,8 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
         editTaskInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
         editTaskInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
         
-        const confirmEdits = document.querySelector(`#editTaskSubmitButton`);
-        confirmEdits.addEventListener(`click`, (e) => {
+        const confirmTaskEdits = document.querySelector(`#editTaskSubmitButton`);
+        confirmTaskEdits.addEventListener(`click`, (e) => {
             e.stopPropagation();
             if (checkFormValidation(editTaskInputs)) {
                 finalizeTaskEdits(editTaskInputs, taskToEditIndex, pageDisplayedTitle);
@@ -127,8 +127,8 @@ import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTas
         editProjectInputs[1].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDateDue}`);
         editProjectInputs[2].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDescription}`);
         
-        const confirmEdits = document.querySelector(`#editProjectSubmitButton`);
-        confirmEdits.addEventListener(`click`, (e) => {
+        const confirmProjectEdits = document.querySelector(`#editProjectSubmitButton`);
+        confirmProjectEdits.addEventListener(`click`, (e) => {
             if (checkFormValidation(editProjectInputs)) {
                 finalizeProjectEdits(editProjectInputs, projectToEditIndex, projectToEditTitle);
                 e.preventDefault();
