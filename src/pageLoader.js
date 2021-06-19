@@ -21,6 +21,7 @@ function displayTasksOverview(arrayOfTaskObjects) {
     const overviewContainer = document.createElement(`div`);
     const overviewTitle = document.createElement(`h2`);
     overviewTitle.textContent = `overview`;
+    overviewTitle.setAttribute(`id`, `overview-header`);
     overviewContainer.classList.add(`project-container`);
     overviewContainer.appendChild(overviewTitle);
     
@@ -72,27 +73,50 @@ function displayTasks(arrayOfTaskObjects, container) {
 
 function displayProject(projectObject) {
     const projectContainer = document.createElement(`div`);
+    const projectInfoContainer = document.createElement(`div`);
+    const projectInfoHeader = document.createElement(`div`);
+    const projectTitleLabel = document.createElement(`label`);
     const projectTitle = document.createElement(`h2`);
+    // const projectDueLabel = document.createElement(`label`);
     const projectDueDate = document.createElement(`p`);
     const projectDescription = document.createElement(`p`);
     const projectEditButton = document.createElement(`button`);
     const projectDeleteButton = document.createElement(`button`);
     
     projectContainer.classList.add(`project-container`);
+    projectInfoContainer.classList.add(`project-info-container`);
+    projectInfoHeader.classList.add(`project-info-header`);
+    projectTitleLabel.classList.add(`project-title-header`);
+    // projectDueLabel.classList.add(`project-date-header`);
+    projectDueDate.classList.add(`project-date-due`);
+    projectDescription.classList.add(`project-description`);
     projectContainer.setAttribute(`data-index-number`, `${projectObject.projectIndex}`);
+    projectTitleLabel.textContent = `project:`;
     projectTitle.textContent = projectObject.projectTitle;
-    projectDueDate.textContent = projectObject.projectDateDue;
-    projectDescription.textContent = projectObject.projectDescription;
+    // projectDueLabel.textContent = `due:`;
+    projectDueDate.textContent = `due: ${projectObject.projectDateDue}`;
+    projectDescription.textContent = `description: ${projectObject.projectDescription}`;
     projectEditButton.textContent = `edit project`;
     projectDeleteButton.textContent = `delete project`;
     projectEditButton.classList.add(`edit-project-btn`);
     projectDeleteButton.classList.add(`delete-project-btn`);
 
-    projectContainer.appendChild(projectTitle);
-    projectContainer.appendChild(projectDueDate);
-    projectContainer.appendChild(projectDescription);
-    projectContainer.appendChild(projectEditButton);
-    projectContainer.appendChild(projectDeleteButton);
+    projectTitleLabel.appendChild(projectTitle);
+    // projectDueLabel.appendChild(projectDueDate);
+
+    projectInfoHeader.appendChild(projectTitleLabel);
+    projectInfoHeader.appendChild(projectDueDate);
+    // projectInfoHeader.appendChild(projectDueLabel);
+    projectInfoHeader.appendChild(projectEditButton);
+    projectInfoHeader.appendChild(projectDeleteButton);
+
+    projectInfoContainer.appendChild(projectInfoHeader);
+    // projectInfoContainer.appendChild(projectDueDate);
+    projectInfoContainer.appendChild(projectDescription);
+    // projectInfoContainer.appendChild(projectEditButton);
+    // projectInfoContainer.appendChild(projectDeleteButton);
+
+    projectContainer.appendChild(projectInfoContainer);
 
     return projectContainer
 }
