@@ -97,9 +97,10 @@
             <div class="modal-content">
                 <h3 class="modal-header">create new project</h3>
                 <form class="formField" id="addProjectForm">
-                    <input class="projectUserInputs" type="text" id="title" placeholder="enter a title" required>
-                    <input class="projectUserInputs" type="date" id="dateDue" placeholder="select a due date" required>
-                    <input class="projectUserInputs" type="text" id="description" placeholder="describe the project" required>
+                    <input class="projectUserInputs" type="text" id="new-project-title" placeholder="enter a title" required>
+                    <input class="projectUserInputs" type="date" id="new-project-dateDue" placeholder="select a due date" required>
+                    <!-- <input class="projectUserInputs" type="text" id="description" placeholder="describe the project" required> -->
+                    <textarea class="editTaskInputs" id="new-project-description" rows= "3" placeholder="describe the project" required></textarea>
                     <input type="submit" id="addProjectSubmitButton" value="add project">
                     <button class="cancelFormButtons" id="cancelProject">cancel</button>
                 </form>
@@ -114,7 +115,8 @@
                 <form class="formField" id="editProjectForm">
                     <input class="editProjectInputs" type="text" id="title" required>
                     <input class="editProjectInputs" type="date" id="dateDue" required>
-                    <input class="editProjectInputs" type="text" id="description" required>
+                    <!-- <input class="editProjectInputs" type="text" id="description" required> -->
+                    <textarea class="editProjectInputs" id="edit-project-description" rows= "3"required></textarea>
                     <input type="submit" id="editProjectSubmitButton" value="confirm edits">
                     <button class="cancelFormButtons" id="cancelProjectEdit">cancel</button>
                 </form>
@@ -124,7 +126,7 @@
         <!-- modal for deleteProject confirmation -->
         <div id="confirmDeleteProject" class="modal">
             <!-- Modal content -->
-            <div class="modal-content">
+            <div class="modal-content" id="confirm-delete-project">
                     <p id="confirm-delete-text"></p>
                     <button class="cancelFormButtons" id="confirmProjectDelete">Yes, delete.</button>
                     <button class="cancelFormButtons" id="cancelProjectDelete">No, nevermind.</button>
