@@ -44,7 +44,7 @@ function displayTasks(arrayOfTaskObjects, container, toDisplayProjectAssociation
     headerTitleLabel.textContent = `task`;
     headerDueDateLabel.textContent = `due date`;
     headerDescriptionLabel.textContent = `description`;
-    headerPriorityLabel.textContent = `priority status`;
+    headerPriorityLabel.textContent = `priority`;
     headerProjectAssociatedLabel.textContent = `associated project`;
 
     taskHeader.appendChild(headerTitleLabel);
