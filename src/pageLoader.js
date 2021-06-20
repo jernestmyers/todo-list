@@ -104,7 +104,6 @@ function displayProject(projectObject) {
     const projectInfoHeader = document.createElement(`div`);
     const projectTitleLabel = document.createElement(`label`);
     const projectTitle = document.createElement(`h2`);
-    // const projectDueLabel = document.createElement(`label`);
     const projectDueDate = document.createElement(`p`);
     const projectDescription = document.createElement(`p`);
     const projectEditButton = document.createElement(`button`);
@@ -114,13 +113,11 @@ function displayProject(projectObject) {
     projectInfoContainer.classList.add(`project-info-container`);
     projectInfoHeader.classList.add(`project-info-header`);
     projectTitleLabel.classList.add(`project-title-header`);
-    // projectDueLabel.classList.add(`project-date-header`);
     projectDueDate.classList.add(`project-date-due`);
     projectDescription.classList.add(`project-description`);
     projectContainer.setAttribute(`data-index-number`, `${projectObject.projectIndex}`);
     projectTitleLabel.textContent = `project:`;
     projectTitle.textContent = projectObject.projectTitle;
-    // projectDueLabel.textContent = `due:`;
     projectDueDate.textContent = `due: ${projectObject.projectDateDue}`;
     projectDescription.textContent = `description: ${projectObject.projectDescription}`;
     projectEditButton.textContent = `edit project`;
@@ -129,19 +126,14 @@ function displayProject(projectObject) {
     projectDeleteButton.classList.add(`delete-project-btn`);
 
     projectTitleLabel.appendChild(projectTitle);
-    // projectDueLabel.appendChild(projectDueDate);
 
     projectInfoHeader.appendChild(projectTitleLabel);
     projectInfoHeader.appendChild(projectDueDate);
-    // projectInfoHeader.appendChild(projectDueLabel);
     projectInfoHeader.appendChild(projectEditButton);
     projectInfoHeader.appendChild(projectDeleteButton);
 
     projectInfoContainer.appendChild(projectInfoHeader);
-    // projectInfoContainer.appendChild(projectDueDate);
     projectInfoContainer.appendChild(projectDescription);
-    // projectInfoContainer.appendChild(projectEditButton);
-    // projectInfoContainer.appendChild(projectDeleteButton);
 
     projectContainer.appendChild(projectInfoContainer);
 

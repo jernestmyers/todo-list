@@ -8,7 +8,11 @@ const projectListContainer = document.querySelector(`#project-list`);
 
 navContainer.addEventListener(`click`, pageSelector);
 projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
-projectListContainer.addEventListener(`click`, projectSelector);
+projectListContainer.addEventListener(`click`, (e) => {
+    if (e.target.className === `projectListButton`) {
+        projectSelector(e)
+    }
+});
 
 const loadPage = (function() {
     const currentObjectArray = getObjectArrays();

@@ -103,6 +103,7 @@ function instantiateNewProject(newProjectModalInputs) {
 }
 
 function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
+    console.log(editModalInputs[0].value);
     const editedTaskTitle = editModalInputs[0].value;
     const editedTaskDateDue = editModalInputs[1].value;
     const editedTaskDescription = editModalInputs[2].value;
