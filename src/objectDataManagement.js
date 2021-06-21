@@ -19,7 +19,7 @@ let tasksCreated = [
     {
         taskTitle: `refactor code`,
         taskDateDue: `2021-06-20`,
-        taskDescription: `this is a test`,
+        taskDescription: `clean it up, make logic more linear`,
         taskPriorityStatus: `high`,
         taskProjectAssociated: `todo list`,
         taskIndex: 0,
@@ -27,7 +27,7 @@ let tasksCreated = [
     {
         taskTitle: `make progress`,
         taskDateDue: `2021-06-12`,
-        taskDescription: `this is a test`,
+        taskDescription: `keep at it and stay positive`,
         taskPriorityStatus: `high`,
         taskProjectAssociated: `todo list`,
         taskIndex: 1,
@@ -35,10 +35,18 @@ let tasksCreated = [
     {
         taskTitle: `do more`,
         taskDateDue: `2021-06-13`,
-        taskDescription: `this is a test`,
-        taskPriorityStatus: `high`,
+        taskDescription: `do what you can, when you can`,
+        taskPriorityStatus: `medium`,
         taskProjectAssociated: `default`,
         taskIndex: 2,
+    },
+    {
+        taskTitle: `do even more`,
+        taskDateDue: `2021-06-13`,
+        taskDescription: `carve out more time, if possible`,
+        taskPriorityStatus: `low`,
+        taskProjectAssociated: `keep grinding`,
+        taskIndex: 3,
     }
 ];
 
@@ -108,13 +116,13 @@ function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
     const editedTaskDateDue = editModalInputs[1].value;
     const editedTaskDescription = editModalInputs[2].value;
     const editedTaskPriorityStatus = editModalInputs[3].value;
-    const editedTaskProjectAssocaited = editModalInputs[4].value;
+    const editedTaskProjectAssociated = editModalInputs[4].value;
 
     tasksCreated[targetIndex].taskTitle = editedTaskTitle;
     tasksCreated[targetIndex].taskDateDue = editedTaskDateDue;
     tasksCreated[targetIndex].taskDescription = editedTaskDescription;
     tasksCreated[targetIndex].taskPriorityStatus = editedTaskPriorityStatus;
-    tasksCreated[targetIndex].taskProjectAssociated = editedTaskProjectAssocaited;
+    tasksCreated[targetIndex].taskProjectAssociated = editedTaskProjectAssociated;
 
     const projectAssociatedToLoad = projectsCreated.find(object => object.projectTitle === currentPageDisplayed);
     const tasksToLoad = taskFilter(currentPageDisplayed);

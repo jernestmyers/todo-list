@@ -1,5 +1,14 @@
 import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTaskEdits, finalizeProjectEdits, deleteTaskObject, deleteProjectObject } from './objectDataManagement.js'
 
+// sets the default date in the addTask and addProject modals to today's date
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+document.querySelector('#new-task-dateDue').value = new Date().toDateInputValue();    
+document.querySelector('#new-project-dateDue').value = new Date().toDateInputValue();
+
 // this section contains functions to open, close and submit addTask and addProject form modals
     const addTaskButton = document.querySelector(`#addTaskButton`);
     const addProjectButton = document.querySelector(`#addProjectButton`);
@@ -90,13 +99,24 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
     const editTaskModal = document.querySelector(`#editTaskModal`);
     editTaskModal.style.display = `block`;
     
-    // pre-populate the text inputs with existing data
+    // <------- pre-populate the editModal inputs with existing data -------------->
     const editTaskInputs = document.querySelectorAll(`.editTaskInputs`);
+    const prepopulateProjectInModal = document.querySelector(`#existing-project`);
+    const prepopulatePriorityInModal = document.querySelector(`#existing-status`);
     editTaskInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskTitle}`);
     editTaskInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
     editTaskInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
     editTaskInputs[2].textContent = currentObjectArray.tasks[taskToEditIndex].taskDescription;
-    
+    prepopulatePriorityInModal.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus}`)
+    prepopulatePriorityInModal.textContent = `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus} priority`;
+    prepopulateProjectInModal.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated}`);
+    if (currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated === `default`) {
+        prepopulateProjectInModal.textContent = `overview (${currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated})`;
+    } else {
+        prepopulateProjectInModal.textContent = currentObjectArray.tasks[taskToEditIndex].taskProjectAssociated;
+    }
+    // <------- end of pre-populating the editModal inputs ------------------------>
+
     const confirmTaskEdits = document.querySelector(`#editTaskSubmitButton`);
     confirmTaskEdits.addEventListener(`click`, confirmTaskEditsHandler)
     

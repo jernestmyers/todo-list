@@ -182,9 +182,13 @@ function projectButtonsAndSelectorsHandler(projectsCreatedArray) {
         defaultProjectForAddTaskSelector.textContent = `overview (default)`;
         addTaskProjectSelector.appendChild(defaultProjectForAddTaskSelector);
         
+        const currentProjectAssociatedInEditModal = document.createElement(`option`);
+        currentProjectAssociatedInEditModal.setAttribute(`id`, `existing-project`);
         const defaultProjectForEditTaskSelector = document.createElement(`option`);
         defaultProjectForEditTaskSelector.setAttribute(`value`, `default`);
         defaultProjectForEditTaskSelector.textContent = `overview (default)`;
+
+        editTaskProjectSelector.appendChild(currentProjectAssociatedInEditModal);
         editTaskProjectSelector.appendChild(defaultProjectForEditTaskSelector);
         
         projectsArray.forEach( (projectObject) => {
