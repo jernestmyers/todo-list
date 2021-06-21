@@ -58,8 +58,6 @@ function updateLocalStorage(objectType) {
         window.localStorage.removeItem(`projectsCreated`);
         window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
     }
-    // projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
-    // tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
 }
 
 function getObjectArrays() {
@@ -133,7 +131,6 @@ function instantiateNewProject(newProjectModalInputs) {
 }
 
 function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
-    console.log(editModalInputs[0].value);
     const editedTaskTitle = editModalInputs[0].value;
     const editedTaskDateDue = editModalInputs[1].value;
     const editedTaskDescription = editModalInputs[2].value;
@@ -186,11 +183,11 @@ function finalizeProjectEdits(editProjectModalInputs, targetProjectIndex, existi
         tasksToLoad.forEach( taskObject => {
             taskObject.taskProjectAssociated = editedProjectTitle;
         })
+        updateLocalStorage(`task`);
     } else {
         tasksToLoad = taskFilter(existingProjectTitle);
     }
 
-    updateLocalStorage(`task`);
     updateLocalStorage(`project`);
     loadContentHelper(projectsCreated[targetProjectIndex], tasksToLoad);
 }

@@ -14,9 +14,8 @@ projectListContainer.addEventListener(`click`, (e) => {
     }
 });
 
-// window.localStorage.removeItem(`test`);
-window.localStorage.removeItem(`projectsCreated`);
-window.localStorage.removeItem(`tasksCreated`);
+// window.localStorage.removeItem(`projectsCreated`);
+// window.localStorage.removeItem(`tasksCreated`);
 
 const loadPage = (function() {
     const currentObjectArray = getObjectArrays();

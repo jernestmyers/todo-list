@@ -183,12 +183,17 @@ function openDeleteProjectModal(projectToDeleteTitle, projectToDeleteIndex) {
     const confirmDeleteButton = document.querySelector(`#confirmProjectDelete`);
     const cancelDeleteButton = document.querySelector(`#cancelProjectDelete`);
     
-    confirmDeleteButton.addEventListener( `click`, (e) => {
+    confirmDeleteButton.addEventListener( `click`, confirmProjectDeleteHandler)
+    
+    function confirmProjectDeleteHandler(e) {
+        confirmDeleteButton.removeEventListener(`click`, confirmProjectDeleteHandler);
+        e.stopPropagation();
         closeEditOrDeleteModal(deleteProjectModal);
         deleteProjectObject(projectToDeleteTitle, projectToDeleteIndex);
-    })
+    }
     
     cancelDeleteButton.addEventListener( `click`, (e) => {
+        confirmDeleteButton.removeEventListener(`click`, confirmProjectDeleteHandler);
         closeEditOrDeleteModal(deleteProjectModal);
     })
     
