@@ -73,7 +73,8 @@
                     <div class="priority-status-selector" id="edit-task-priority">
                         <label class="modal-label" for="priority-status">change priority status:</label>
                             <select class="editTaskInputs" name="priority-status-prompt" id="priority-status" required>
-                                <option value="low" selected>low priority</option>
+                                <option id="existing-status" selected></option>
+                                <option value="low">low priority</option>
                                 <option value="medium">medium priority</option>
                                 <option value="high">high priority</option>
                             </select>
@@ -110,7 +111,7 @@
                 <h3 class="modal-header">edit project</h3>
                 <form class="formField" id="editProjectForm">
                     <input class="editProjectInputs" type="text" id="title" required>
-                    <input class="editProjectInputs" type="date" id="dateDue" required>
+                    <input class="editProjectInputs newDateDue" type="date" id="dateDue" required>
                     <textarea class="editProjectInputs" id="edit-project-description" rows= "3"required></textarea>
                     <input type="submit" id="editProjectSubmitButton" value="confirm edits">
                     <button class="cancelFormButtons" id="cancelProjectEdit">cancel</button>
