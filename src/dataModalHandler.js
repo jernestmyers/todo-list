@@ -6,66 +6,66 @@ Date.prototype.toDateInputValue = (function() {
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
     return local.toJSON().slice(0,10);
 });
-document.querySelector('#new-task-dateDue').value = new Date().toDateInputValue();    
-document.querySelector('#new-project-dateDue').value = new Date().toDateInputValue();
 
 // this section contains functions to open, close and submit addTask and addProject form modals
-    const addTaskButton = document.querySelector(`#addTaskButton`);
-    const addProjectButton = document.querySelector(`#addProjectButton`);
-    addTaskButton.addEventListener(`click`, openNewObjectModal);
-    addProjectButton.addEventListener(`click`, openNewObjectModal);
-    
-    const projectUserInput = document.querySelectorAll(`.projectUserInputs`);
-    const taskUserInput = document.querySelectorAll(`.taskUserInputs`);
-    
-    function openNewObjectModal(e) {
-        e.stopPropagation();
-        const addObjectModal = document.querySelectorAll(`.modal`);
-        if (e.target.id === `addTaskButton`) {
-            addObjectModal[0].style.display = `block`;
-        } else {
-            addObjectModal[2].style.display = `block`;
-        }
+const addTaskButton = document.querySelector(`#addTaskButton`);
+const addProjectButton = document.querySelector(`#addProjectButton`);
+addTaskButton.addEventListener(`click`, openNewObjectModal);
+addProjectButton.addEventListener(`click`, openNewObjectModal);
+
+const projectUserInput = document.querySelectorAll(`.projectUserInputs`);
+const taskUserInput = document.querySelectorAll(`.taskUserInputs`);
+
+function openNewObjectModal(e) {
+    e.stopPropagation();
+    const addObjectModal = document.querySelectorAll(`.modal`);
+    if (e.target.id === `addTaskButton`) {
+        document.querySelector('#new-task-dateDue').value = new Date().toDateInputValue();    
+        addObjectModal[0].style.display = `block`;
+    } else {
+        document.querySelector('#new-project-dateDue').value = new Date().toDateInputValue();
+        addObjectModal[2].style.display = `block`;
     }
-    
-    const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
-    const submitTaskButton = document.querySelector(`#addTaskSubmitButton`);
-    const cancelProjectButton = document.querySelector(`#cancelProject`);
-    const cancelTaskButton = document.querySelector(`#cancelTask`);
-    
-    cancelProjectButton.addEventListener(`click`, (e) => closeNewObjectModal(e.target.id));
-    cancelTaskButton.addEventListener(`click`, (e) => closeNewObjectModal(e.target.id));
-    
-    submitProjectButton.addEventListener(`click`, (e) => {
-        if (checkFormValidation(projectUserInput)) {
-            instantiateNewProject(projectUserInput);
-            submitNewObjectForm(e);
-        }
-    })
-    
-    submitTaskButton.addEventListener(`click`, (e) => {
-        if (checkFormValidation(taskUserInput)) {
-            instantiateNewTask(taskUserInput);
-            submitNewObjectForm(e);
-        }
-    })
-    
-    function submitNewObjectForm(event) {
-        event.preventDefault();
-        closeNewObjectModal(event.target.id);
+}
+
+const submitProjectButton = document.querySelector(`#addProjectSubmitButton`);
+const submitTaskButton = document.querySelector(`#addTaskSubmitButton`);
+const cancelProjectButton = document.querySelector(`#cancelProject`);
+const cancelTaskButton = document.querySelector(`#cancelTask`);
+
+cancelProjectButton.addEventListener(`click`, (e) => closeNewObjectModal(e.target.id));
+cancelTaskButton.addEventListener(`click`, (e) => closeNewObjectModal(e.target.id));
+
+submitProjectButton.addEventListener(`click`, (e) => {
+    if (checkFormValidation(projectUserInput)) {
+        instantiateNewProject(projectUserInput);
+        submitNewObjectForm(e);
     }
-    
-    function closeNewObjectModal(buttonID) {
-        const modalToClose = document.querySelectorAll(`.modal`);
-        const formToReset = document.querySelectorAll(`.formField`);
-        if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
-            modalToClose[2].style.display = `none`;
-            formToReset[2].reset();
-        } else {
-            modalToClose[0].style.display = `none`;
-            formToReset[0].reset();
-        }
+})
+
+submitTaskButton.addEventListener(`click`, (e) => {
+    if (checkFormValidation(taskUserInput)) {
+        instantiateNewTask(taskUserInput);
+        submitNewObjectForm(e);
     }
+})
+
+function submitNewObjectForm(event) {
+    event.preventDefault();
+    closeNewObjectModal(event.target.id);
+}
+
+function closeNewObjectModal(buttonID) {
+    const modalToClose = document.querySelectorAll(`.modal`);
+    const formToReset = document.querySelectorAll(`.formField`);
+    if (buttonID === `addProjectSubmitButton` || buttonID === `cancelProject`) {
+        modalToClose[2].style.display = `none`;
+        formToReset[2].reset();
+    } else {
+        modalToClose[0].style.display = `none`;
+        formToReset[0].reset();
+    }
+}
 
 // this section contains functions to open, close and submit editTask and editProject form modals
 const mainContainer = document.querySelector(`#main-content`);
@@ -129,14 +129,13 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
             closeEditOrDeleteModal(editTaskModal);
         }
     }
-    
+
     const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
     cancelTaskEdits.addEventListener(`click`, (e) => {
         confirmTaskEdits.removeEventListener(`click`, confirmTaskEditsHandler);
         e.preventDefault();
         closeEditOrDeleteModal(editTaskModal);
     });
-
 }
 
 function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
@@ -179,7 +178,7 @@ function openDeleteProjectModal(projectToDeleteTitle, projectToDeleteIndex) {
     
     const deleteProjectModal = document.querySelector(`#confirmDeleteProject`)
     const deleteProjectMessage = document.querySelector(`#confirm-delete-text`);
-    deleteProjectMessage.textContent = `Are you sure you want to delete the project "${projectToDeleteTitle}" and all of its tasks?`;
+    deleteProjectMessage.textContent = `Are you sure you want to delete this project and all of its associated tasks?`;
     
     const confirmDeleteButton = document.querySelector(`#confirmProjectDelete`);
     const cancelDeleteButton = document.querySelector(`#cancelProjectDelete`);

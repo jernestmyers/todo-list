@@ -194,6 +194,7 @@ button {
 button:hover,
 #addTaskSubmitButton:hover,
 #editTaskSubmitButton:hover,
+#editProjectSubmitButton:hover,
 #cancelProject:hover,
 #addProjectSubmitButton:hover {
     background-color: #CB997E;

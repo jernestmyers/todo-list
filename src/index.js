@@ -1,4 +1,4 @@
-import {} from './dataModalHandler.js'
+import './dataModalHandler.js'
 import { getObjectArrays } from './objectDataManagement.js'
 import { loadMainContent } from './pageLoader.js'
 
@@ -14,6 +14,10 @@ projectListContainer.addEventListener(`click`, (e) => {
     }
 });
 
+// window.localStorage.removeItem(`test`);
+window.localStorage.removeItem(`projectsCreated`);
+window.localStorage.removeItem(`tasksCreated`);
+
 const loadPage = (function() {
     const currentObjectArray = getObjectArrays();
     loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, `overview`);
@@ -23,12 +27,14 @@ function pageSelector(e) {
     const pageSelectedTitle = e.target.textContent;
     if (pageSelectedTitle === `overview`) {
         const currentObjectArray = getObjectArrays();
+        console.log(currentObjectArray);
         loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, pageSelectedTitle);
     }
 }
 
 function projectSelector(e) {
     const currentObjectArray = getObjectArrays();
+    console.log(currentObjectArray);
     const projectClickedTitle = e.target.textContent;
     const projectClickedIndex = e.target.dataset.indexNumber;
 

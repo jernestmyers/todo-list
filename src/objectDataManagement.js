@@ -50,11 +50,29 @@ let tasksCreated = [
     }
 ];
 
-function getObjectArrays() {
-    const taskArrays = {
-        projects: projectsCreated,
-        tasks: tasksCreated
+function updateLocalStorage(objectType) {
+    if (objectType === `task`) {
+        window.localStorage.removeItem(`tasksCreated`);
+        window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+    } else {
+        window.localStorage.removeItem(`projectsCreated`);
+        window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
     }
+    // projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
+    // tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
+}
+
+function getObjectArrays() {
+    if (!window.localStorage.length) {
+        window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
+        window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+    }
+    const taskArrays = {
+        projects: JSON.parse(window.localStorage.getItem(`projectsCreated`)),
+        tasks: JSON.parse(window.localStorage.getItem(`tasksCreated`)),
+    }
+    console.log(taskArrays.projects);
+    console.log(taskArrays.tasks);
     return taskArrays
 }
 
@@ -94,10 +112,13 @@ function instantiateNewTask(newTaskModalInputs, pageToRefresh) {
     const projectAssociatedToLoad = projectsCreated.find(object => object.projectTitle === newTaskProjectAssociated);
     const tasksToLoad = taskFilter(newTaskProjectAssociated);
     
+    updateLocalStorage(`task`);
     loadContentHelper(projectAssociatedToLoad, tasksToLoad);
 }
         
 function instantiateNewProject(newProjectModalInputs) {
+    let isDisplayed = false;
+
     const newProjectInputArray = Array.from(newProjectModalInputs);
     const newProjectTitle = newProjectInputArray[0].value;
     const newProjectDateDue = newProjectInputArray[1].value;
@@ -107,7 +128,8 @@ function instantiateNewProject(newProjectModalInputs) {
     const newProject = new Project(newProjectTitle, newProjectDateDue, newProjectDescription, newProjectIndex);
     projectsCreated.push(newProject);
 
-    loadMainContent(projectsCreated, newProject, null, `new project`);
+    updateLocalStorage(`project`);
+    loadMainContent(projectsCreated, newProject, null, isDisplayed);
 }
 
 function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
@@ -127,6 +149,7 @@ function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
     const projectAssociatedToLoad = projectsCreated.find(object => object.projectTitle === currentPageDisplayed);
     const tasksToLoad = taskFilter(currentPageDisplayed);
 
+    updateLocalStorage(`task`);
     loadContentHelper(projectAssociatedToLoad, tasksToLoad);
 }
 
@@ -142,6 +165,7 @@ function updateTaskIndex(indexOfTaskToDelete, currentPageDisplayed) {
     const projectAssociatedToLoad = projectsCreated.find(object => object.projectTitle === currentPageDisplayed);
     const tasksToLoad = taskFilter(currentPageDisplayed);
 
+    updateLocalStorage(`task`);
     loadContentHelper(projectAssociatedToLoad, tasksToLoad);
 }
 
@@ -166,6 +190,8 @@ function finalizeProjectEdits(editProjectModalInputs, targetProjectIndex, existi
         tasksToLoad = taskFilter(existingProjectTitle);
     }
 
+    updateLocalStorage(`task`);
+    updateLocalStorage(`project`);
     loadContentHelper(projectsCreated[targetProjectIndex], tasksToLoad);
 }
 
@@ -195,6 +221,8 @@ function updateProjectIndex(indexOfDeletedProject) {
         projectsCreated[i].projectIndex = i;
     }
 
+    updateLocalStorage(`task`);
+    updateLocalStorage(`project`);
     loadContentHelper(null, tasksCreated);
 }
 

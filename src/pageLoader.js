@@ -7,7 +7,7 @@ function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay
     if (pageToDisplay === `overview`) {
         const containerToDisplay = displayTasksOverview(tasksArray);
         mainContainer.appendChild(containerToDisplay);
-    } else if (pageToDisplay === `new project`) {
+    } else if (!pageToDisplay) {
         const containerToDisplay = displayProject(projectToLoad)
         mainContainer.appendChild(containerToDisplay);
     } else {
