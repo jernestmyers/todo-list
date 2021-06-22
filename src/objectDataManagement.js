@@ -50,6 +50,14 @@ let tasksCreated = [
     }
 ];
 
+if (!window.localStorage.length) {
+    window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
+    window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+} else {
+    projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
+    tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
+}
+
 function updateLocalStorage(objectType) {
     if (objectType === `task`) {
         window.localStorage.removeItem(`tasksCreated`);
@@ -61,16 +69,16 @@ function updateLocalStorage(objectType) {
 }
 
 function getObjectArrays() {
-    if (!window.localStorage.length) {
-        window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
-        window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
-    }
+    // if (!window.localStorage.length) {
+    //     window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
+    //     window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+    // }
     const taskArrays = {
         projects: JSON.parse(window.localStorage.getItem(`projectsCreated`)),
         tasks: JSON.parse(window.localStorage.getItem(`tasksCreated`)),
     }
-    console.log(taskArrays.projects);
-    console.log(taskArrays.tasks);
+    // console.log(taskArrays.projects);
+    // console.log(taskArrays.tasks);
     return taskArrays
 }
 
@@ -97,6 +105,7 @@ class Task {
 function instantiateNewTask(newTaskModalInputs, pageToRefresh) {
     
     const newTaskInputArray = Array.from(newTaskModalInputs);
+    console.log(newTaskInputArray[1].value);
     const newTaskTitle = newTaskInputArray[0].value;
     const newTaskDateDue = newTaskInputArray[1].value;
     const newTaskDescription = newTaskInputArray[2].value;

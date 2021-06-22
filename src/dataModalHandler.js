@@ -20,7 +20,7 @@ function openNewObjectModal(e) {
     e.stopPropagation();
     const addObjectModal = document.querySelectorAll(`.modal`);
     if (e.target.id === `addTaskButton`) {
-        document.querySelector('#new-task-dateDue').value = new Date().toDateInputValue();    
+        document.querySelector('#new-task-dateDue').value = new Date().toDateInputValue();
         addObjectModal[0].style.display = `block`;
     } else {
         document.querySelector('#new-project-dateDue').value = new Date().toDateInputValue();
@@ -118,10 +118,13 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
     // <------- end of pre-populating the editModal inputs ------------------------>
 
     const confirmTaskEdits = document.querySelector(`#editTaskSubmitButton`);
-    confirmTaskEdits.addEventListener(`click`, confirmTaskEditsHandler)
+    const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
+    confirmTaskEdits.addEventListener(`click`, confirmTaskEditsHandler);
+    cancelTaskEdits.addEventListener(`click`, cancelTaskEditsHandler);
     
     function confirmTaskEditsHandler(e) {
         confirmTaskEdits.removeEventListener(`click`, confirmTaskEditsHandler);
+        cancelTaskEdits.removeEventListener(`click`, cancelTaskEditsHandler);
         e.stopPropagation();
         if (checkFormValidation(editTaskInputs)) {
             finalizeTaskEdits(editTaskInputs, taskToEditIndex, pageDisplayedTitle);
@@ -129,13 +132,13 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
             closeEditOrDeleteModal(editTaskModal);
         }
     }
-
-    const cancelTaskEdits = document.querySelector(`#cancelTaskEdit`);
-    cancelTaskEdits.addEventListener(`click`, (e) => {
+    
+    function cancelTaskEditsHandler(e) {
         confirmTaskEdits.removeEventListener(`click`, confirmTaskEditsHandler);
+        cancelTaskEdits.removeEventListener(`click`, cancelTaskEditsHandler);
         e.preventDefault();
         closeEditOrDeleteModal(editTaskModal);
-    });
+    }
 }
 
 function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
@@ -153,10 +156,13 @@ function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
     editProjectInputs[2].textContent = currentObjectArray.projects[projectToEditIndex].projectDescription;
     
     const confirmProjectEdits = document.querySelector(`#editProjectSubmitButton`);
-    confirmProjectEdits.addEventListener(`click`, confirmProjectEditsHandler)
+    const cancelProjectEdits = document.querySelector(`#cancelProjectEdit`);
+    confirmProjectEdits.addEventListener(`click`, confirmProjectEditsHandler);
+    cancelProjectEdits.addEventListener(`click`, cancelProjectEditsHandler);
     
     function confirmProjectEditsHandler(e) {
         confirmProjectEdits.removeEventListener(`click`, confirmProjectEditsHandler);
+        cancelProjectEdits.removeEventListener(`click`, cancelProjectEditsHandler);
         e.stopPropagation();
         if (checkFormValidation(editProjectInputs)) {
             finalizeProjectEdits(editProjectInputs, projectToEditIndex, projectToEditTitle);
@@ -165,13 +171,12 @@ function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
         }
     }
     
-    const cancelProjectEdits = document.querySelector(`#cancelProjectEdit`);
-    cancelProjectEdits.addEventListener(`click`, (e) => {
+    function cancelProjectEditsHandler(e) {
         confirmProjectEdits.removeEventListener(`click`, confirmProjectEditsHandler);
+        cancelProjectEdits.removeEventListener(`click`, cancelProjectEditsHandler);
         e.preventDefault();
         closeEditOrDeleteModal(editProjectModal);
-    })
-    
+    }
 }
 
 function openDeleteProjectModal(projectToDeleteTitle, projectToDeleteIndex) {
@@ -182,20 +187,23 @@ function openDeleteProjectModal(projectToDeleteTitle, projectToDeleteIndex) {
     
     const confirmDeleteButton = document.querySelector(`#confirmProjectDelete`);
     const cancelDeleteButton = document.querySelector(`#cancelProjectDelete`);
-    
-    confirmDeleteButton.addEventListener( `click`, confirmProjectDeleteHandler)
+    confirmDeleteButton.addEventListener( `click`, confirmProjectDeleteHandler);
+    cancelDeleteButton.addEventListener( `click`, cancelProjectDeleteHandler);
     
     function confirmProjectDeleteHandler(e) {
         confirmDeleteButton.removeEventListener(`click`, confirmProjectDeleteHandler);
+        cancelDeleteButton.removeEventListener(`click`, cancelProjectDeleteHandler);
         e.stopPropagation();
         closeEditOrDeleteModal(deleteProjectModal);
         deleteProjectObject(projectToDeleteTitle, projectToDeleteIndex);
     }
     
-    cancelDeleteButton.addEventListener( `click`, (e) => {
+    function cancelProjectDeleteHandler(e) {
+        console.log(`cancel project delete check`);
         confirmDeleteButton.removeEventListener(`click`, confirmProjectDeleteHandler);
+        cancelDeleteButton.removeEventListener(`click`, cancelProjectDeleteHandler);
         closeEditOrDeleteModal(deleteProjectModal);
-    })
+    }
     
     deleteProjectModal.style.display = `block`;
 }

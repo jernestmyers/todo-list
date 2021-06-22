@@ -26,14 +26,14 @@ function pageSelector(e) {
     const pageSelectedTitle = e.target.textContent;
     if (pageSelectedTitle === `overview`) {
         const currentObjectArray = getObjectArrays();
-        console.log(currentObjectArray);
+        // console.log(currentObjectArray);
         loadMainContent(currentObjectArray.projects, null, currentObjectArray.tasks, pageSelectedTitle);
     }
 }
 
 function projectSelector(e) {
     const currentObjectArray = getObjectArrays();
-    console.log(currentObjectArray);
+    // console.log(currentObjectArray);
     const projectClickedTitle = e.target.textContent;
     const projectClickedIndex = e.target.dataset.indexNumber;
 
