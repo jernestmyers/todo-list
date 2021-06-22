@@ -1,5 +1,4 @@
-html, 
-body {
+html, body {
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -18,8 +17,7 @@ main {
     grid-template-rows: auto;
 }
 
-header,
-h1 {
+header, h1 {
     margin: 0;
     padding: 0;
 }
@@ -38,11 +36,7 @@ h1 {
     margin-left: 10px;
 }
 
-h2,
-h3,
-h4,
-h5,
-p {
+h2, h3, h4, h5, p {
     padding: 0px;
     margin: 0px;
 }
@@ -73,10 +67,6 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#project-list {
-    /* display: none; */
 }
 
 #nav-container {
@@ -202,17 +192,17 @@ button:hover,
 }
 
 #project-button {
+    display: flex;
+    cursor: default;
+    justify-content: center;
     padding-top: 5px;
     width: 125px;
     height: 20px;
-    /* background-color: #CB997E; */
     font-weight: bolder;
     font-size: 16px;
     text-align: center;
-    /* color: #FFE8D6; */
     color: #6B705C;
     border-bottom: 3px solid #CB997E;
-    /* border-bottom: 2px solid #FFE8D6; */
 }
 
 .projectListButton {
@@ -448,4 +438,9 @@ label {
 
 .toggle-nav-btn:hover {
     background-color: #CB997E;
+}
+
+#toggle-projects {
+    color: #FFE8D6;
+    padding-right: 5px;
 }
