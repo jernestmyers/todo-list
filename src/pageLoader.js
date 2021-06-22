@@ -4,7 +4,7 @@ function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay
     while (mainContainer.firstChild) {
         mainContainer.removeChild(mainContainer.firstChild)
     }
-    if (pageToDisplay === `overview`) {
+    if (pageToDisplay === `overview` || pageToDisplay === `done.`) {
         const containerToDisplay = displayTasksOverview(tasksArray);
         mainContainer.appendChild(containerToDisplay);
     } else if (pageToDisplay === `due today` || pageToDisplay === `due this week` || pageToDisplay === `past due`) {
