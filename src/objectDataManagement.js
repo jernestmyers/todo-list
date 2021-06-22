@@ -1,15 +1,16 @@
+import { format } from 'date-fns'
 import { loadMainContent } from './pageLoader.js'
 
 let projectsCreated = [
     {
         projectTitle: `todo list`,
-        projectDateDue: `2021-06-20`,
+        projectDateDue: `06/20/2021`,
         projectDescription: `this is a project for the odin project`,
         projectIndex: 0,
     },
     {
         projectTitle: `keep grinding`,
-        projectDateDue: `2021-06-20`,
+        projectDateDue: `06/20/2021`,
         projectDescription: `this is a test project for my buggy todo list app`,
         projectIndex: 1,
     },
@@ -18,7 +19,7 @@ let projectsCreated = [
 let tasksCreated = [
     {
         taskTitle: `refactor code`,
-        taskDateDue: `2021-06-20`,
+        taskDateDue: `06/20/2021`,
         taskDescription: `clean it up, make logic more linear`,
         taskPriorityStatus: `high`,
         taskProjectAssociated: `todo list`,
@@ -26,7 +27,7 @@ let tasksCreated = [
     },
     {
         taskTitle: `make progress`,
-        taskDateDue: `2021-06-12`,
+        taskDateDue: `06/12/2021`,
         taskDescription: `keep at it and stay positive`,
         taskPriorityStatus: `high`,
         taskProjectAssociated: `todo list`,
@@ -34,7 +35,7 @@ let tasksCreated = [
     },
     {
         taskTitle: `do more`,
-        taskDateDue: `2021-06-13`,
+        taskDateDue: `06/13/2021`,
         taskDescription: `do what you can, when you can`,
         taskPriorityStatus: `medium`,
         taskProjectAssociated: `default`,
@@ -42,7 +43,7 @@ let tasksCreated = [
     },
     {
         taskTitle: `do even more`,
-        taskDateDue: `2021-06-13`,
+        taskDateDue: `06/13/2021`,
         taskDescription: `carve out more time, if possible`,
         taskPriorityStatus: `low`,
         taskProjectAssociated: `keep grinding`,
@@ -50,10 +51,14 @@ let tasksCreated = [
     }
 ];
 
-if (!window.localStorage.length) {
-    window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
-    window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
-} else {
+// if (!window.localStorage.length) {
+//     window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
+//     window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+// } else {
+//     projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
+//     tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
+// }
+if (window.localStorage.length) {
     projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
     tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
 }
@@ -69,16 +74,14 @@ function updateLocalStorage(objectType) {
 }
 
 function getObjectArrays() {
-    // if (!window.localStorage.length) {
-    //     window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
-    //     window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
-    // }
+    if (!window.localStorage.length) {
+        window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
+        window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
+    }
     const taskArrays = {
         projects: JSON.parse(window.localStorage.getItem(`projectsCreated`)),
         tasks: JSON.parse(window.localStorage.getItem(`tasksCreated`)),
     }
-    // console.log(taskArrays.projects);
-    // console.log(taskArrays.tasks);
     return taskArrays
 }
 
@@ -102,12 +105,11 @@ class Task {
     }
 }
 
-function instantiateNewTask(newTaskModalInputs, pageToRefresh) {
+function instantiateNewTask(newTaskModalInputs) {
     
     const newTaskInputArray = Array.from(newTaskModalInputs);
-    console.log(newTaskInputArray[1].value);
     const newTaskTitle = newTaskInputArray[0].value;
-    const newTaskDateDue = newTaskInputArray[1].value;
+    const newTaskDateDue = reformatDateDue(newTaskInputArray[1].value);
     const newTaskDescription = newTaskInputArray[2].value;
     const newTaskPriorityStatus = newTaskInputArray[3].value;
     const newTaskProjectAssociated = newTaskInputArray[4].value;
@@ -128,7 +130,7 @@ function instantiateNewProject(newProjectModalInputs) {
 
     const newProjectInputArray = Array.from(newProjectModalInputs);
     const newProjectTitle = newProjectInputArray[0].value;
-    const newProjectDateDue = newProjectInputArray[1].value;
+    const newProjectDateDue = reformatDateDue(newProjectInputArray[1].value);
     const newProjectDescription = newProjectInputArray[2].value;
     const newProjectIndex = projectsCreated.length;
     
@@ -141,7 +143,7 @@ function instantiateNewProject(newProjectModalInputs) {
 
 function finalizeTaskEdits(editModalInputs, targetIndex, currentPageDisplayed) {
     const editedTaskTitle = editModalInputs[0].value;
-    const editedTaskDateDue = editModalInputs[1].value;
+    const editedTaskDateDue = reformatDateDue(editModalInputs[1].value);
     const editedTaskDescription = editModalInputs[2].value;
     const editedTaskPriorityStatus = editModalInputs[3].value;
     const editedTaskProjectAssociated = editModalInputs[4].value;
@@ -179,7 +181,7 @@ function finalizeProjectEdits(editProjectModalInputs, targetProjectIndex, existi
 
     let tasksToLoad = null;
     const editedProjectTitle = editProjectModalInputs[0].value;
-    const editedProjectDateDue = editProjectModalInputs[1].value;
+    const editedProjectDateDue = reformatDateDue(editProjectModalInputs[1].value);
     const editedProjectDescription = editProjectModalInputs[2].value;
 
     projectsCreated[targetProjectIndex].projectTitle = editedProjectTitle;
@@ -248,6 +250,13 @@ function loadContentHelper(projectObjectToLoad, tasksArrayToLoad) {
     } else {
         loadMainContent(projectsCreated, projectObjectToLoad, tasksArrayToLoad, projectObjectToLoad.projectTitle);
     }
+}
+
+function reformatDateDue(dateString) {
+    const year = dateString.slice(0, 4);
+    const month = +dateString.slice(5, 7) - 1;
+    const day = dateString.slice(8,10);
+    return format(new Date(year, month, day), 'MM/dd/yyyy')
 }
 
 export {

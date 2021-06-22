@@ -23,6 +23,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "circular-dependency-plugin": "^5.2.2"
+    "circular-dependency-plugin": "^5.2.2",
+    "date-fns": "^2.22.1"
   }
 }

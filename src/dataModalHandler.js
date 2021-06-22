@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { getObjectArrays, instantiateNewTask, instantiateNewProject, finalizeTaskEdits, finalizeProjectEdits, deleteTaskObject, deleteProjectObject } from './objectDataManagement.js'
 
 // sets the default date in the addTask and addProject modals to today's date
@@ -72,7 +73,7 @@ const mainContainer = document.querySelector(`#main-content`);
 mainContainer.addEventListener(`click`, (e) => {
     e.stopPropagation();
     let currentPage = mainContainer.firstChild.firstChild.textContent;
-    if (currentPage !== `overview`) {
+    if (currentPage !== `overview` && currentPage !== `tasks due today` && currentPage !== `tasks due this week` && currentPage !== `tasks past due`) {
         currentPage = mainContainer.firstChild.firstChild.firstChild.firstChild.firstChild.nextSibling.textContent;
     }
     if (e.target.className === `edit-task-btn`) {
@@ -104,7 +105,8 @@ function openEditTaskModal(taskToEditIndex, pageDisplayedTitle) {
     const prepopulateProjectInModal = document.querySelector(`#existing-project`);
     const prepopulatePriorityInModal = document.querySelector(`#existing-status`);
     editTaskInputs[0].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskTitle}`);
-    editTaskInputs[1].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDateDue}`);
+    const dateToPrepopulate = revertFormatting(currentObjectArray.tasks[taskToEditIndex].taskDateDue);
+    editTaskInputs[1].setAttribute(`value`, `${dateToPrepopulate}`);
     editTaskInputs[2].setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskDescription}`);
     editTaskInputs[2].textContent = currentObjectArray.tasks[taskToEditIndex].taskDescription;
     prepopulatePriorityInModal.setAttribute(`value`, `${currentObjectArray.tasks[taskToEditIndex].taskPriorityStatus}`)
@@ -151,7 +153,8 @@ function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
     // pre-populate the edit form with existing data
     const editProjectInputs = document.querySelectorAll(`.editProjectInputs`);
     editProjectInputs[0].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectTitle}`);
-    editProjectInputs[1].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDateDue}`);
+    const dateToPrepopulate = revertFormatting(currentObjectArray.projects[projectToEditIndex].projectDateDue);
+    editProjectInputs[1].setAttribute(`value`, `${dateToPrepopulate}`);
     editProjectInputs[2].setAttribute(`value`, `${currentObjectArray.projects[projectToEditIndex].projectDescription}`);
     editProjectInputs[2].textContent = currentObjectArray.projects[projectToEditIndex].projectDescription;
     
@@ -227,4 +230,12 @@ function checkFormValidation(inputNodeList) {
         }
     })
     return isValid
+}
+
+// format editObject date for pre-population
+function revertFormatting(dateToRevert) {
+    const year = +dateToRevert.slice(6);
+    const month = +dateToRevert.slice(0, 2) - 1;
+    const day = +dateToRevert.slice(3, 5);
+    return format(new Date(year, month, day), "yyyy-MM-dd")
 }

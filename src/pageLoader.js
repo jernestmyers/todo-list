@@ -7,6 +7,9 @@ function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay
     if (pageToDisplay === `overview`) {
         const containerToDisplay = displayTasksOverview(tasksArray);
         mainContainer.appendChild(containerToDisplay);
+    } else if (pageToDisplay === `due today` || pageToDisplay === `due this week` || pageToDisplay === `past due`) {
+        const containerToDisplay = displayTasksSortedByDate(tasksArray, pageToDisplay);
+        mainContainer.appendChild(containerToDisplay);
     } else if (!pageToDisplay) {
         const containerToDisplay = displayProject(projectToLoad)
         mainContainer.appendChild(containerToDisplay);
@@ -14,7 +17,7 @@ function loadMainContent(projectsArray, projectToLoad, tasksArray, pageToDisplay
         const containerToDisplay = displayExistingProject(projectToLoad, tasksArray)
         mainContainer.appendChild(containerToDisplay);
     }
-    projectButtonsAndSelectorsHandler(projectsArray)
+    projectButtonsAndSelectorsHandler(projectsArray);
 }
 
 function displayTasksOverview(arrayOfTaskObjects) {
@@ -26,6 +29,25 @@ function displayTasksOverview(arrayOfTaskObjects) {
     overviewContainer.appendChild(overviewTitle);
     
     const tasksToDisplay = displayTasks(arrayOfTaskObjects, overviewContainer, true)
+    
+    return tasksToDisplay
+}
+
+function displayTasksSortedByDate(arrayOfTaskObjects, sortedDateType) {
+    const sortedDateContainer = document.createElement(`div`);
+    const sortedDateTitle = document.createElement(`h2`);
+    if (sortedDateType === `due today`) {
+        sortedDateTitle.textContent = `tasks due today`;
+    } else if (sortedDateType === `due this week`) {
+        sortedDateTitle.textContent = `tasks due this week`;
+    } else {
+        sortedDateTitle.textContent = `tasks past due`
+    }
+    sortedDateTitle.setAttribute(`id`, `overview-header`);
+    sortedDateContainer.classList.add(`project-container`);
+    sortedDateContainer.appendChild(sortedDateTitle);
+    
+    const tasksToDisplay = displayTasks(arrayOfTaskObjects, sortedDateContainer, true)
     
     return tasksToDisplay
 }
