@@ -200,6 +200,20 @@ button:hover,
     background-color: #CB997E;
 }
 
+#project-button {
+    padding-top: 5px;
+    width: 125px;
+    height: 20px;
+    /* background-color: #CB997E; */
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    /* color: #FFE8D6; */
+    color: #6B705C;
+    border-bottom: 3px solid #CB997E;
+    /* border-bottom: 2px solid #FFE8D6; */
+}
+
 .projectListButton {
     color: #6B705C;
     background-color: #B7B7A4;
