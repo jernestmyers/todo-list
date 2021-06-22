@@ -13,6 +13,7 @@ const navContainer = document.querySelector(`#nav-container`);
 const projectNavContainer = document.querySelector(`#project-nav-container`);
 const projectButton = document.querySelector(`#project-button`);
 const projectListContainer = document.querySelector(`#project-list`);
+const projectToggleSymbol = document.querySelector(`#toggle-projects`);
 
 openNavMenuButton.addEventListener(`click`, (e) => {
     leftContainer.style.width = `250px`;
@@ -38,7 +39,15 @@ closeNavMenuButton.addEventListener(`click`, (e) => {
 
 applicationTitle.addEventListener(`click`, pageSelector);
 navContainer.addEventListener(`click`, pageSelector);
-projectButton.addEventListener(`click`, (e) => console.log(e.target.textContent));
+projectButton.addEventListener(`click`, (e) => {
+    if (!projectListContainer.style.display || projectListContainer.style.display === `flex`) {
+        projectListContainer.style.display = `none`;
+        projectToggleSymbol.textContent = `>`;
+    } else {
+        projectListContainer.style.display = `flex`;
+        projectToggleSymbol.textContent = `v`;
+    }
+});
 projectListContainer.addEventListener(`click`, (e) => {
     if (e.target.className === `projectListButton`) {
         projectSelector(e)
