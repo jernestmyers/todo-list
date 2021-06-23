@@ -3,61 +3,70 @@ import { loadMainContent } from './pageLoader.js'
 
 let projectsCreated = [
     {
-        projectTitle: `todo list`,
-        projectDateDue: `06/20/2021`,
-        projectDescription: `this is a project for the odin project`,
+        projectTitle: `javascript in the real world`,
+        projectDateDue: `06/30/2021`,
+        projectDescription: `this is the next section in the odin project's full stack javascript course, following completion of the todo list project`,
         projectIndex: 0,
     },
     {
-        projectTitle: `keep grinding`,
-        projectDateDue: `06/20/2021`,
-        projectDescription: `this is a test project for my buggy todo list app`,
+        projectTitle: `asynchronous javascript and APIs`,
+        projectDateDue: `07/22/2021`,
+        projectDescription: `this section follows "javascript in the real world" in TOP's full stack javascript course`,
         projectIndex: 1,
     },
 ];
 
 let tasksCreated = [
     {
-        taskTitle: `refactor code`,
-        taskDateDue: `06/20/2021`,
-        taskDescription: `clean it up, make logic more linear`,
+        taskTitle: `wrap up the todo list project`,
+        taskDateDue: `06/23/2021`,
+        taskDescription: `move on and return to this project at a later date to improve its code, design and functionality`,
         taskPriorityStatus: `high`,
-        taskProjectAssociated: `todo list`,
+        taskProjectAssociated: `default`,
         taskIndex: 0,
     },
     {
-        taskTitle: `make progress`,
-        taskDateDue: `06/12/2021`,
-        taskDescription: `keep at it and stay positive`,
+        taskTitle: `linting`,
+        taskDateDue: `06/23/2021`,
+        taskDescription: `first topic in this project's section`,
         taskPriorityStatus: `high`,
-        taskProjectAssociated: `todo list`,
+        taskProjectAssociated: `javascript in the real world`,
         taskIndex: 1,
     },
     {
-        taskTitle: `do more`,
-        taskDateDue: `06/13/2021`,
-        taskDescription: `do what you can, when you can`,
-        taskPriorityStatus: `medium`,
-        taskProjectAssociated: `default`,
+        taskTitle: `dynamic user interface interactions`,
+        taskDateDue: `06/24/2021`,
+        taskDescription: `second topic in this project's section`,
+        taskPriorityStatus: `low`,
+        taskProjectAssociated: `javascript in the real world`,
         taskIndex: 2,
     },
     {
-        taskTitle: `do even more`,
-        taskDateDue: `06/13/2021`,
-        taskDescription: `carve out more time, if possible`,
-        taskPriorityStatus: `low`,
-        taskProjectAssociated: `keep grinding`,
+        taskTitle: `forms`,
+        taskDateDue: `06/24/2021`,
+        taskDescription: `third topic in this project's section`,
+        taskPriorityStatus: `medium`,
+        taskProjectAssociated: `javascript in the real world`,
         taskIndex: 3,
-    }
+    },
+    {
+        taskTitle: `ES?`,
+        taskDateDue: `06/25/2021`,
+        taskDescription: `final topic in this project's section`,
+        taskPriorityStatus: `low`,
+        taskProjectAssociated: `javascript in the real world`,
+        taskIndex: 4,
+    },
+    {
+        taskTitle: `weather app`,
+        taskDateDue: `07/22/2021`,
+        taskDescription: `the culminating project for this section`,
+        taskPriorityStatus: `medium`,
+        taskProjectAssociated: `asynchronous javascript and APIs`,
+        taskIndex: 5,
+    },
 ];
 
-// if (!window.localStorage.length) {
-//     window.localStorage.setItem(`projectsCreated`, JSON.stringify(projectsCreated));
-//     window.localStorage.setItem(`tasksCreated`, JSON.stringify(tasksCreated));
-// } else {
-//     projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
-//     tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));
-// }
 if (window.localStorage.length) {
     projectsCreated = JSON.parse(window.localStorage.getItem(`projectsCreated`));
     tasksCreated = JSON.parse(window.localStorage.getItem(`tasksCreated`));

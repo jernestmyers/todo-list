@@ -8,7 +8,7 @@ Date.prototype.toDateInputValue = (function() {
     return local.toJSON().slice(0,10);
 });
 
-// this section contains functions to open, close and submit addTask and addProject form modals
+// ------ this section contains functions to open, close and submit addTask and addProject form modals ------- //
 const addTaskButton = document.querySelector(`#addTaskButton`);
 const addProjectButton = document.querySelector(`#addProjectButton`);
 addTaskButton.addEventListener(`click`, openNewObjectModal);
@@ -67,8 +67,9 @@ function closeNewObjectModal(buttonID) {
         formToReset[0].reset();
     }
 }
+// ---- END of section for addTask and addProject modals ---- //
 
-// this section contains functions to open, close and submit editTask and editProject form modals
+// <---- this section contains functions to open, close and submit editTask and editProject form modals ----> //
 const mainContainer = document.querySelector(`#main-content`);
 mainContainer.addEventListener(`click`, (e) => {
     e.stopPropagation();
@@ -181,6 +182,7 @@ function openEditProjectModal(projectToEditTitle, projectToEditIndex) {
         closeEditOrDeleteModal(editProjectModal);
     }
 }
+// ---- END of editTask and editProject modal functionality------- //
 
 function openDeleteProjectModal(projectToDeleteTitle, projectToDeleteIndex) {
     
