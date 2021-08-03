@@ -23,7 +23,7 @@ this is project 4 from the odin project's full stack javascript curriculum.
 ## app features
 
 1. users can create, edit and delete both projects and tasks.
-2. users can sort tasks by tasks due today, tasks due this week, and tasks past due. this functionality makes use of the ![date-fns](https://date-fns.org/) library.
+2. users can sort tasks by tasks due today, tasks due this week, and tasks past due. this functionality makes use of the [date-fns](https://date-fns.org/) library.
 3. leverages localStorage to store and retrieve user data.
 4. users can expand/condense the navigation menu and the project list.
 
