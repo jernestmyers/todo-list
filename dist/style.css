@@ -35,7 +35,11 @@ header {
 h1 {
   cursor: default;
   margin-top: auto;
-  margin-left: 10px;
+  margin-left: 0.5rem;
+}
+
+svg {
+  margin-left: 0.5rem;
 }
 
 h2,
@@ -60,7 +64,6 @@ h2 {
 }
 
 #add-task-container {
-  /* margin-top: 10px; */
   height: 30px;
   display: flex;
   justify-content: space-evenly;
@@ -215,7 +218,7 @@ button:hover,
 .projectListButton {
   color: #6b705c;
   background-color: #b7b7a4;
-  height: 20px;
+  height: auto;
   width: auto;
   border-radius: 5px;
 }
